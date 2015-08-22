@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.4" type="plugin" group="system" method="upgrade">
+        <name>Onepage Generic</name>
+        <author>Claes Norin</author>
+        <creationDate>June 2015</creationDate>
+        <copyright> Copyright (c) 2012, 2015 All Right Reserved, http://www.joomlaproffs.se.</copyright>
+        <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+        <authorEmail>support@vmuikit.com</authorEmail>
+        <authorUrl>http://vmonepage.com/</authorUrl>
+        <version>1.0</version>
+		<description><![CDATA[ 
+	 <table class="table"><tr><td><a href="http://vmonepage.com"><img src="http://vmkco.com/images/logo_vmonepage.png"></a></td><td><h3>Onepage Generic successfully installed.</h3><hr>For more information and to download the latest FREE version of this One Page Checkout please visit <a target="_blank" href="http://vmonepage.com">http://vmonepage.com</a> </h4></td></tr></table>
+	  <table class="table"><tr><td><a href="http://vmkco.com"><img src="http://vmkco.com/images/klarna_logo_mini.png"></a></td><td style="vertical-align: middle;">Looking for Klarna Checkout module? Please visit <a target="_blank" href="http://www.vmkco.com">www.vmkco.com</a> for Free Klarna Checkout Enhanced plugin</td></tr></table>
+		]]></description>
+        <files>
+				<folder>languages</folder>
+				<folder>cart</folder>
+				<folder>fonts</folder>
+                <filename plugin="onepage_generic">onepage_generic.php</filename>
+                <filename plugin="onepage_generic">onepage_generic.css</filename>
+				<filename plugin="onepage_generic">onepage_generic.js</filename>
+				<filename plugin="onepage_generic">onepage.js</filename>
+				<filename plugin="onepage_generic">vmprices.js</filename>
+        </files>
+        <languages folder="languages">
+        	<language tag="en-GB">en-GB.plg_system_onepage_generic.ini</language>
+			<language tag="sv-SE">sv-SE.plg_system_onepage_generic.ini</language>
+        </languages>
+        <config>
+	        <fields name="params">
+	                <fieldset name="basic">
+						
+	                	
+	                
+						<field 	name="show_extraterms"	type="radio" class="btn-group btn-group-yesno"	label="Show Legislative Decree 196/03"
+			description="" default="0">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>	 
+						<field 	name="hide_oneshipment"	type="radio" class="btn-group btn-group-yesno"	label="Hide Shipment Block(If one Shipment)"	description="" default="0">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>	
+						<field 	name="hide_onepayment"	type="radio" class="btn-group btn-group-yesno"	label="Hide Payment Block(If one Payment)"
+			description="" default="0">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>	
+						<field 	name="show_onlyguest" type="radio" class="btn-group btn-group-yesno" label="Show Guest" 	description="" default="0">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>
+						
+						<field name="buttoncolour" type="color" label="Button Color" />
+						<field 	name="activetab" type="radio" class="btn-group btn-group-yesno" label="Active Tab" 	description="" default="0">							<option value="1">REGISTER</option>
+							<option value="2">GUEST</option>
+							<option value="3">LOGIN</option>
+							<option value="4">NONE</option>
+						</field>
+						<field 	name="hide_countryfield"	type="radio" class="btn-group btn-group-yesno"	label="Hide Country(You Must Select Default Country in Backend)"	description="" default="0">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>
+						<field 	name="hide_statefield"	type="radio" class="btn-group btn-group-yesno"	label="Hide State(You Must Select Default State in Backend)"	description="" default="0">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>
+						<field 	name="check_terms"	type="radio" class="btn-group btn-group-yesno"	label="Checked Terms and condirions"	description="" default="0">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>	
+						<field 	name="layout_width"	type="list" class="btn-group btn-group-yesno"	label="Layout Width(Left / Right)"	description="" default="0">
+							<option value="1">3-5 / 2-5</option>
+							<option value="2">2-3 / 1-3</option>
+							<option value="3">1-2 / 1-2</option>
+							<option value="4">Full Width</option>
+						</field>	
+						
+						<field 	name="loadingmsg" type="text" class="btn-group btn-group-yesno" label="Loading Message"  description="" default="" />
+						
+
+	                </fieldset>
+	        </fields>
+        </config>
+</extension>

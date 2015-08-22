@@ -1,0 +1,88 @@
+<?php
+/**
+** Copyright (c) 2012, 2015 All Right Reserved, http://www.joomlaproffs.se
+
+** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
+** This source is free software. This version may have been modified pursuant
+** to the GNU General Public License, and as distributed it includes or
+** is derivative of works licensed under the GNU General Public License or
+** other free or open source software licenses.
+**
+** THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
+** KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+** IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+** PARTICULAR PURPOSE.
+
+** <author>Joomlaproffs</author>
+** <email>info@joomlaproffs.se</email>
+** <date>2015</date>
+
+*/
+
+defined('_JEXEC') or die('Restricted access');
+defined('DS') or define('DS', DIRECTORY_SEPARATOR);
+
+jimport('joomla.plugin.plugin');
+
+class plgSystemOnepage_generic extends JPlugin {
+	function __construct($config,$params) {
+		parent::__construct($config,$params);
+	}
+
+	function onBeforeCompileHead()
+	{
+	
+	    $style = '.form-horizontal .control-label{width:250px; !important; }';
+		$input = JFactory::getApplication()->input;
+		$document = JFactory::getDocument();
+		$document->addStyleDeclaration($style);
+		
+		$_option = $input->getString('option'); 
+		$_view =   $input->getString('view'); 
+		$_format = $input->getString('format');
+		$_task =   $input->getString('task'); 	
+		$_tmpl =   $input->getString('tmpl');  
+	    if ($_option == 'com_virtuemart' && $_view == 'cart' && $_format != 'json') 
+		{
+			$document = JFactory::getDocument();
+		 	$rootPath = JURI::root(true);
+			$arrHead = $document->getHeadData();   
+			foreach($arrHead['scripts'] as $key => $script)
+			{
+			  if(strpos($key, "js/vmprices.js") > 1)
+			  {
+			      unset($arrHead['scripts'][$key]);
+			  }
+	  	    }	
+			$document->setHeadData($arrHead);
+	    }
+	}
+	
+	function onAfterRoute() {
+		
+		if(JFactory::getApplication()->isAdmin()) {
+			return;
+		}
+	    $input = JFactory::getApplication()->input;
+		$document = JFactory::getDocument();
+		$app = JFactory::getApplication();
+		$template = $app->getTemplate(true);
+		if (!class_exists ('VmConfig')) 
+		{
+			require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart' . DS . 'helpers' . DS . 'config.php');
+		}
+		VmConfig::loadConfig();
+		$uri = JFactory::getURI();
+		$post = JRequest::get('post');
+		$_option = $input->getString('option'); 
+		$_view =   $input->getString('view'); 
+		$_format = $input->getString('format');
+		$_task =   $input->getString('task'); 	
+		$_tmpl =   $input->getString('tmpl');  
+	    if ($_option == 'com_virtuemart' && $_view == 'cart' && $_format != 'json') 
+		{
+			require_once(dirname(__FILE__) . DS . 'cart' . DS . 'view.html.php');
+   	    }
+	}
+}
+?>
