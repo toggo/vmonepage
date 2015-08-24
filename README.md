@@ -15,6 +15,10 @@ Download latest version here or on [vmonepage.com](http://vmonepage).
 
 Its a plugin so just install in Joomla and enable and off you go. 
 
+## News 2015-08-25
+
+[![Watch all new features](http://img.youtube.com/vi/bh2JKvxBI60/0.jpg)](http://www.youtube.com/watch?v=bh2JKvxBI60)
+
 ## Copyright and License
 
 Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015. All Right Reserved.
