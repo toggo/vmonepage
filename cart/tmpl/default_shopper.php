@@ -126,16 +126,48 @@ defined('_JEXEC') or die('Restricted access');
 		  <strong><?php echo JText::_('COM_VIRTUEMART_ORDER_CONNECT_FORM') ?></strong>
 		  <div id="loginerror" class="opg-width-1-1" style="display:none;">
 		  </div>
+		   <?php
+		   $lang = JFactory::getLanguage();
+		   $extension = 'com_users';
+		   $lang->load($extension);
+		   $show_forgot =  $params->get('show_forgot',1);
+		   $loginwidth = "opg-width-1-1";
+		   if($show_forgot)
+		   {
+		    	$loginwidth = "opg-width-8-10 opg-float-left opg-margin-bottom";
+		   }
+		  ?>
 		 
             <div class="first-row opg-width-1-1">
                 <div class="username  opg-width-small-1-1 opg-margin-small-top" id="com-form-login-username">
-                    <input id="userlogin_username" class="opg-width-1-1" type="text" name="username" size="18" alt="<?php echo JText::_('COM_VIRTUEMART_USERNAME'); ?>" value="" placeholder="<?php echo JText::_('COM_VIRTUEMART_USERNAME'); ?>" />
+					<div class="<?php echo $loginwidth; ?>">
+                	    <input id="userlogin_username" class="opg-width-1-1" type="text" name="username" size="18" alt="<?php echo JText::_('COM_VIRTUEMART_USERNAME'); ?>" value="" placeholder="<?php echo JText::_('COM_VIRTUEMART_USERNAME'); ?>" />
+					</div>
+					<?php
+					if($show_forgot)
+					{
+					?>
+					<div class="opg-width-1-10 opg-float-left">
+					<a title="<?php echo JText::_('COM_USERS_LOGIN_REMIND'); ?>" class="opg-button" href="<?php echo JRoute::_('index.php?option=com_users&view=remind'); ?>"><i class="opg-icon-question"></i></a>
+					</div>
+					<?php
+					}
+					?>
                 </div>
-
                 <div class="password opg-width-large-1-1 opg-width-small-1-1 opg-margin-small-top" id="com-form-login-password">
-	
-                    <input id="userlogin_password" type="password" name="password" class="opg-width-1-1" size="18" alt="<?php echo JText::_('COM_VIRTUEMART_PASSWORD'); ?>" value="" placeholder="<?php echo JText::_('COM_VIRTUEMART_PASSWORD'); ?>" />
-	
+					 <div class="<?php echo $loginwidth; ?>"> 
+      	        	      <input id="userlogin_password" type="password" name="password" class="opg-width-1-1" size="18" alt="<?php echo JText::_('COM_VIRTUEMART_PASSWORD'); ?>" value="" placeholder="<?php echo JText::_('COM_VIRTUEMART_PASSWORD'); ?>" />
+					 </div>
+					 <?php
+					if($show_forgot)
+					{
+					?>
+					<div class="opg-width-1-10 opg-float-left">
+					<a title="<?php echo JText::_('COM_USERS_LOGIN_RESET'); ?>" class="opg-button" href="<?php echo JRoute::_('index.php?option=com_users&view=reset'); ?>"><i class="opg-icon-question"></i></a>
+					</div>
+					<?php
+					}
+					?>
                 </div>
 
                 <div class="login opg-width-large-1-1 opg-width-small-1-1 opg-margin-small-top" id="com-form-login-remember">
