@@ -15,6 +15,8 @@ Download latest version here or on [vmonepage.com](http://vmonepage).
 
 Its a plugin so just install in Joomla and enable and off you go. 
 
+Built for Joomla 3 and Virtuemart 3.
+
 ## News 2015-08-25
 Click image below to jump to Youtube and check news and features in a video:
 [![Watch all new features](http://img.youtube.com/vi/bh2JKvxBI60/0.jpg)](http://www.youtube.com/watch?v=bh2JKvxBI60)
