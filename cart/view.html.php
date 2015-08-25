@@ -667,7 +667,7 @@ class VirtueMartViewCart extends VmView {
 		$cart = $this->cart;
 		$j='jQuery(document).ready(function(){
 
-    jQuery(".output-shipto").find(":radio").change(function(){
+    jQuery(".shipto_fields_div").find(":radio").change(function(){
         var form = jQuery("#checkoutFormSubmit");
         jQuery(this).vm2front("startVmLoading");
 		document.checkoutForm.submit();

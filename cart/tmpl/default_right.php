@@ -29,9 +29,9 @@ $params=new JRegistry($plugin->params);
   <div class="opg-width-1-1 opg-panel opg-panel-box">
   <?php
    $tempcount = 0;
-   foreach($this->cart->BTaddress["fields"] as $_field) 
+   foreach($this->cart->BTaddress["fields"] as $singlefield) 
     {
-	  if($_field['name']=='virtuemart_country_id' || $_field['name'] == "virtuemart_state_id") 
+	  if($singlefield['name']=='virtuemart_country_id' || $singlefield['name'] == "virtuemart_state_id") 
 	  {
 	    $tempcount++;
 	  }
@@ -46,9 +46,9 @@ $params=new JRegistry($plugin->params);
    {
 	       echo ' <div class="opg-width-1-1 opg-panel opg-panel-box">';
    }
-   foreach($this->cart->BTaddress["fields"] as $_field) 
+   foreach($this->cart->BTaddress["fields"] as $singlefield) 
     {
-	  if($_field['name']=='virtuemart_country_id') 
+	  if($singlefield['name']=='virtuemart_country_id') 
 	  {
 	     $hidecountry_class = "";
 	     if($hidecountry)
@@ -56,16 +56,16 @@ $params=new JRegistry($plugin->params);
 		   $hidecountry_class = "opg-hidden";
 		 }
 		 echo '<div class="'.$hidecountry_class.'">';
-	     echo '				<label class="' . $_field['name'] . '" for="' . $_field['name'] . '_field">' . "\n";
-	     echo '					' . $_field['title'] . ($_field['required'] ? ' *' : '') . "\n";
+	     echo '				<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">' . "\n";
+	     echo '					' . $singlefield['title'] . ($singlefield['required'] ? ' *' : '') . "\n";
  	     echo '				</label>' . "<br />";
 		 $replacetext = '<select onchange="javascript:updateaddress();"';
-	  	 $_field['formcode']=str_replace('<select',$replacetext,$_field['formcode']);
-		 $_field['formcode']=str_replace('vm-chzn-select','',$_field['formcode']);
-		 echo $_field['formcode'];
+	  	 $singlefield['formcode']=str_replace('<select',$replacetext,$singlefield['formcode']);
+		 $singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
+		 echo $singlefield['formcode'];
 		 echo '</div>';
 	  }
-	  else if($_field['name'] == "virtuemart_state_id")
+	  else if($singlefield['name'] == "virtuemart_state_id")
 	  {
 	     $hidestate_class = "";
 	     if($hidestate)
@@ -73,21 +73,21 @@ $params=new JRegistry($plugin->params);
 		   $hidestate_class = "opg-hidden";
 		 }
 		 echo '<div class="'.$hidestate_class.'">';
-	     echo '				<label class="' . $_field['name'] . '" for="' . $_field['name'] . '_field">' . "\n";
-	     echo '					' . $_field['title'] . ($_field['required'] ? ' *' : '') . "\n";
+	     echo '				<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">' . "\n";
+	     echo '					' . $singlefield['title'] . ($singlefield['required'] ? ' *' : '') . "\n";
  	     echo '				</label>' . "<br />";
 
 		 $replacetext = '<select onchange="javascript:updateaddress();"';
-	  	 $_field['formcode']=str_replace('<select',$replacetext,$_field['formcode']);
-		 if($_field['required'])
+	  	 $singlefield['formcode']=str_replace('<select',$replacetext,$singlefield['formcode']);
+		 if($singlefield['required'])
 		 {
-		  $_field['formcode']=str_replace('vm-chzn-select','required',$_field['formcode']);
+		  $singlefield['formcode']=str_replace('vm-chzn-select','required',$singlefield['formcode']);
 		 }
 		 else
 		 {
-		  $_field['formcode']=str_replace('vm-chzn-select','',$_field['formcode']);
+		  $singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
 		 } 
-		 echo $_field['formcode'];
+		 echo $singlefield['formcode'];
 		 echo '</div>';
 	  }
 	}

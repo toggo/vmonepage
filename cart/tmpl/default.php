@@ -73,9 +73,9 @@ JHtml::_('behavior.formvalidation');
 $document = JFactory::getDocument();
 $document->addStyleDeclaration('#facebox .content {display: block !important; height: 480px !important; overflow: auto; width: 560px !important; }');
 $customernote = 0;
- foreach($this->cart->BTaddress["fields"] as $_field) 
+ foreach($this->cart->BTaddress["fields"] as $singlefield) 
  {
-     if($_field['name']=='customer_note') 
+     if($singlefield['name']=='customer_note') 
  	 {
 	   $customernote = true;
 	 }
@@ -113,7 +113,7 @@ input#register
 {
  float:none !important;
 }
-.billto-shipto{
+.all_shopper_fields{
  border:none !important;
 }
 </style>
@@ -230,9 +230,9 @@ else
 		<?php // Leave A Comment Field ?>
 		
 		<?php
-  foreach($this->cart->BTaddress["fields"] as $_field) 
+  foreach($this->cart->BTaddress["fields"] as $singlefield) 
   {
-     if($_field['name']=='customer_note') 
+     if($singlefield['name']=='customer_note') 
 	 {
 		if($this->cart->BT['customer_note'] != "")
 	 	{
@@ -256,17 +256,17 @@ else
     	   <div class="opg-modal-header"><strong><?php echo JText::_('COM_VIRTUEMART_COMMENT_CART'); ?></strong></div>
 		   <div id="extracomments" class="customer-comments">
 		   <?php
-			   if($_field['required'])
+			   if($singlefield['required'])
 			   {
 			     $tmptext = "";
-				 $tmptext = str_replace("<textarea", '<textarea onblur="javascript:updatecart();" ', $_field['formcode']);
+				 $tmptext = str_replace("<textarea", '<textarea onblur="javascript:updatecart();" ', $singlefield['formcode']);
 				 $tmptext = str_replace("<textarea", '<textarea class="required"', $tmptext);
 				 echo $tmptext;
 
 			   }
 			   else
 			   {
-			    	echo str_replace("<textarea", '<textarea onblur="javascript:updatecart();" ', $_field['formcode']);
+			    	echo str_replace("<textarea", '<textarea onblur="javascript:updatecart();" ', $singlefield['formcode']);
 			   }
 			   ?>
 		   </div>

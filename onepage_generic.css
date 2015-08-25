@@ -70,6 +70,15 @@ input.quantity-input
 {
   display:block;
 }
+#right_div .opg-width-1-1 input, #right_div .opg-width-1-1 select
+{
+width:100% !important;
+}
+
+.line-through 
+{
+text-decoration:line-through;
+}
 
 .squaredTwo {
   width: 28px;
@@ -120,7 +129,7 @@ input.quantity-input
 
 
 
-#checkoutForm .output-shipto
+#checkoutForm .shipto_fields_div
 {
   margin:10px !important;
 }

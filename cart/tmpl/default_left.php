@@ -197,16 +197,16 @@ $params=new JRegistry($plugin->params);
 	  </div>
   </div>
   <?php
-  foreach($this->cart->BTaddress["fields"] as $_field) 
+  foreach($this->cart->BTaddress["fields"] as $singlefield) 
   {
-     if($_field['name']=='customer_note') 
+     if($singlefield['name']=='customer_note') 
 	 {
 	 ?>
 	   <div id="extracommentss" class="opg-panel opg-panel-box opg-margin-small-top">
 	   <h3 class="opg-panel-title"><?php echo JText::_('COM_VIRTUEMART_COMMENT_CART'); ?></h3>
 		   <div class="opg-text-center">
 		   <?php
-			   echo str_replace("<textarea", '<textarea onblur="javascript:updatecart();" ', $_field['formcode']);
+			   echo str_replace("<textarea", '<textarea onblur="javascript:updatecart();" ', $singlefield['formcode']);
 		   ?>
 		   </div>
 	   </div>

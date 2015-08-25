@@ -20,6 +20,16 @@
 
 window.selectedpaymentid = 0;
 
+jQuery(document).ready(function(){
+    if(jQuery('#checkoutForm').length  > 0)
+    {
+		window.firsttime = 1;
+		updateaddress();
+    }
+	jQuery(".uk-alert").hide();
+	jQuery("#system-message-container").hide();
+});
+
 
 jQuery(document).ready(function($) {
   Virtuemart.product($("div.product"));
@@ -116,7 +126,7 @@ function validatecomment()
 
 function removeshipto()
 {
-	 jQuery('#table_shipto input').each(function() 
+	 jQuery('#shipto_fields_div input').each(function() 
      {
 		  elementid = jQuery(this).attr("id");
 		  jQuery("#"+elementid).val("");
@@ -138,7 +148,7 @@ function validateshipto(returnval)
 	else
 	{
 		var validator=new JFormValidator();
-		jQuery('#table_shipto input').each(function() {
+		jQuery('#shipto_fields_div input').each(function() {
 			var validatefield = validator.validate(this);
 			elementid = jQuery(this).attr("id");
 			if(validatefield == false)
@@ -225,7 +235,7 @@ function changecheckout(val)
 	jQuery("#guesticon").addClass("opg-icon-check");
 
 	   jQuery('#register').attr('checked', false);
-	   jQuery('#table_user').hide();
+	   jQuery('#user_fields_div').hide();
 	   window.lastvalue = 1;
 
     
@@ -241,7 +251,7 @@ function changecheckout(val)
 	 jQuery("#guesticon").removeClass("opg-icon-check");
 	
 	   jQuery('#register').attr('checked', true);
-	   jQuery('#table_user').show();
+	   jQuery('#user_fields_div').show();
 	   window.lastvalue = 2;
 	
   }
@@ -255,7 +265,7 @@ function changemode(val)
 	jQuery("#loginbtn").addClass("opg-button-primary");
 	jQuery("#regbtn").removeClass("opg-button-primary");
 	jQuery("#old_payments").slideUp();
-	jQuery(".billto-shipto").slideUp();
+	jQuery(".all_shopper_fields").slideUp();
 	jQuery("#other-things").slideUp();
   }
   if(val == 2)
@@ -264,20 +274,12 @@ function changemode(val)
 	 jQuery("#loginbtn").removeClass("opg-button-primary");
 	 jQuery("#regbtn").addClass("opg-button-primary");
 	 jQuery("#old_payments").slideDown();
-	 jQuery(".billto-shipto").slideDown();
+	 jQuery(".all_shopper_fields").slideDown();
 	 jQuery("#other-things").slideDown();
   }
 }
 
-jQuery(document).ready(function(){
-    if(jQuery('#checkoutForm').length  > 0)
-    {
-	  setpayment();
-  	  updatecart();
-    }
-	jQuery(".opg-alert").hide();
-	jQuery("#system-message-container").hide();
-});
+
 
 function strip_tags(str, allow) {
   // making sure the allow arg is a string containing only tags in lowercase (<a><b><c>)
@@ -454,7 +456,7 @@ function submit_order() {
     inputvalidation = true;
 	if(onlyregistered)
 	{
-		jQuery('#table_user input').each(function(){
+		jQuery('#user_fields_div input').each(function(){
 			var validatefield = validator.validate(this);
 			elementid = jQuery(this).attr("id");
 			if(validatefield == false)
@@ -470,7 +472,7 @@ function submit_order() {
 		});
      }
 
-     jQuery('#table_billto input').each(function(){
+     jQuery('#billto_fields_div input').each(function(){
 												 
 		var validatefield = validator.validate(this);
 		elementid = jQuery(this).attr("id");
@@ -519,13 +521,13 @@ function submit_order() {
 	{
 		if(jQuery('#STsameAsBT').prop("checked") == true ) 
 		{
-			jQuery('#table_shipto input').each(function() 
+			jQuery('#shipto_fields_div input').each(function() 
 	   	    { 
 			    inputid = jQuery(this).attr('id');
 				var name= inputid.replace('shipto_','');
-				if(jQuery("#table_billto #"+name).length > 0)
+				if(jQuery("#billto_fields_div #"+name).length > 0)
 				{
-					jQuery(this).val(jQuery("#table_billto #"+name).val());
+					jQuery(this).val(jQuery("#billto_fields_div #"+name).val());
 				}
 
 			});
@@ -537,7 +539,7 @@ function submit_order() {
 		else
 		{
 			var validator=new JFormValidator();
-			jQuery('#table_shipto input').each(function(){
+			jQuery('#shipto_fields_div input').each(function(){
 				var validatefield=validator.validate(this);
 				elementid = jQuery(this).attr("id");
 				if(validatefield == false)
@@ -616,7 +618,7 @@ function submit_order() {
 	        cache: false,
     	    url: window.vmSiteurl + registerurl,
 			dataType: "json",
-			data : jQuery("#div_billto :input").serialize()
+			data : jQuery("#billto_inputdiv :input").serialize()
        }).done(
 	   function (data, textStatus) 
 	   {
@@ -734,6 +736,11 @@ function update_product()
 				 }
 				 else
 				 {
+					if (jQuery(".vmCartModule")[0]) 
+					{
+						 currentview = "";
+                    	 Virtuemart.productUpdate(jQuery(".vmCartModule"), currentview);
+                    }  
 					var r = '<div class="opg-margin-small-top opg-alert opg-alert-success" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + productupdate + "</p></div>";
 				   jQuery("#customerror").html("");
 				   jQuery("#customerror").show();
@@ -747,6 +754,7 @@ function update_product()
 }
 function update_prices()
 {
+	window.firsttime = 2;
 	jQuery.ajax({
 				type: "POST",
 		        cache: false,
@@ -890,14 +898,14 @@ function update_prices()
 				    	 }
 					     $("#klarna-checkout-container").slideDown();
 					     $('#otherpay_buttons').slideUp();
-				  	     $('div.billto-shipto').slideUp();
+				  	     $('div.all_shopper_fields').slideUp();
 					     $('div#other-things').slideUp();
 					}
 					else 
 					{
 					    $("#klarna-checkout-container").slideUp();
 					    $('#otherpay_buttons').slideDown();
-				        $('div.billto-shipto').slideDown();
+				        $('div.all_shopper_fields').slideDown();
 					    $('div#other-things').slideDown();
 					};
 			  }
@@ -1340,8 +1348,16 @@ function updatepayment()
 					  document.getElementById("extracommentss").style.display = "none";
 				  }
 			}
+			if(window.firsttime == 1)
+			{
+				 update_shipment();
+			}
+			else
+			{
+				update_prices();
+			}
 			
-			update_prices();
+			
 		});
 }
 
@@ -1425,9 +1441,16 @@ function updateaddress()
 				dataType: "json"
 		 }).done(
 			 function (data, textStatus){
-				setpayment();
-				setshipment();
-				update_prices();
+				 if(window.firstime == 1)
+				 {
+					setpayment();
+				 }
+				 else
+				 {
+					setpayment();
+					setshipment();
+					update_prices(); 
+				 }
 		 });
   	
 }

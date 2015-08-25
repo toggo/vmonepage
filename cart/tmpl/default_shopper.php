@@ -205,7 +205,7 @@ defined('_JEXEC') or die('Restricted access');
 	    $displayreg = "";
 	  }
 	?>
-<div class="billto-shipto" style="<?php echo $displayreg; ?>">
+<div class="all_shopper_fields" style="<?php echo $displayreg; ?>">
 
    <?php  
    if($user->id == 0) 
@@ -378,120 +378,68 @@ defined('_JEXEC') or die('Restricted access');
 		   $disvar = 'display:none;';   
 		}
 
-		$userFields=array('agreed','name','username','password','password2');
-		echo '<div id="div_billto">';
-		echo '<table class="adminform opg-table"  id="table_user" style="'.$disvar.' ">' . "\n";
+		$skippedfields_array =array('name','username','password','password2');
+		echo '<div id="billto_inputdiv">';
+		echo '<div class="adminform "  id="user_fields_div" style="'.$disvar.' ">';
 
-		foreach($this->cart->BTaddress["fields"] as $_field) {
-		
-			if(!in_array($_field['name'],$userFields)) {
+		foreach($this->cart->BTaddress["fields"] as $singlefield) {
+			if(!in_array($singlefield['name'],$skippedfields_array)) {
 				continue;
 			}
-			if($_field['name']=='agreed') {
-				continue;
-			}
-	    	echo '		<tr>' . "\n";
-		    echo '			<td class="key">' . "\n";
-			if($_field['type'] == "select")
+			echo '<div class="opg-width-1-1">';
+			if($singlefield['type'] == "select")
 	        {	
-		      echo '				<label class="' . $_field['name'] . '" for="' . $_field['name'] . '_field">' . "\n";
-		      echo '					' . $_field['title'] . ($_field['required'] ? ' *' : '') . "\n";
-		      echo '				</label>';
+		      echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
+		      echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
+		      echo '</label><br />';
 			}
 			else
 			{
-			 $_field['formcode']=str_replace('<input','<input placeholder="'.$_field['title'].'"'. (VmConfig::get('oncheckout_only_registered') == 1 ? ' class="required"' : '') ,$_field['formcode']);
-			 $_field['formcode']=str_replace('size="30"','' ,$_field['formcode']);
+			 $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"'. (VmConfig::get('oncheckout_only_registered') == 1 ? ' class="required"' : '') ,$singlefield['formcode']);
+			 $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
 			}
-		    echo '				' . $_field['formcode'] . "\n";
-		    echo '			</td>' . "\n";
-		    echo '		</tr>' . "\n";
+		    echo $singlefield['formcode'];
+		    echo '</div>';
 		}
-		echo '<tr><td><hr /></td></tr>';
-		echo '	</table>' . "\n";
-		echo '	<table class="adminform opg-table" id="table_billto" style="margin:0;">' . "\n";
-
-		foreach($this->cart->BTaddress["fields"] as $_field) {
-         
-		 if($_field['formcode'] != "")
+		echo '<div><hr /></div>';
+		echo '</div>';
+		echo '<div class="adminform" id="billto_fields_div" style="margin:0;">';
+		$skipped_fields_array = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2'); 
+		foreach($this->cart->BTaddress["fields"] as $singlefield) {
+		 if($singlefield['formcode'] != "")
 		 {
-		  
-		    if($_field['name']=='customer_note') {
-	          continue;
-			}
-			if($_field['name']=='virtuemart_country_id') {
-	          continue;
-			}
-			if($_field['name']=='virtuemart_state_id') {
-			  continue;
-			}
-		
-			if(in_array($_field['name'],$userFields)) {
+			if(in_array($singlefield['name'],$skipped_fields_array)) {
 				continue;
 			}
-			
-			
-			echo '		<tr>' . "\n";
-		    echo '			<td class="key">' . "\n";
-			if($_field['type'] == "select")
+			echo "<div class='opg-width-1-1'>";
+			if($singlefield['type'] == "select")
 	        {	
-		    echo '				<label class="' . $_field['name'] . '" for="' . $_field['name'] . '_field">' . "\n";
-		    echo '					' . $_field['title'] . ($_field['required'] ? ' *' : '') . "\n";
-		    echo '				</label>';
-			}
+		      echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
+		      echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
+		      echo '</label><br />';
+		 	}
 			else
 			{
-			 $_field['formcode']=str_replace('<input','<input placeholder="'.$_field['title'].'"' ,$_field['formcode']);
-			 $_field['formcode']=str_replace('size="30"','' ,$_field['formcode']);
+			  $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
+			  $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
 			}
-
-		    if($_field['name']=='zip') {
-			     
-
+		    if($singlefield['name']=='zip') {
 				$replacetext = 'input onchange="javascript:updateaddress();"';
-		    	$_field['formcode']=str_replace('input', $replacetext ,$_field['formcode']);
+		    	$singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
 		    } 
-
-			else if($_field['name']=='virtuemart_country_id') {
-			
-				/*
-		    	$_field['formcode']=str_replace('<select','<select onchange="javascript:updateaddress();"',$_field['formcode']);
-				$_field['formcode']=str_replace('vm-chzn-select','',$_field['formcode']);
-				*/
-				
-		    } else if($_field['name']=='virtuemart_state_id') {
-			
-		    	//$uptask = "'custom'";
-		        //$replacetext = '<select onchange="javascript:updateaddress('.$uptask.');"';
-		    	//$_field['formcode']=str_replace('<select',$replacetext,$_field['formcode']);
-				
-				if($_field['required'])
-				{
-				 // $_field['formcode']=str_replace('vm-chzn-select','required',$_field['formcode']);
-				}
-				else
-				{
-				  // $_field['formcode']=str_replace('vm-chzn-select','',$_field['formcode']);
-				} 
-				
-		    }
-			else if($_field['name']=='title') {
-				$_field['formcode']=str_replace('vm-chzn-select','',$_field['formcode']);
+			else if($singlefield['name']=='title') {
+				$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
 		    }
 			
-		    echo '				' . $_field['formcode'] . "\n";
-		    echo '			</td>' . "\n";
-		    echo '		</tr>' . "\n";
+		    echo $singlefield['formcode'];
+			echo '</div>';
 	      }
 		}
-	    echo '	</table>' . "\n";
 	    echo '</div>';
 		?>
   </div>
   <div class="opg-width-1-1 opg-margin-top" id="div_shipto"> 
-    <div class="output-shipto">
-	
-		  
+    <div class="shipto_fields_div">
      <div class="opg-width-1-1">
 	     <?php
 		  $target = "{target:'#shiptopopup'}";
@@ -537,63 +485,49 @@ defined('_JEXEC') or die('Restricted access');
 
     <?php if(!isset($this->cart->lists['current_id'])) $this->cart->lists['current_id'] = 0; ?>
     <?php
-		echo '	<table class="adminform  opg-table" id="table_shipto" style="'.$shiptodisplay.'">' . "\n";
-		
-
-		foreach($this->cart->STaddress["fields"] as $_field) {
-		  echo '		<tr>' . "\n";
-	      echo '			<td class="key">' . "\n";
-	     if($_field['type'] == "select")
+		echo '<div class="adminform  " id="shipto_fields_div" style="'.$shiptodisplay.'">';
+		foreach($this->cart->STaddress["fields"] as $singlefield) {
+		 echo '<div class="opg-width-1-1">';
+	     if($singlefield['type'] == "select")
 	      {		
-		    echo '				<label class="' . $_field['name'] . '" for="' . $_field['name'] . '_field">' . "\n";
-		    echo '					' . $_field['title'] . ($_field['required'] ? ' *' : '') . "\n";
-		    echo '				</label>';
+		    echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
+		    echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
+		    echo '</label><br/>';
 		  }
 		  else
 		  {
-		    $_field['formcode']=str_replace('<input','<input placeholder="'.$_field['title'].'"' ,$_field['formcode']);
+		    $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
 		  }
-		 
-		  
-		
-    if($_field['name']=='shipto_zip') {
-		  $replacetext = 'input onchange="javascript:updateaddress();"';
-		  $_field['formcode']=str_replace('input', $replacetext ,$_field['formcode']);
+	    if($singlefield['name']=='shipto_zip') {
+			  $replacetext = 'input onchange="javascript:updateaddress();"';
+			  $singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
+	    } 
+		else if($singlefield['name']=='customer_note') {
+		}
+		else if($singlefield['name']=='shipto_virtuemart_country_id') {
+		    	$singlefield['formcode']=str_replace('<select','<select onchange="javascript:updateaddress();"',$singlefield['formcode']);
+		    	$singlefield['formcode']=str_replace('class="virtuemart_country_id','class="shipto_virtuemart_country_id',$singlefield['formcode']);
+				$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
 
-    } 
-	else if($_field['name']=='customer_note') {
-	 
-	}
-	else if($_field['name']=='shipto_virtuemart_country_id') {
-		    	$_field['formcode']=str_replace('<select','<select onchange="javascript:updateaddress();"',$_field['formcode']);
-		    	$_field['formcode']=str_replace('class="virtuemart_country_id','class="shipto_virtuemart_country_id',$_field['formcode']);
-				$_field['formcode']=str_replace('vm-chzn-select','',$_field['formcode']);
-
-    } else if($_field['name']=='shipto_virtuemart_state_id') {
-
-    	$_field['formcode']=str_replace('id="virtuemart_state_id"','id="shipto_virtuemart_state_id"',$_field['formcode']);
-
+	   } 
+	   else if($singlefield['name']=='shipto_virtuemart_state_id') 
+	   {
+		    	$singlefield['formcode']=str_replace('id="virtuemart_state_id"','id="shipto_virtuemart_state_id"',$singlefield['formcode']);
 		        $replacetext = '<select onchange="javascript:updateaddress();"';
-		    	$_field['formcode']=str_replace('<select',$replacetext,$_field['formcode']);
-				if($_field['required'])
+		    	$singlefield['formcode']=str_replace('<select',$replacetext,$singlefield['formcode']);
+				if($singlefield['required'])
 				{
-				  $_field['formcode']=str_replace('vm-chzn-select','required',$_field['formcode']);
+				  $singlefield['formcode']=str_replace('vm-chzn-select','required',$singlefield['formcode']);
 				}
 				else
 				{
-				   $_field['formcode']=str_replace('vm-chzn-select','',$_field['formcode']);
+				   $singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
 				} 
 	    }
-    echo '				' . $_field['formcode'] . "\n";
-
-    echo '			</td>' . "\n";
-	echo ' </tr>';
-
-
- 
-}
-
-    echo '</tr>	</table>' . "\n";
+	    echo $singlefield['formcode'];
+		echo '</div>';
+	}
+    echo '</div>';
 
 		?>
 	  <div class="opg-modal-footer">
