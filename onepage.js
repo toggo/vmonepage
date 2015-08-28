@@ -405,6 +405,7 @@ function submit_order() {
 	  }
 	}
 	var selected_shipment = false;
+	var selected_payment = false;
 	
 	if(jQuery('#shipment_selection').length > 0)
 	{

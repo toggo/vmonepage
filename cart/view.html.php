@@ -366,6 +366,7 @@ class VirtueMartViewCart extends VmView {
 		$this->assignRef('shipment_not_found_text', $shipment_not_found_text);
 		$this->assignRef('shipments_shipment_rates', $shipmentarray);
 		$this->assignRef('found_shipment_method', $found_shipment_method);
+		$this->assignRef('selectedShipment', $selectedShipment);
 
 		return $ok;
 	}
