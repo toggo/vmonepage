@@ -238,9 +238,11 @@ class VirtueMartViewCart extends VmView {
 			require_once dirname(__FILE__)."/".$task.".php";
 		
 		if($task == "completecheckout")
-		{
+		{ 
 		     require_once dirname(__FILE__)."/updatecartaddress.php";
+			
 			 $checkout = $cart->checkoutData(false);
+			
 		     if($checkout)
 			 {
 				 echo "success";
@@ -264,12 +266,13 @@ class VirtueMartViewCart extends VmView {
 			echo json_encode($this->paymentplugins_payments);
 			exit;
 		  }
+		   $cart->setCartIntoSession();
 	
 	  parent::display($tpl);
 	}
 
 	private function lSelectCoupon() {
-
+		$cart = $this->cart;
 		$this->couponCode = (!empty($cart->couponCode) ? $cart->couponCode : '');
 		$this->coupon_text = $cart->couponCode ? vmText::_('COM_VIRTUEMART_COUPON_CODE_CHANGE') : vmText::_('COM_VIRTUEMART_COUPON_CODE_ENTER');
 	}
@@ -389,6 +392,9 @@ class VirtueMartViewCart extends VmView {
 		  }
 		}
 		
+		
+		
+		
 		$paymentModel = VmModel::getModel('Paymentmethod');
 		$payments = $paymentModel->getPayments(true, false);
 		
@@ -426,6 +432,7 @@ class VirtueMartViewCart extends VmView {
 			}
         }
 	
+	
 
 		$this->paymentplugins_payments = array();
 		if (!$this->checkPaymentMethodsConfigured()) {
@@ -433,10 +440,12 @@ class VirtueMartViewCart extends VmView {
 		}
 
 		if(!class_exists('vmPSPlugin')) require(JPATH_VM_PLUGINS.DS.'vmpsplugin.php');
+		
 		JPluginHelper::importPlugin('vmpayment');
 		$dispatcher = JDispatcher::getInstance();
-		$returnValues = $dispatcher->trigger('plgVmDisplayListFEPayment', array($cart, $selectedPayment,&$this->paymentplugins_payments));
 
+		
+		$returnValues = $dispatcher->trigger('plgVmDisplayListFEPayment', array($cart, $selectedPayment,&$this->paymentplugins_payments));
 		$this->found_payment_method =count($this->paymentplugins_payments);
 		if (!$this->found_payment_method) {
 			$link=''; // todo
@@ -490,6 +499,7 @@ class VirtueMartViewCart extends VmView {
 		/* this code modified for one page generic to list payment in one page */
         $this->assignRef('paymentplugins_paymentsnew', $paymentsnew);
         $this->assignRef('paymentplugins_payments', $paymentsarray);
+        $this->assignRef('selectedPayment', $selectedPayment);
 		return $ok;
 	}
 

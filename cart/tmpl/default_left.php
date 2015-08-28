@@ -24,8 +24,10 @@ defined('_JEXEC') or die('Restricted access');
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
 ?>
+<div class="opg-width-1-1 opg-margin-bottom">
+   <h3 class="opg-h3"><?php echo JText::_('COM_VIRTUEMART_CART_TITLE'); ?></h3>
+</div>
 <div id="allproducts" class="opg-width-1-1">
-    <h3 class="opg-h3"><?php echo JText::_('COM_VIRTUEMART_CART_TITLE'); ?></h3>
 	
 	 <?php
     $modules = JModuleHelper::getModules("onepage_promo_top");

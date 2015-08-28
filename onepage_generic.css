@@ -70,7 +70,7 @@ input.quantity-input
 {
   display:block;
 }
-#right_div .opg-width-1-1 input, #right_div .opg-width-1-1 select
+#right_div .opg-width-1-1 input[type="text"], #right_div .opg-width-1-1 input[type="password"], #right_div .opg-width-1-1 select
 {
 width:100% !important;
 }

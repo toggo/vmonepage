@@ -23,8 +23,31 @@ defined('_JEXEC') or die('Restricted access');
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
 ?>
+<script type="text/javascript">
+var selected_payment  = <?php echo $this->selectedPayment; ?>;
+var selected_shipment  = <?php echo $this->selectedShipment; ?>;
+jQuery(document).ready(function(){
+ for(var i=0;i<document.id('paymentsdiv').getElements('input').length;i++) 
+ {
+	if (document.id('paymentsdiv').getElements('input')[i].value == selected_payment) 
+	{
+		document.id('paymentsdiv').getElements('input')[i].checked=true;
+	}
+ }
+ for(var i=0;i<document.id('shipmentdiv').getElements('input').length;i++) 
+ {
+	if (document.id('shipmentdiv').getElements('input')[i].value == selected_shipment) 
+	{
+		document.id('shipmentdiv').getElements('input')[i].checked=true;
+	}
+  }
+});
+
+
+</script>
+
   <div class="opg-width-1-1 opg-margin-bottom">
- 	  <strong class="opg-h3"><?php echo JText::_('PLG_SYSTEM_VMUIKIT_ONEPAGE_CHECKOUT'); ?></strong>
+ 	  <h3 class="opg-h3"><?php echo JText::_('PLG_SYSTEM_VMUIKIT_ONEPAGE_CHECKOUT'); ?></h3>
   </div>
   <div class="opg-width-1-1 opg-panel opg-panel-box">
   <?php
@@ -256,7 +279,7 @@ $params=new JRegistry($plugin->params);
 							if(count($this->paymentplugins_paymentsnew) > 1)
 							{  
 							    $target = "{target:'#paymentdiv'}";
-							    echo '<td id="paychangediv">';
+							    echo '<td id="paychangediv" class="opg-width-1-4">';
 					            echo '<a class="opg-button opg-button-primary" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}

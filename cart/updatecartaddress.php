@@ -39,7 +39,6 @@ if($cart->STsameAsBT =='1') {
 
 
 $cart->saveAddressInCart($postData,'BT');
-$cart->setCartIntoSession(false,true);
 	
 $user = JFactory::getUser();
 
