@@ -404,34 +404,9 @@ function submit_order() {
 		    errormsg += '<p>' + minpurchaseerror + '</p>';
 	  }
 	}
-	var selected_shipment = false;
-	var selected_payment = false;
 	
-	if(jQuery('#shipment_selection').length > 0)
-	{
-		
-		jQuery("#shipment_selection input").each(function(){
-			if(jQuery(this).prop('checked') == true || jQuery(this).attr('checked') == "checked")
-			{
-				selected_shipment= true;
-			}	
-		});
-
-		if(selected_shipment==false) 
-		{
-			  errormsg += '<p>' + selectshipment + '</p>';
-		}
-	}
-	
-	
-
-   
-		
-	if(selected_payment==false) 
-	{
-		 errormsg += '<p>' + selectpayment + '</p>';
-	}
-
+	if(selected_shipment==false)  errormsg += '<p>' + selectshipment + '</p>';
+	if(selected_payment==false)  errormsg += '<p>' + selectpayment + '</p>';
 
 
 	var validator = new JFormValidator();
