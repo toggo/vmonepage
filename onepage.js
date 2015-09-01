@@ -843,12 +843,16 @@ function update_prices()
 				var klarna_id = $('#klarna_checkout_onepage').val();
 				if (klarna_id != null) 
 				{
-					if (selected_payment == klarna_id) 
+					if ($("#paymentsdiv input[name='virtuemart_paymentmethod_id']:checked").val() == klarna_id) 
 					{
 					     if(customernote)
 					     {
 					        document.getElementById("extracommentss").style.display = "block";
 				    	 }
+						  if(document.getElementById("klarna-checkout-iframe") == null)
+						 {
+							  document.location.reload(); 
+						 }
 					     $("#klarna-checkout-container").slideDown();
 					     $('#otherpay_buttons').slideUp();
 				  	     $('div.all_shopper_fields').slideUp();
@@ -856,6 +860,10 @@ function update_prices()
 					}
 					else 
 					{
+						if(customernote)
+					    {
+					        document.getElementById("extracommentss").style.display = "none";
+				    	} 
 					    $("#klarna-checkout-container").slideUp();
 					    $('#otherpay_buttons').slideDown();
 				        $('div.all_shopper_fields').slideDown();

@@ -11,7 +11,7 @@
 **
 ** THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 ** KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-** IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
+** IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A 
 ** PARTICULAR PURPOSE.
 
 ** <author>Joomlaproffs / Virtuemart team</author>
@@ -399,11 +399,30 @@ class VirtueMartViewCart extends VmView {
 		$paymentModel = VmModel::getModel('Paymentmethod');
 		$payments = $paymentModel->getPayments(true, false);
 		
+		
+            $db=JFactory::getDBO();
+            $query=$db->getQuery(true);
+            $query->select('virtuemart_paymentmethod_id');
+            $query->from('#__virtuemart_paymentmethods');
+            $query->where("payment_element='klarna_checkout_onepage'");
+			$query->where("published=1");
+            $db->setQuery($query);
+            $pmid = $db->loadResult();
+			$klarnapaymentid = 0;
+			if($pmid > 0)
+			{
+				$klarnapaymentid = $pmid;
+			}
+		
 		if($cart->virtuemart_paymentmethod_id == 0)
 		{
 		   if(vmconfig::get("set_automatic_payment") > 0)
 		   {
 			  $cart->virtuemart_paymentmethod_id = vmconfig::get("set_automatic_payment");
+		   }
+		   else if($pmid > 0)
+		   {
+		       $cart->virtuemart_paymentmethod_id = $pmid;
 		   }
 		   else if(!empty($payments[0]->virtuemart_paymentmethod_id))
 		   {
@@ -413,27 +432,11 @@ class VirtueMartViewCart extends VmView {
 	
 		$this->payment_not_found_text='';
 		$this->payments_payment_rates=array();
-
 		$this->found_payment_method = 0;
+		
+
+		
 		$selectedPayment = empty($cart->virtuemart_paymentmethod_id) ? 0 : $cart->virtuemart_paymentmethod_id;
-		if ($selectedPayment == 0) 
-		 {
-            $db=JFactory::getDBO();
-            $query=$db->getQuery(true);
-            $query->select('virtuemart_paymentmethod_id');
-            $query->from('#__virtuemart_paymentmethods');
-            $query->where("payment_element='klarna_checkout_onepage'");
-			$query->where("published=1");
-            $db->setQuery($query);
-            $pmid = $db->loadResult();
-			if($pmid > 0)
-			{
-	            $cart->virtuemart_paymentmethod_id = $pmid;
-				$selectedPayment = $cart->virtuemart_paymentmethod_id;
-			}
-        }
-	
-	
 
 		$this->paymentplugins_payments = array();
 		if (!$this->checkPaymentMethodsConfigured()) {
@@ -501,6 +504,7 @@ class VirtueMartViewCart extends VmView {
         $this->assignRef('paymentplugins_paymentsnew', $paymentsnew);
         $this->assignRef('paymentplugins_payments', $paymentsarray);
         $this->assignRef('selectedPayment', $selectedPayment);
+		$this->assignRef('klarnapaymentid', $klarnapaymentid);
 		return $ok;
 	}
 

@@ -31,8 +31,15 @@ defined('_JEXEC') or die('Restricted access');
 				echo $display;
     }
 	echo '</fieldset>';
+	if($this->klarnapaymentid > 0)
+	{
+	   if($this->selectedPayment == $this->klarnapaymentid)
+	   {
+	     $otherpaycss = "display:none;";
+	   }
+	}
    ?>
-   <div id="otherpay_buttons" class="opg-panel-box opg-margin-top"> <!-- Panel Box Started -->
+   <div id="otherpay_buttons" class="opg-panel-box opg-margin-top" style="<?php echo $otherpaycss; ?>"> <!-- Panel Box Started -->
      
 	 <?php
 	  $onlyguest =  $params->get('show_onlyguest',0);
