@@ -371,6 +371,7 @@ function ajaxlogin()
 function submit_order() {	
 
    jQuery("#loadingbutton").click();
+
    
    jQuery("#customerror").html("");
    errormsg = "";
@@ -444,10 +445,11 @@ function submit_order() {
 		  jQuery("#"+elementid).removeClass("opg-form-danger");
 		}
 	 });
-	 
-   	 country_ele = jQuery('#virtuemart_country_id');
+
+   	 country_ele = document.getElementById("virtuemart_country_id");
 	 if(jQuery("#virtuemart_country_id").length > 0)
 	 {
+		 var validator=new JFormValidator();
 	     var validatefield = validator.validate(country_ele);
 		 if(validatefield == false)
 		 {
@@ -459,8 +461,7 @@ function submit_order() {
 			  jQuery("#virtuemart_country_id").removeClass("opg-form-danger");
 	  	 }
 	 }
-	 
-	 state_ele = jQuery('#virtuemart_state_id');
+	 state_ele = document.getElementById("virtuemart_state_id");
 	 if(jQuery("#virtuemart_state_id").length > 0)
 	 {
 	     var validatefield = validator.validate(state_ele);
@@ -474,7 +475,6 @@ function submit_order() {
 			  jQuery("#virtuemart_state_id").removeClass("opg-form-danger");
 	  	 }
 	}
-
     if(shipmentfileds > 0)
 	{
 		if(jQuery('#STsameAsBT').prop("checked") == true ) 
@@ -511,7 +511,7 @@ function submit_order() {
 				}
 			});
 		
-		 country_ele2 = jQuery('#shipto_virtuemart_country_id');
+		 country_ele2 =  document.getElementById('shipto_virtuemart_country_id');
 		 if(jQuery('#shipto_virtuemart_country_id').length > 0)
 		 {
 		     var validatefield =validator.validate(country_ele2);
@@ -525,7 +525,7 @@ function submit_order() {
 			  jQuery("#shipto_virtuemart_country_id").removeClass("opg-form-danger");
 		  	 }
 		 }
-		 state_ele2 = jQuery('#shipto_virtuemart_state_id');
+		 state_ele2 =  document.getElementById('shipto_virtuemart_state_id');
 		 if(jQuery('#shipto_virtuemart_state_id').length > 0)
 		 {
 	    	 var validatefield=validator.validate(state_ele2);
