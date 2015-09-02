@@ -159,7 +159,7 @@ $params=new JRegistry($plugin->params);
 							<?php } ?>
                     </div>
                 </div>
-				<div class="status opg-width-large-1-3 opg-width-small-1-2 opg-width-1-2">
+				<div class="status opg-width-large-1-3 opg-width-small-1-2 opg-width-1-2 opg-text-right">
                     <div class="spacer">
 					        <a id="removeproduct" class="removeproduct" title="<?php echo JText::_('COM_VIRTUEMART_CART_DELETE') ?>" align="middle" href="javascript:void(0)" data-itemid="<?php echo $cartitemid; ?>" ><?php echo JText::_('COM_VIRTUEMART_CART_DELETE') ?> </a></td> 
 
