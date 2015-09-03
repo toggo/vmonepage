@@ -298,7 +298,9 @@ function applycoupon() {
 				   jQuery("#customerror").html("");
 				   jQuery("#customerror").show();
 				   jQuery("#customerror").html(r);
-				   window.location.hash='customerror';
+				   jQuery('html,body').animate({
+	    			    scrollTop: jQuery("#customerror").offset().top},
+		    	   'slow');
 			   }
 			   else
 			   {
@@ -306,11 +308,11 @@ function applycoupon() {
 				   jQuery("#customerror").html("");
 				   jQuery("#customerror").show();
 				   jQuery("#customerror").html(r);
-				   window.location.hash='customerror';
-				   updatecart();
+				   jQuery('html,body').animate({
+	    			    scrollTop: jQuery("#customerror").offset().top},
+		    	   'slow');
+				   update_prices();
 			   }
-			   
-			    jQuery("#loadingbtnclose").click();
 	        });
 }
 

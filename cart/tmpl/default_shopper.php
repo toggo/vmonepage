@@ -186,7 +186,6 @@ defined('_JEXEC') or die('Restricted access');
             <input type="hidden" id="loginempty" value="<?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_LOGIN_EMPTY"); ?>" /> 
             <input type="hidden" id="loginerrors" value="<?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_LOGIN_ERROR"); ?>" />
             <input type="hidden" name="task" value="user.login" />
-            <input type="hidden" name="option" value="<?php echo $comUserOption ?>" />
             <input type="hidden" name="return" value="<?php echo base64_encode($url) ?>" id="returnurl" />
            
 
@@ -471,6 +470,7 @@ defined('_JEXEC') or die('Restricted access');
 	    else if($params->get('check_shipto_address') == 1)
 		{
 			$samebt = 'checked="checked"';
+			$shiptodisplay = "";
 		}
 		else
 		{
@@ -590,7 +590,7 @@ defined('_JEXEC') or die('Restricted access');
   {
      if($singlefield['name']=='customer_note') 
 	 {
-		if($this->cart->BT['customer_note'] != "")
+		if(!empty($this->cart->BT['customer_note']))
 	 	{
 		  $commenticon  = '';
 		  $commentactive = 'opg-button-primary';

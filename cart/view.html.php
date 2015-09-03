@@ -152,10 +152,8 @@ class VirtueMartViewCart extends VmView {
 				JPluginHelper::importPlugin('vmshipment');
 				JPluginHelper::importPlugin('vmpayment');
 				vmdebug('cart view oncheckout_opc ');
-				if(!$this->lSelectShipment() or !$this->lSelectPayment()){
-					vmInfo('COM_VIRTUEMART_CART_ENTER_ADDRESS_FIRST');
-					$this->pointAddress = true;
-				}
+				$this->lSelectShipment();
+				$this->lSelectPayment();
 
          
 
@@ -207,7 +205,14 @@ class VirtueMartViewCart extends VmView {
 			$this->addTemplatePath($cart->layoutPath);
 		}
 		
-		$_POST["agreed"] = $_POST["tos"];
+		if(isset($_POST["tos"]))
+		{
+			$_POST["agreed"] = $_POST["tos"];
+		}
+		else
+		{
+		   $_POST["agreed"] = 0;
+		}
 
 		$current = JFactory::getUser();
 		$this->allowChangeShopper = false;

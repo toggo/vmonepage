@@ -52,6 +52,8 @@ defined('_JEXEC') or die('Restricted access');
 		if(!empty($cart->pricesUnformatted[$price_name])) $price_values[$price_name] = $currency->priceDisplay($cart->pricesUnformatted[$price_name]);
 		else $price_values[$price_name] = "";
 	}
+	$price_values["couponDescr"] = ""; 	   
+	$price_values["couponCode"] = ""; 	  
 	
 	if(!empty($cart->cartData["couponCode"]))
 		   $price_values["couponCode"] = $cart->cartData["couponCode"];
