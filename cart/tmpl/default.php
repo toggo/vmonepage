@@ -201,7 +201,9 @@ else
 		 <div id="right_div" class="tm-sidebar-a opg-width-1-1 <?php echo $rightdiv_width; ?> opg-width-small-1-1 opg-float-right" >
 		    <?php echo $this->loadTemplate('right'); ?>
 		 </div>
+		 
      </div><!-- CART CONTENT DIV END -->
+	 <p style="text-align: center;"><small style="text-size:8px; color:#b4b4b4;"><a style="text-size:8px; color:#b4b4b4;" title="one page checkout virtuemart" target="_blank" href="http://vmonepage.com">VMonepage</a>is built by<a style="text-size:8px; color:#b4b4b4;" title="joomlaproffs webshop ecommerce" target="_blank" href="http://www.joomlaproffs.se">joomlaproffs.se</a></small></p>
 </form>
 
 <?php
