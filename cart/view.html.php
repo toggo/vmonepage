@@ -312,14 +312,6 @@ class VirtueMartViewCart extends VmView {
 		
 		$shipmentModel = VmModel::getModel('Shipmentmethod');
 		$shipments = $shipmentModel->getShipments();
-
-		$shipments_shipment_rates=array();
-		if (!$this->checkShipmentMethodsConfigured()) {
-			$this->assignRef('shipments_shipment_rates',$shipments_shipment_rates);
-			return;
-		}
-
-		$selectedShipment = (empty($cart->virtuemart_shipmentmethod_id) ? 0 : $cart->virtuemart_shipmentmethod_id);
 		
 		if($cart->virtuemart_shipmentmethod_id == 0)
 		{
@@ -333,7 +325,16 @@ class VirtueMartViewCart extends VmView {
 		   }
 		   
 		}
+		$selectedShipment = (empty($cart->virtuemart_shipmentmethod_id) ? 0 : $cart->virtuemart_shipmentmethod_id);
 		
+		$this->assignRef('selectedShipment', $selectedShipment);
+		
+		
+		$shipments_shipment_rates=array();
+		if (!$this->checkShipmentMethodsConfigured()) {
+			$this->assignRef('shipments_shipment_rates',$shipments_shipment_rates);
+			return;
+		}
 
 		$shipments_shipment_rates = array();
 		if (!class_exists('vmPSPlugin')) require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
@@ -371,7 +372,7 @@ class VirtueMartViewCart extends VmView {
 		$this->assignRef('shipment_not_found_text', $shipment_not_found_text);
 		$this->assignRef('shipments_shipment_rates', $shipmentarray);
 		$this->assignRef('found_shipment_method', $found_shipment_method);
-		$this->assignRef('selectedShipment', $selectedShipment);
+		
 
 		return $ok;
 	}
@@ -442,6 +443,8 @@ class VirtueMartViewCart extends VmView {
 
 		
 		$selectedPayment = empty($cart->virtuemart_paymentmethod_id) ? 0 : $cart->virtuemart_paymentmethod_id;
+		
+	    $this->assignRef('selectedPayment', $selectedPayment);
 
 		$this->paymentplugins_payments = array();
 		if (!$this->checkPaymentMethodsConfigured()) {

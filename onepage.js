@@ -676,6 +676,7 @@ function update_product()
 				data : jQuery("#allproducts :input").serialize()
 		 }).done(
 			 function (data, textStatus){
+				 
 				 if(data.error) 
 				 {
 				   qtytext = "#quantity_"+data.vmid;
@@ -687,6 +688,7 @@ function update_product()
 				   jQuery('html,body').animate({
 				    	    scrollTop: jQuery("#customerror").offset().top},
     	    	   'slow');
+				   
 				   jQuery("#loadingbtnclose").click();
 				 }
 				 else
@@ -853,7 +855,10 @@ function update_prices()
 				    	 }
 						  if(document.getElementById("klarna-checkout-iframe") == null)
 						 {
-							  document.location.reload(); 
+						    if(jQuery("#payments .error_div").length == 0)
+						    {
+						  	  document.location.reload(); 
+						    }
 						 }
 					     $("#klarna-checkout-container").slideDown();
 					     $('#otherpay_buttons').slideUp();
