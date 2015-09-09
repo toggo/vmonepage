@@ -208,7 +208,7 @@ $params=new JRegistry($plugin->params);
 	   <h3 class="opg-panel-title"><?php echo JText::_('COM_VIRTUEMART_COMMENT_CART'); ?></h3>
 		   <div class="opg-text-center">
 		   <?php
-			   echo str_replace("<textarea", '<textarea onblur="javascript:updatecart();" ', $singlefield['formcode']);
+			   echo str_replace("<textarea", '<textarea onblur="javascript:updatecustomernote(this);" ', $singlefield['formcode']);
 		   ?>
 		   </div>
 	   </div>

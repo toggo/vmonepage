@@ -319,9 +319,16 @@ class VirtueMartViewCart extends VmView {
 		   {
 			  $cart->virtuemart_shipmentmethod_id = vmconfig::get("set_automatic_shipment");
 		   }
-		   else if(!empty($shipments[0]->virtuemart_shipmentmethod_id))
+		   else if(count($shipments) > 0)
 		   {
-		      $cart->virtuemart_shipmentmethod_id = $shipments[0]->virtuemart_shipmentmethod_id;
+		     foreach($shipments as $shipment)
+			 {
+			   if($shipment->published == 1)
+			   {
+			  	$cart->virtuemart_shipmentmethod_id = $shipment->virtuemart_shipmentmethod_id;
+				break;
+			   }
+			 }
 		   }
 		   
 		}
@@ -430,9 +437,16 @@ class VirtueMartViewCart extends VmView {
 		   {
 		       $cart->virtuemart_paymentmethod_id = $pmid;
 		   }
-		   else if(!empty($payments[0]->virtuemart_paymentmethod_id))
+		   else if(count($payments) > 0)
 		   {
-			  $cart->virtuemart_paymentmethod_id = $payments[0]->virtuemart_paymentmethod_id;
+			 foreach($payments as $payment)
+			 {
+			   if($payment->published == 1)
+			   {
+			  	$cart->virtuemart_paymentmethod_id = $payment->virtuemart_paymentmethod_id;
+				break;
+			   }
+			 }
 		   }
 		}
 	

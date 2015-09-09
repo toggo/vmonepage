@@ -615,7 +615,7 @@ defined('_JEXEC') or die('Restricted access');
 			   if($singlefield['required'])
 			   {
 			     $tmptext = "";
-				 $tmptext = str_replace("<textarea", '<textarea onblur="javascript:updatecart();" ', $singlefield['formcode']);
+				$tmptext = str_replace("<textarea", '<textarea onblur="javascript:updatecustomernote(this);" ', $singlefield['formcode']);
 				 $tmptext = str_replace("<textarea", '<textarea class="required"', $tmptext);
 				 echo $tmptext;
 

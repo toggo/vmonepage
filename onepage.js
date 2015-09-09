@@ -1372,6 +1372,12 @@ function setpayment()
 				updatepayment();
 		 });
 }
+function updatecustomernote(element)
+{
+	jQuery("#extracommentss #customer_note_field").val(jQuery(element).val());
+	jQuery("#commentpopup #customer_note_field").val(jQuery(element).val());
+	updatecart();
+}
 function updatecart()
 {
 	 jQuery("#loadingbutton").click();
