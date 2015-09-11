@@ -705,7 +705,7 @@ function update_product()
 				   jQuery('html,body').animate({
 				    	    scrollTop: jQuery("#customerror").offset().top},
     	    	   'slow')
-				   update_prices();
+				   update_shipment();
 				 }
 	 	 });
 }

@@ -152,7 +152,7 @@ jQuery(document).ready(function(){
 					     if(strpos($rates, "checked") !== false)
 					  	 {
 						
-						    $tmpdis = strip_tags($rates , '<span>');
+						    $tmpdis = strip_tags($rates , '<span><img>');
 						    echo '<table class="opg-table opg-table-striped" id="shipmenttable"><tr id="shipmentrow"><td id="shipmentdetails">';
 							$tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
 							$tmpdis =  str_replace("vmshipment_description" , "vmshipment_description opg-text-small", $tmpdis);
@@ -175,7 +175,7 @@ jQuery(document).ready(function(){
 					 {
 					    if(count($this->shipments_shipment_rates) > 0)
 						{
-				            $tmpdis = strip_tags($this->shipments_shipment_rates[0] , '<span>');
+				            $tmpdis = strip_tags($this->shipments_shipment_rates[0] , '<span><img>');
 						    echo '<table class="opg-table opg-table-striped" id="shipmenttable"><tr id="shipmentrow"><td id="shipmentdetails">';
 						    $tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
 							$tmpdis =  str_replace("vmshipment_description" , "vmshipment_description opg-text-small", $tmpdis);
@@ -269,7 +269,7 @@ jQuery(document).ready(function(){
 			 	    if(strpos($tmppay , "checked") !== false)
 				    {
 					
-						    $tmpdis = strip_tags($tmppay , '<span>');
+						    $tmpdis = strip_tags($tmppay , '<span><img>');
 						    echo '<table class="opg-table opg-table-striped" id="paymentable"><tr id="paymentrow"><td id="paymentdetails">';
 						    $tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_description" , "vmpaymentt_description opg-text-small", $tmpdis);
@@ -295,7 +295,7 @@ jQuery(document).ready(function(){
 					  {
 					        $paym_arr = array();
 					        $paym_arr = $this->paymentplugins_paymentsnew;
-				            $tmpdis = strip_tags($paym_arr[0] , '<span>');
+				            $tmpdis = strip_tags($paym_arr[0] , '<span><img>');
 						    echo '<table class="opg-table opg-table-striped" id="paymentable"><tr id="paymentrow"><td id="paymentdetails">';
 						    $tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_description" , "vmpayment_description opg-text-small", $tmpdis);
