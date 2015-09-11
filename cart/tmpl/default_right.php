@@ -21,7 +21,7 @@
 defined('_JEXEC') or die('Restricted access');
  
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
-$params=new JRegistry($plugin->params);
+$params=new JRegistry($plugin->params); 
 ?>
 <script type="text/javascript">
 var selected_payment  = <?php echo $this->selectedPayment; ?>;
