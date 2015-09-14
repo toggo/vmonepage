@@ -45,6 +45,10 @@ class VirtueMartViewCart extends VmView {
 		$document->setMetaData('robots','NOINDEX, NOFOLLOW, NOARCHIVE, NOSNIPPET');
 		
 		$this->addTemplatePath(dirname(__FILE__).DS. 'tmpl'.DS);
+		
+		$path   = JPATH_BASE.'/templates/'.$app->getTemplate().'/html/plg_content_vmuikit_onepage/';
+		$this->addTemplatePath($path);
+
 
 		$layoutName = $this->getLayout();
 
