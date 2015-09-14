@@ -46,7 +46,7 @@ class VirtueMartViewCart extends VmView {
 		
 		$this->addTemplatePath(dirname(__FILE__).DS. 'tmpl'.DS);
 		
-		$path   = JPATH_BASE.'/templates/'.$app->getTemplate().'/html/plg_content_vmuikit_onepage/';
+		$path   = JPATH_BASE.'/templates/'.$app->getTemplate().'/html/plg_content_onepage_generic/';
 		$this->addTemplatePath($path);
 
 
