@@ -69,6 +69,7 @@ class VirtueMartViewCart extends VmView {
 			$this->setLayout('mini_cart');
 			$this->prepareContinueLink();
 		}
+		
 
 		if ($layoutName == 'select_shipment') {
 
@@ -351,6 +352,8 @@ class VirtueMartViewCart extends VmView {
 		if (!class_exists('vmPSPlugin')) require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
 		JPluginHelper::importPlugin('vmshipment');
 		$dispatcher = JDispatcher::getInstance();
+		
+		assignship:
 
 		$returnValues = $dispatcher->trigger('plgVmDisplayListFEShipment', array( $cart, $selectedShipment, &$shipments_shipment_rates));
 		// if no shipment rate defined
@@ -378,6 +381,37 @@ class VirtueMartViewCart extends VmView {
 				$shipmentarray[]=$shipments;
 			}
 		}
+		
+		 $shipmentselected = false;
+		 $newshipid = array();
+		 foreach($shipmentarray as $rates) 
+		 {
+			$shiptext = explode('"', $rates);
+			foreach($shiptext as $key => $shiptxt)
+			{
+			   if(strpos($shiptxt , "value") !== false)
+			   {
+			     $newkey = $key+1;
+			     $newshipid[] = $shiptext[$newkey];
+			   }
+			 }
+		     if(strpos($rates, "checked") !== false)
+		  	 {
+			   $shipmentselected = true;
+			 }
+	     }
+		
+		 if(!$shipmentselected)
+		 {
+		   if(count($newshipid) > 0)
+		   {
+			  $cart->virtuemart_shipmentmethod_id = $newshipid[0];
+			  $selectedShipment = $newshipid[0];
+			  $this->assignRef('selectedShipment', $selectedShipment);
+			  unset($shipments_shipment_rates);
+			  goto assignship; 
+			}
+		 }
 
 		$shipment_not_found_text = vmText::_('COM_VIRTUEMART_CART_NO_SHIPPING_METHOD_PUBLIC');
 		$this->assignRef('shipment_not_found_text', $shipment_not_found_text);
@@ -458,7 +492,7 @@ class VirtueMartViewCart extends VmView {
 		$this->payments_payment_rates=array();
 		$this->found_payment_method = 0;
 		
-
+        assignpay:
 		
 		$selectedPayment = empty($cart->virtuemart_paymentmethod_id) ? 0 : $cart->virtuemart_paymentmethod_id;
 		
@@ -526,6 +560,38 @@ class VirtueMartViewCart extends VmView {
 			}
 			
 		}
+		 $newpayid = array();
+		 foreach($paymentsnew as $rates) 
+		 {
+			$shiptext = explode('"', $rates);
+			foreach($shiptext as $key => $shiptxt)
+			{
+			   if(strpos($shiptxt , "value") !== false)
+			   {
+			     $newkey = $key+1;
+			     $newpayid[] = $shiptext[$newkey];
+			   }
+			 }
+
+		     if(strpos($rates, "checked") !== false)
+		  	 {
+			   $paymentselected = true;
+			 }
+	     }
+		
+		
+		 if(!$paymentselected)
+		 {
+		   if(count($newpayid) > 0)
+		   {
+			  $cart->virtuemart_paymentmethod_id = $newpayid[0];
+			  $selectedPayment = $newpayid[0];
+			  $this->assignRef('selectedPayment', $selectedPayment);
+              unset($this->paymentplugins_payments);
+			  goto assignpay; 
+			}
+		 }
+		 
 		/* this code modified for one page generic to list payment in one page */
         $this->assignRef('paymentplugins_paymentsnew', $paymentsnew);
         $this->assignRef('paymentplugins_payments', $paymentsarray);

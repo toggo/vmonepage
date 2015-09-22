@@ -634,8 +634,23 @@ function submit_order() {
 												 }).done(
 													 function (data, textStatus) 
 													 {
-														jQuery("#loadingbtnclose").click();
-														jQuery("#checkoutForm").submit();
+														 if(data == "error")
+														 {
+														   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + invaliddata + "</p></div>";
+														   jQuery("#customerror").html("");
+														   jQuery("#customerror").show();
+														   jQuery("#customerror").html(r);
+														   jQuery("#loadingbtnclose").click();
+														   jQuery('html,body').animate({
+													    	    scrollTop: jQuery("#customerror").offset().top},
+												    	    'slow');
+															return;
+														 }
+														 else
+														 {
+															jQuery("#loadingbtnclose").click();
+															jQuery("#checkoutForm").submit();
+														 }
 												     });
 										  }
 									});
@@ -659,8 +674,24 @@ function submit_order() {
 		 }).done(
 			 function (data, textStatus) 
 				 {
-					jQuery("#loadingbtnclose").click();
-					jQuery("#checkoutForm").submit();
+					 if(data == "error")
+					 {
+						   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + invaliddata + "</p></div>";
+						   jQuery("#customerror").html("");
+						   jQuery("#customerror").show();
+						   jQuery("#customerror").html(r);
+						   jQuery("#loadingbtnclose").click();
+						   jQuery('html,body').animate({
+					    	    scrollTop: jQuery("#customerror").offset().top},
+				    	    'slow');
+						  return;
+						 
+					 }
+					 else
+					 {
+						jQuery("#loadingbtnclose").click();
+						jQuery("#checkoutForm").submit();
+					 }
 		 });
    }
 
@@ -796,7 +827,7 @@ function update_prices()
 					jQuery("#bottom_total").show();
 					jQuery('#bill_total').html(data.billTotal);
 					jQuery('#carttotal').html(data.billTotal);
-					jQuery('#carttotalunformat').value = data.billTotalunformat;
+					jQuery('#carttotalunformat').val(data.billTotalunformat);
 				}
 				else
 				{

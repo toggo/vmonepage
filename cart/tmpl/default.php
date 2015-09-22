@@ -82,24 +82,38 @@ $customernote = 0;
 	   $customernote = true;
 	 }
  } 
+ 
+$acceptmessage =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_PLEASE_ACCEPT_TOS'), ENT_QUOTES);
+$privacymeessage =  htmlspecialchars(JText::_('PLG_VMUIKITONEPAGE_PRIVACY_POLICY_ERROR'), ENT_QUOTES);
+$selectshipment  =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_SELECT_SHIPMENT'), ENT_QUOTES);
+$selectpayment =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_SELECT_PAYMENT'), ENT_QUOTES);
+$invaliddata   =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_CHECKOUT_DATA_NOT_VALID'), ENT_QUOTES);
+$productupdate =  htmlspecialchars(JText::_('COM_VIRTUEMART_PRODUCT_UPDATED_SUCCESSFULLY'), ENT_QUOTES);
+$chosecountry =  htmlspecialchars(JText::_('PLG_SYSTEM_VMUIKIT_CHOOSE_COUNTRY'), ENT_QUOTES);
+$removeprouct =  htmlspecialchars(JText::_('COM_VIRTUEMART_PRODUCT_REMOVED_SUCCESSFULLY'), ENT_QUOTES);
+$changetext   =  htmlspecialchars(JText::_('PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE'), ENT_QUOTES);
+$noshipmethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', ''), ENT_QUOTES);
+$nopaymethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', ''), ENT_QUOTES);
+$minpurchaseerror   =  htmlspecialchars(vmText::sprintf('COM_VIRTUEMART_CART_MIN_PURCHASE', $vendordata->vendor_min_pov), ENT_QUOTES);
+
 
 $document->addScriptDeclaration("
       //<![CDATA[ 
       window.CARTPAGE = 'yes';
 	  window.shipmentfileds = ".count($this->cart->STaddress['fields']).";
       window.agree_to_tos_onorder = ".VmConfig::get('agree_to_tos_onorder').";
-	  window.acceptmeessage = '".JText::_('COM_VIRTUEMART_CART_PLEASE_ACCEPT_TOS')."';
-	  window.privacymeessage = '".JText::_('PLG_VMUIKITONEPAGE_PRIVACY_POLICY_ERROR')."';
-      window.minpurchaseerror = '".vmText::sprintf('COM_VIRTUEMART_CART_MIN_PURCHASE', $vendordata->vendor_min_pov)."';
-	  window.selectshipment = '".JText::_('COM_VIRTUEMART_CART_SELECT_SHIPMENT')."';
-	  window.selectpayment = '".JText::_('COM_VIRTUEMART_CART_SELECT_PAYMENT')."';	  
-	  window.invaliddata = '".JText::_('COM_VIRTUEMART_CART_CHECKOUT_DATA_NOT_VALID')."';	  
-	  window.productupdate = '".JText::_('COM_VIRTUEMART_PRODUCT_UPDATED_SUCCESSFULLY')."';	  
-	  window.chosecountry = '".JText::_('PLG_SYSTEM_VMUIKIT_CHOOSE_COUNTRY')."';	  
-	  window.removeprouct = '".JText::_('COM_VIRTUEMART_PRODUCT_REMOVED_SUCCESSFULLY')."';	  
-	  window.changetext = '".JText::_('PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE')."';	  
-	  window.noshipmethod = '".vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', '')."';	  
-	  window.nopaymethod = '".vmInfo('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', '')."';	  
+	  window.acceptmeessage = '".$acceptmessage."';
+	  window.privacymeessage = '".$privacymeessage."';
+      window.minpurchaseerror = '".$minpurchaseerror."';
+	  window.selectshipment = '".$selectshipment."';
+	  window.selectpayment = '".$selectpayment."';	  
+	  window.invaliddata = '".$invaliddata."';	  
+	  window.productupdate = '".$productupdate."';	  
+	  window.chosecountry = '".$chosecountry."';	  
+	  window.removeprouct = '".$removeprouct."';	  
+	  window.changetext = '".$changetext."';	  
+	  window.noshipmethod = '".$noshipmethod."';	  
+	  window.nopaymethod = '".$nopaymethod."';	  
 	  window.onlyregistered = ".VmConfig::get('oncheckout_only_registered').";	  
 	  window.couponenable = ".VmConfig::get('coupons_enable').";	  
 	  window.showextraterms = ".$showextraterms.";
