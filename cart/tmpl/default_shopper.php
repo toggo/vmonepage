@@ -26,7 +26,7 @@ defined('_JEXEC') or die('Restricted access');
 
    echo "<fieldset id='payments'>"; 
    foreach($this->paymentplugins_payments as $payments) {
-				$display = str_replace('type="radio"','type="radio" class="opg-hidden" onclick="javascript:updateaddress();"',$payments);
+				$display = str_replace('type="radio"','type="radio" class="opg-hidden" onclick="javascript:updateaddress(5);"',$payments);
 				$display = str_replace('<label','<label class="opg-hidden"',$display);
 				echo $display;
     }
@@ -430,7 +430,7 @@ defined('_JEXEC') or die('Restricted access');
 			  $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
 			}
 		    if($singlefield['name']=='zip') {
-				$replacetext = 'input onchange="javascript:updateaddress();"';
+				$replacetext = 'input onchange="javascript:updateaddress(3);"';
 		    	$singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
 		    } 
 			else if($singlefield['name']=='title') {
@@ -506,13 +506,13 @@ defined('_JEXEC') or die('Restricted access');
 		    $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
 		  }
 	    if($singlefield['name']=='shipto_zip') {
-			  $replacetext = 'input onchange="javascript:updateaddress();"';
+			  $replacetext = 'input onchange="javascript:updateaddress(3);"';
 			  $singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
 	    } 
 		else if($singlefield['name']=='customer_note') {
 		}
 		else if($singlefield['name']=='shipto_virtuemart_country_id') {
-		    	$singlefield['formcode']=str_replace('<select','<select onchange="javascript:updateaddress();"',$singlefield['formcode']);
+		    	$singlefield['formcode']=str_replace('<select','<select onchange="javascript:updateaddress(1);"',$singlefield['formcode']);
 		    	$singlefield['formcode']=str_replace('class="virtuemart_country_id','class="shipto_virtuemart_country_id',$singlefield['formcode']);
 				$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
 
@@ -520,7 +520,7 @@ defined('_JEXEC') or die('Restricted access');
 	   else if($singlefield['name']=='shipto_virtuemart_state_id') 
 	   {
 		    	$singlefield['formcode']=str_replace('id="virtuemart_state_id"','id="shipto_virtuemart_state_id"',$singlefield['formcode']);
-		        $replacetext = '<select onchange="javascript:updateaddress();"';
+		        $replacetext = '<select onchange="javascript:updateaddress(2);"';
 		    	$singlefield['formcode']=str_replace('<select',$replacetext,$singlefield['formcode']);
 				if($singlefield['required'])
 				{

@@ -1133,8 +1133,19 @@ function update_shipment()
 							  updatecart();
 						  }
 					}
-				
-					update_prices();
+					
+					if (action != "updateaddress")
+					{
+						update_prices();
+					}
+					else if(countrychange == "yes" && window.countryreload == 1)
+					{
+					 	  document.location.reload(); 
+					}
+					else
+					{
+					  update_prices();	
+					}
 			   }
 		});
 }
@@ -1428,9 +1439,14 @@ function updatecart()
 				update_prices();
 		 });
 }
-function updateaddress()
+function updateaddress(fieldtype)
 {
 	 action = "updateaddress";
+	 countrychange = "no";
+	 if(fieldtype == 1)
+	 {
+		 countrychange = "yes";
+	 }
 	 jQuery("#loadingbutton").click();
 	
 	 datas = jQuery("#checkoutForm").serialize();

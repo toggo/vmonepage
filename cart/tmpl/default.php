@@ -44,6 +44,7 @@ JHTML::script('plugins/system/onepage_generic/vmprices.js');
 
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
+$countryreload = $params->get("country_reload", 0);
 
 if($params->get("buttoncolour") != "")
 {
@@ -120,6 +121,7 @@ $document->addScriptDeclaration("
 	  window.token = '".JSession::getFormToken()."';
 	  window.show_tax = ".VmConfig::get('show_tax').";
 	  window.customernote = ".$customernote.";
+	  window.countryreload = ".$countryreload.";
       //]]>
       ");
 ?>

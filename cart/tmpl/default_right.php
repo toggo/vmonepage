@@ -82,7 +82,7 @@ jQuery(document).ready(function(){
 	     echo '				<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">' . "\n";
 	     echo '					' . $singlefield['title'] . ($singlefield['required'] ? ' *' : '') . "\n";
  	     echo '				</label>' . "<br />";
-		 $replacetext = '<select onchange="javascript:updateaddress();"';
+		 $replacetext = '<select onchange="javascript:updateaddress(1);"';
 	  	 $singlefield['formcode']=str_replace('<select',$replacetext,$singlefield['formcode']);
 		 $singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
 		 echo $singlefield['formcode'];
@@ -100,7 +100,7 @@ jQuery(document).ready(function(){
 	     echo '					' . $singlefield['title'] . ($singlefield['required'] ? ' *' : '') . "\n";
  	     echo '				</label>' . "<br />";
 
-		 $replacetext = '<select onchange="javascript:updateaddress();"';
+		 $replacetext = '<select onchange="javascript:updateaddress(2);"';
 	  	 $singlefield['formcode']=str_replace('<select',$replacetext,$singlefield['formcode']);
 		 if($singlefield['required'])
 		 {

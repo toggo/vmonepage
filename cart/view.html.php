@@ -315,8 +315,10 @@ class VirtueMartViewCart extends VmView {
 		$this->assignRef('shipment_not_found_text', $shipment_not_found_text);
 		$this->assignRef('found_shipment_method', $found_shipment_method);
 		
-		$shipmentModel = VmModel::getModel('Shipmentmethod');
-		$shipments = $shipmentModel->getShipments();
+		$db = JFactory::getDBO();
+		$query = 'SELECT * FROM `#__virtuemart_shipmentmethods_'.VmConfig::$vmlang.'` as l LEFT OUTER JOIN `#__virtuemart_shipmentmethods` AS b ON l.virtuemart_shipmentmethod_id = b.virtuemart_shipmentmethod_id WHERE published = 1 ORDER BY ordering ASC';
+		$db->setQuery($query);
+		$shipments = $db->LoadObjectList();
 		
 		if($cart->virtuemart_shipmentmethod_id == 0)
 		{
@@ -324,16 +326,9 @@ class VirtueMartViewCart extends VmView {
 		   {
 			  $cart->virtuemart_shipmentmethod_id = vmconfig::get("set_automatic_shipment");
 		   }
-		   else if(count($shipments) > 0)
+		    else if(count($shipments) > 0)
 		   {
-		     foreach($shipments as $shipment)
-			 {
-			   if($shipment->published == 1)
-			   {
-			  	$cart->virtuemart_shipmentmethod_id = $shipment->virtuemart_shipmentmethod_id;
-				break;
-			   }
-			 }
+			  $cart->virtuemart_shipmentmethod_id = $shipments[0]->virtuemart_shipmentmethod_id;
 		   }
 		   
 		}
