@@ -51,6 +51,8 @@ if($user->id > 0)
   $userModel->storeAddress($postData);
 }
 
+$cart->saveCartFieldsInCart();
+
 $dataarray  = array();
 $dataarray['success'] = 1;
 if($task != "completecheckout")
