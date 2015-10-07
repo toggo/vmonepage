@@ -19,7 +19,7 @@
 ** <date>2015</date>
 */
 defined('_JEXEC') or die('Restricted access');
-
+$cart->prepareCartData();
 	$i = 0;	
 	foreach($cart->pricesUnformatted as $id=>$value) 
 	{

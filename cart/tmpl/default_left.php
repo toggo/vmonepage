@@ -200,31 +200,33 @@ $params=new JRegistry($plugin->params);
   </div>
   <?php
    $customernote = 0;
-   foreach($this->cart->BTaddress["fields"] as $singlefield) 
-   {
-      if($singlefield['name']=='customer_note') 
- 	  {
-	    $customernote = true;
- 	    break;
-  	 }
-   } 
-   foreach($this->cart->STaddress["fields"] as $singlefield) 
-   {
-      if($singlefield['name']=='customer_note') 
- 	  {
-	    $customernote = true;
-	    break;
- 	  }
-   } 
-   foreach($this->userFieldsCart["fields"] as $singlefield) 
-   {
-      if($singlefield['name']=='customer_note') 
- 	  {
-	    $customernote = true;
-	    break;
- 	  }
-   } 
- 
+  foreach($this->cart->BTaddress["fields"] as $field) 
+  {
+     if($field['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	   $singlefield = $field;
+	   break;
+	 }
+  } 
+  foreach($this->cart->STaddress["fields"] as $field) 
+  {
+     if($field['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	   $singlefield = $field;
+	   break;
+	 }
+  } 
+  foreach($this->userFieldsCart["fields"] as $field) 
+  {
+     if($field['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	   $singlefield = $field;
+	   break;
+	 }
+  } 
      if($customernote) 
 	 {
 	 ?>

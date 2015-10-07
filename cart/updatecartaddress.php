@@ -67,8 +67,6 @@ foreach($this->userFieldsCart['fields'] as $name => $cartfield)
 $cart->setCartIntoSession(false,true);
 $cart->saveCartFieldsInCart();
 
-$cart->saveCartFieldsInCart();
-
 $dataarray  = array();
 $dataarray['success'] = 1;
 if($task != "completecheckout")
