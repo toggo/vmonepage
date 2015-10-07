@@ -276,9 +276,63 @@ class VirtueMartViewCart extends VmView {
 			echo json_encode($this->paymentplugins_payments);
 			exit;
 		  }
-		   $cart->setCartIntoSession();
-	
-	  parent::display($tpl);
+		  if($task == "klarnaupdate")
+		  {
+		    $post = JRequest::get("post");
+			$address = array();
+			$address['shipto_address_type_name'] = 'ST';
+			if(!empty($post['given_name']))
+			{
+				$address['shipto_first_name'] = $post['given_name'];
+			}
+			if(!empty($post['family_name']))
+			{
+				$address['shipto_last_name'] = $post['family_name'];
+			}
+			if(!empty($post['street_address']))
+			{			
+				$address['shipto_address_1'] = $post['street_address'];
+			}
+			if(!empty($post['street_address2']))
+			{
+				$address['shipto_address_2'] = $post['street_address2'];
+			}
+			if(!empty($post['postal_code']))
+			{
+				$address['shipto_zip'] = $post['postal_code'];
+			}
+			if(!empty($post['city']))
+			{
+				$address['shipto_city'] = $post['city'];
+			}
+			if(!empty($post['country']))
+			{
+				$address['shipto_virtuemart_country_id'] = ShopFunctions::getCountryIDByName($post['country']);
+			}
+			else if(!empty($cart->BT['virtuemart_country_id']))
+			{
+			   $address['shipto_virtuemart_country_id'] = $cart->BT['virtuemart_country_id']; 
+			}
+			
+			if(!empty($post['region']))
+			{
+				$address['shipto_virtuemart_state_id'] = ShopFunctions::getStateIDByName($post['region']);
+			}
+			if(!empty($post['phone']))
+			{
+				$address['shipto_phone_1'] = $post['phone'];
+			}
+			$address['tos'] = 1;
+			$cart->saveAddressInCart($address,'ST', true, 'shipto_');
+			$cart->setCartIntoSession(false,true);
+			$return = array();
+			$return['response'] = "success";
+			echo json_encode($return);
+			exit;
+		  }
+		  
+		  $cart->setCartIntoSession();
+		  parent::display($tpl);
 	}
 
 	private function lSelectCoupon() {

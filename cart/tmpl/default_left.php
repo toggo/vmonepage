@@ -186,7 +186,7 @@ $params=new JRegistry($plugin->params);
    <div class="opg-clear"></div>
    <div class="opg-width-1-1 opg-margin-small-top <?php echo $hidecoupondiv; ?>">
 	   <div class="opg-width-1-1 opg-text-center opg-panel-box">
-	   		<input type="text" name="coupon_code opg-form" id="coupon_code" size="30" maxlength="50" class="" alt="<?php echo $this->coupon_text ?>" value="<?php echo $this->coupon_text; ?>" onblur="if(this.value=='') this.value='<?php echo $this->coupon_text; ?>';" onfocus="if(this.value=='<?php echo $this->coupon_text; ?>') this.value='';" />
+	   			<input type="text" name="coupon_code" id="coupon_code" size="30" maxlength="50" class="" alt="<?php echo $this->coupon_text ?>" placeholder="<?php echo $this->coupon_text; ?>" value=""/>
 			<span class="details-button">
 				<input class="opg-button" type="button" title="<?php echo JText::_('COM_VIRTUEMART_SAVE'); ?>" value="<?php echo JText::_('COM_VIRTUEMART_SAVE'); ?>" onclick="applycoupon();"/>
 		</span>
@@ -199,12 +199,36 @@ $params=new JRegistry($plugin->params);
 	  </div>
   </div>
   <?php
-  foreach($this->cart->BTaddress["fields"] as $singlefield) 
-  {
-     if($singlefield['name']=='customer_note') 
+   $customernote = 0;
+   foreach($this->cart->BTaddress["fields"] as $singlefield) 
+   {
+      if($singlefield['name']=='customer_note') 
+ 	  {
+	    $customernote = true;
+ 	    break;
+  	 }
+   } 
+   foreach($this->cart->STaddress["fields"] as $singlefield) 
+   {
+      if($singlefield['name']=='customer_note') 
+ 	  {
+	    $customernote = true;
+	    break;
+ 	  }
+   } 
+   foreach($this->userFieldsCart["fields"] as $singlefield) 
+   {
+      if($singlefield['name']=='customer_note') 
+ 	  {
+	    $customernote = true;
+	    break;
+ 	  }
+   } 
+ 
+     if($customernote) 
 	 {
 	 ?>
-	   <div id="extracommentss" class="opg-panel opg-panel-box opg-margin-small-top">
+	   <div id="extracommentss" class="opg-panel opg-panel-box opg-margin-small-top" style="display:none;">
 	   <h3 class="opg-panel-title"><?php echo JText::_('COM_VIRTUEMART_COMMENT_CART'); ?></h3>
 		   <div class="opg-text-center">
 		   <?php
@@ -214,7 +238,7 @@ $params=new JRegistry($plugin->params);
 	   </div>
 	 <?php
 	 }
-  }
+
     echo $this->loadTemplate('prices');
 	
     $modules = JModuleHelper::getModules("onepage_promo");

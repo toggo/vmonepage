@@ -50,11 +50,27 @@ if($user->id > 0)
   
   $userModel->storeAddress($postData);
 }
+foreach($this->userFieldsCart['fields'] as $name => $cartfield)
+{
+ if($cartfield['required'] == 1)
+ {
+	 if($cartfield['name'] == "tos")
+	 {
+	   $cart->cartfields['tos'] = 1;
+	 }
+	 else
+	 {
+	   $cart->cartfields[$name] = $cartfield['title'];
+	 }
+ }
+}
+$cart->setCartIntoSession(false,true);
+$cart->saveCartFieldsInCart();
 
 $dataarray  = array();
 $dataarray['success'] = 1;
 if($task != "completecheckout")
-		{
+{
 echo json_encode($dataarray);
 exit;
 }

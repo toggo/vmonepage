@@ -75,15 +75,65 @@ JHtml::_('behavior.formvalidation');
 
 $document = JFactory::getDocument();
 $document->addStyleDeclaration('#facebox .content {display: block !important; height: 480px !important; overflow: auto; width: 560px !important; }');
-$customernote = 0;
+ $customernote = 0;
  foreach($this->cart->BTaddress["fields"] as $singlefield) 
  {
      if($singlefield['name']=='customer_note') 
  	 {
 	   $customernote = true;
 	 }
+	 
+ } 
+ foreach($this->cart->STaddress["fields"] as $singlefield) 
+ {
+     if($singlefield['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	 }
+	 
+ } 
+ foreach($this->userFieldsCart["fields"] as $singlefield) 
+ {
+     if($singlefield['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	 }
+	 
+ } 
+$agreetotos = VmConfig::get('agree_to_tos_onorder');
+foreach($this->BTaddress['fields'] as $name => $cartfield)
+{
+ if($cartfield['required'] == 1)
+ {
+	 if($cartfield['name'] == "tos")
+	 {
+	   $agreetotos = 1;
+	 }
+  }
+ } 
+
+foreach($this->STaddress['fields'] as $name => $cartfield)
+{
+ if($cartfield['required'] == 1)
+ {
+	 if($cartfield['name'] == "tos")
+	 {
+	   $agreetotos = 1;
+	 }
+  }
  } 
  
+foreach($this->userFieldsCart['fields'] as $name => $cartfield)
+{
+ if($cartfield['required'] == 1)
+ {
+	 if($cartfield['name'] == "tos")
+	 {
+	   $agreetotos = 1;
+	 }
+  }
+ } 
+
 $acceptmessage =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_PLEASE_ACCEPT_TOS'), ENT_QUOTES);
 $privacymeessage =  htmlspecialchars(JText::_('PLG_VMUIKITONEPAGE_PRIVACY_POLICY_ERROR'), ENT_QUOTES);
 $selectshipment  =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_SELECT_SHIPMENT'), ENT_QUOTES);
@@ -102,7 +152,7 @@ $document->addScriptDeclaration("
       //<![CDATA[ 
       window.CARTPAGE = 'yes';
 	  window.shipmentfileds = ".count($this->cart->STaddress['fields']).";
-      window.agree_to_tos_onorder = ".VmConfig::get('agree_to_tos_onorder').";
+      window.agree_to_tos_onorder = ".$agreetotos.";
 	  window.acceptmeessage = '".$acceptmessage."';
 	  window.privacymeessage = '".$privacymeessage."';
       window.minpurchaseerror = '".$minpurchaseerror."';
@@ -219,6 +269,9 @@ else
 		 </div>
 		 
      </div><!-- CART CONTENT DIV END -->
+	  <?php
+	  	echo $this->loadTemplate('modalpage');
+	  ?>
 	 <p style="text-align: center;"><small style="text-size:8px; color:#b4b4b4;"><a style="text-size:8px; color:#b4b4b4;" title="one page checkout virtuemart" target="_blank" href="http://vmonepage.com">VMonepage</a>is built by<a style="text-size:8px; color:#b4b4b4;" title="joomlaproffs webshop ecommerce" target="_blank" href="http://www.joomlaproffs.se">joomlaproffs.se</a></small></p>
 </form>
 

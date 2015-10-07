@@ -201,41 +201,6 @@ jQuery(document).ready(function(){
 				    }
 			?>
 			</div>
-			<?php
-				  echo '<div id="shipmentdiv" class="opg-modal">';
-				   echo '<div class="opg-modal-dialog">';
-				    echo '<a class="opg-modal-close opg-close"></a>';
-				     echo '<div class="opg-modal-header">Select Shipment Method</div>';
-				      echo "<fieldset id='shipment_selection'>";					
-					   echo '<ul class="opg-list" id="shipment_ul">';
-						foreach($this->shipments_shipment_rates as $rates) 
-						{
-						     if(strpos($rates, "checked") !== false)
-							 {
-							   $actclass = "liselcted";
-							 }
-							 else
-							 {
-							   $actclass = "";
-							 }
-						     echo '<li class="'.$actclass.'">';
-							 echo '<label class="opg-width-1-1">'.$rates.'</label>';
-							 echo '</li><hr class="opg-margin-small-bottom opg-margin-small-top" />';
-						}
-					echo "</ul>";
-					echo "</fieldset>";
-					
-			
-				?>
-				<div class="opg-modal-footer">
-				<a class="opg-button opg-button-primary" id="shipmentset"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
-				<a id="shipmentclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
-				</div>
-				<?php
-				echo '</div>';
-				echo '</div>';
-				?>
-		
    </div>
    <?php
    $paymenthideclass= "";
@@ -322,35 +287,6 @@ jQuery(document).ready(function(){
 				}
 			?>
 			</div>
-			<?php
-			 
-				 echo '<div id="paymentdiv" class="opg-modal">';
-				   echo '<div class="opg-modal-dialog">';
-				    echo '<a class="opg-modal-close opg-close"></a>';
-				      echo '<div class="opg-modal-header">Select Payment Method</div>';
-				  	  $paymentsarr = $this->paymentplugins_paymentsnew;
-					   echo '<div id="paymentsdiv">';
-						echo '<ul class="opg-list" id="payment_ul">';
-							foreach($paymentsarr as $pay)
-							{
-							  echo '<li>'.$pay.'<hr class="opg-margin-small-bottom opg-margin-small-top" /></li>';
-							}
-						echo '</ul>';
-					  echo '</div>';
-
-					
-				?>
-				
-				<div class="opg-modal-footer">
-				<a class="opg-button opg-button-primary" id="paymentset"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
-				<a id="paymentclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
-				</div>
-				<?php
-				echo '</div>';
-				echo '</div>';
-				
-				
-	  
-	   ?>
+			
    </div>
    <?php echo $this->loadTemplate('shopper'); ?>

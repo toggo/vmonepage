@@ -453,99 +453,6 @@ defined('_JEXEC') or die('Restricted access');
 		 <a id="shiptobutton" class="opg-button opg-width-1-1" href="#" data-opg-modal="<?php echo $target; ?>"><i id="shiptoicon" style="display:none;" class="opg-icon opg-icon-check opg-margin-right"></i><?php echo JText::_('PLG_SYSTEM_VMUIKIT_CHANGE_SHIP_ADDRESS'); ?></a>
 	 </div>
 	
-	
-	<div id="shiptopopup" class="opg-modal"><!-- Shipto Modal Started -->
-	 <div class="opg-modal-dialog"><!-- Shipto Modal Started -->
-		<a class="opg-modal-close opg-close"></a>
-    	   <div class="opg-modal-header"><strong><?php echo JText::_('PLG_SYSTEM_VMUIKIT_CHANGE_SHIP_ADDRESS_HEADING'); ?></strong></div>
-      <label class="opg-text-small opg-hidden">
-	  <?php 
-	    $samebt = "";
-		if($this->cart->STsameAsBT == 0)
-		{
-			$samebt = '';
-			$shiptodisplay = "";
-			
-		}
-	    else if($params->get('check_shipto_address') == 1)
-		{
-			$samebt = 'checked="checked"';
-			$shiptodisplay = "";
-		}
-		else
-		{
-		   $samebt = '';
-		   $shiptodisplay = "";
-		}
-	  ?> 
-      <input class="inputbox opg-hidden" type="checkbox" name="STsameAsBT" checked="checked" id="STsameAsBT" value="1"/>
-	  
-	  <?php
-		if(!empty($this->cart->STaddress['fields'])){
-			if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'html.php');
-				echo JText::_('COM_VIRTUEMART_USER_FORM_ST_SAME_AS_BT');
-		?>
-		</label>
-      <?php
-		}
- 		?>
-
-    <?php if(!isset($this->cart->lists['current_id'])) $this->cart->lists['current_id'] = 0; ?>
-    <?php
-		echo '<div class="adminform  " id="shipto_fields_div" style="'.$shiptodisplay.'">';
-		foreach($this->cart->STaddress["fields"] as $singlefield) {
-		 echo '<div class="opg-width-1-1">';
-	     if($singlefield['type'] == "select")
-	      {		
-		    echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
-		    echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
-		    echo '</label><br/>';
-		  }
-		  else
-		  {
-		    $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
-		  }
-	    if($singlefield['name']=='shipto_zip') {
-			  $replacetext = 'input onchange="javascript:updateaddress(3);"';
-			  $singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
-	    } 
-		else if($singlefield['name']=='customer_note') {
-		}
-		else if($singlefield['name']=='shipto_virtuemart_country_id') {
-		    	$singlefield['formcode']=str_replace('<select','<select onchange="javascript:updateaddress(1);"',$singlefield['formcode']);
-		    	$singlefield['formcode']=str_replace('class="virtuemart_country_id','class="shipto_virtuemart_country_id',$singlefield['formcode']);
-				$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
-
-	   } 
-	   else if($singlefield['name']=='shipto_virtuemart_state_id') 
-	   {
-		    	$singlefield['formcode']=str_replace('id="virtuemart_state_id"','id="shipto_virtuemart_state_id"',$singlefield['formcode']);
-		        $replacetext = '<select onchange="javascript:updateaddress(2);"';
-		    	$singlefield['formcode']=str_replace('<select',$replacetext,$singlefield['formcode']);
-				if($singlefield['required'])
-				{
-				  $singlefield['formcode']=str_replace('vm-chzn-select','required',$singlefield['formcode']);
-				}
-				else
-				{
-				   $singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
-				} 
-	    }
-	    echo $singlefield['formcode'];
-		echo '</div>';
-	}
-    echo '</div>';
-
-		?>
-	  <div class="opg-modal-footer">
-	  	 <a class="opg-button opg-button-primary" href="Javascript:void(0);" onclick="validateshipto();"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
-		 <a id="shiptoclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
-		 
-		 <a id="shiptoclose" onclick="removeshipto();" class="opg-modal-close opg-margin-left opg-button opg-button-danger"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REMOVE_SHIPTO"); ?></a>
-	  </div>
-    </div> <!-- Shipto Modal ended -->
-</div><!-- Shipto Modal ended -->
-		
   </div>
   <div class="clear"></div>
 </div>
@@ -605,33 +512,6 @@ defined('_JEXEC') or die('Restricted access');
 	 <div class="opg-width-1-1">
 		 <a id="commentbutton" class="opg-button <?php echo $commentactive; ?> opg-width-1-1" href="#commentpopup" data-opg-modal><i id="commenticon" style="<?php echo $commenticon; ?>" class="opg-icon opg-icon-check opg-margin-small-right"></i><?php echo JText::_('Add Notes and Special Requests'); ?></a>
 	 </div>
-	 
-	 <div id="commentpopup" class="opg-modal"><!-- Comment Modal Started -->
-	 <div class="opg-modal-dialog"><!-- Comment Modal Started -->
-		<a class="opg-modal-close opg-close"></a>
-    	   <div class="opg-modal-header"><strong><?php echo JText::_('COM_VIRTUEMART_COMMENT_CART'); ?></strong></div>
-		   <div id="extracomments" class="customer-comments">
-		   <?php
-			   if($singlefield['required'])
-			   {
-			     $tmptext = "";
-				$tmptext = str_replace("<textarea", '<textarea onblur="javascript:updatecustomernote(this);" ', $singlefield['formcode']);
-				 $tmptext = str_replace("<textarea", '<textarea class="required"', $tmptext);
-				 echo $tmptext;
-
-			   }
-			   else
-			   {
-			    	echo str_replace("<textarea", '<textarea onblur="javascript:updatecart();" ', $singlefield['formcode']);
-			   }
-			   ?>
-		   </div>
-		   <div class="opg-modal-footer">
-	  			 <a class="opg-button opg-button-primary" href="Javascript:void(0);" onclick="validatecomment();">Submit</a>
-				 <a id="commentclose" class="opg-modal-close opg-button">Cancel</a>
-		   </div>
-    </div> <!-- COMMENT Modal ended -->
-	</div><!-- COMMENT Modal ended -->
 	 <?php
 	 }
   }
@@ -664,15 +544,6 @@ defined('_JEXEC') or die('Restricted access');
 				 </section>
 
 			<a class="opg-link opg-text-small" style="cursor:pointer;" data-opg-modal="{target:'#full-tos'}"><?php echo JText::_('COM_VIRTUEMART_CART_TOS_READ_AND_ACCEPTED'); ?></a>
-		    <div id="full-tos" class="opg-modal">
-			  <div class="opg-modal-dialog opg-text-left">
-			        <a class="opg-modal-close opg-close"></a>
-					<strong><?php echo JText::_('COM_VIRTUEMART_CART_TOS'); ?></strong>
-				<?php echo $this->cart->vendor->vendor_terms_of_service;?>
-			  </div>
-			</div>
-
-
 		<?php
 		} 
 		$showextraterms = $params->get('show_extraterms',0);	

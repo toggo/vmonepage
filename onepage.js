@@ -22,10 +22,32 @@ window.selectedpaymentid = 0;
 var action = "";
 
 jQuery(document).ready(function(){
-								
-	
 	jQuery(".uk-alert").hide();
 	jQuery("#system-message-container").hide();
+	
+	if (window._klarnaCheckout) {
+            window._klarnaCheckout(function (api) {
+                    api.on({
+                        'shipping_address_change': function (datas) {
+						  if(window.KLARNALOCALE == 'en-us'  || window.KLARNALOCALE == 'en-gb')
+						   {		
+							 	jQuery("#loadingbutton").click();											  
+								jQuery.ajax({
+						        	type: "POST",
+							        cache: false,
+							        dataType: "json",
+									url: window.vmSiteurl + "index.php?&option=com_virtuemart&view=cart&vmtask=klarnaupdate",
+									data : jQuery.param(datas),
+						        }).done(
+							    function (data, textStatus){
+									  action = "updateaddress"; 
+									  update_shipment();
+                			    });
+						    }
+                        }
+                     });
+            });
+	}
 	
 	jQuery('#shiptopopup').on({
 		'show.uk.modal': function()
@@ -67,14 +89,17 @@ jQuery(document).ready(function(){
 			removeproduct(jQuery(this).attr("data-itemid"));
 	   });
 	});
-	
-	if(jQuery('#checkoutForm').length  > 0)
+});
+
+jQuery(window).load(function() {
+
+if(jQuery('#checkoutForm').length  > 0)
 	{
-		window.firsttime = 1;
-		update_prices();
 		Virtuemart.product(jQuery("div.product"));
+		update_prices();
 	}
 });
+
 
 
 
@@ -301,6 +326,9 @@ function applycoupon() {
 				   jQuery('html,body').animate({
 	    			    scrollTop: jQuery("#customerror").offset().top},
 		    	   'slow');
+				   jQuery("#loadingbtnclose").click();
+				   jQuery("html").removeClass("opg-modal-page");
+			  	   jQuery("#lodingdiv").hide();
 			   }
 			   else
 			   {
@@ -558,6 +586,8 @@ function submit_order() {
 		   jQuery("#customerror").html(r);
 		   
 		    jQuery("#loadingbtnclose").click();
+			jQuery("html").removeClass("opg-modal-page");
+			jQuery("#lodingdiv").hide();
 		   
 		    jQuery('html,body').animate({
 	    	    scrollTop: jQuery("#customerror").offset().top},
@@ -594,7 +624,10 @@ function submit_order() {
 				    	    scrollTop: jQuery("#customerror").offset().top},
     	    		   'slow');
 					}
+					
 					jQuery("#loadingbtnclose").click();
+				    jQuery("html").removeClass("opg-modal-page");
+			  	    jQuery("#lodingdiv").hide();
 					return false;
 		   }
 		   else
@@ -622,6 +655,8 @@ function submit_order() {
 										  if(data == "error")
 										  {
 											    jQuery("#loadingbtnclose").click();
+											    jQuery("html").removeClass("opg-modal-page");
+										  	    jQuery("#lodingdiv").hide();
 										  }
 										  else
 										  {
@@ -640,7 +675,10 @@ function submit_order() {
 														   jQuery("#customerror").html("");
 														   jQuery("#customerror").show();
 														   jQuery("#customerror").html(r);
+														   
 														   jQuery("#loadingbtnclose").click();
+														   jQuery("html").removeClass("opg-modal-page");
+													  	   jQuery("#lodingdiv").hide();
 														   jQuery('html,body').animate({
 													    	    scrollTop: jQuery("#customerror").offset().top},
 												    	    'slow');
@@ -649,6 +687,9 @@ function submit_order() {
 														 else
 														 {
 															jQuery("#loadingbtnclose").click();
+															jQuery("html").removeClass("opg-modal-page");
+														  	jQuery("#lodingdiv").hide();
+															
 															jQuery("#checkoutForm").submit();
 														 }
 												     });
@@ -680,7 +721,11 @@ function submit_order() {
 						   jQuery("#customerror").html("");
 						   jQuery("#customerror").show();
 						   jQuery("#customerror").html(r);
+						   
 						   jQuery("#loadingbtnclose").click();
+						   jQuery("html").removeClass("opg-modal-page");
+					  	   jQuery("#lodingdiv").hide();
+						   
 						   jQuery('html,body').animate({
 					    	    scrollTop: jQuery("#customerror").offset().top},
 				    	    'slow');
@@ -690,6 +735,9 @@ function submit_order() {
 					 else
 					 {
 						jQuery("#loadingbtnclose").click();
+					    jQuery("html").removeClass("opg-modal-page");
+				  	    jQuery("#lodingdiv").hide();
+						
 						jQuery("#checkoutForm").submit();
 					 }
 		 });
@@ -721,6 +769,8 @@ function update_product()
     	    	   'slow');
 				   
 				   jQuery("#loadingbtnclose").click();
+				   jQuery("html").removeClass("opg-modal-page");
+			  	   jQuery("#lodingdiv").hide();
 				 }
 				 else
 				 {
@@ -742,7 +792,6 @@ function update_product()
 }
 function update_prices()
 {
-	window.firsttime = 2;
 	jQuery.ajax({
 				type: "POST",
 		        cache: false,
@@ -921,7 +970,9 @@ function update_prices()
 			};
 				 
 			
-			jQuery("#loadingbtnclose").click();
+				   jQuery("#loadingbtnclose").click();
+				   jQuery("html").removeClass("opg-modal-page");
+			  	   jQuery("#lodingdiv").hide();
 		}
 			
 		 });
@@ -961,7 +1012,7 @@ function removeproduct(vmproductid)
 										}
 									});
 								});
-								updatecart();
+								update_shipment();
 								mod.find(".total").html(datas.billTotal);
 								mod.find(".show_cart").html(datas.cart_show);
 							} else {
