@@ -327,8 +327,6 @@ function applycoupon() {
 	    			    scrollTop: jQuery("#customerror").offset().top},
 		    	   'slow');
 				   jQuery("#loadingbtnclose").click();
-				   jQuery("html").removeClass("opg-modal-page");
-			  	   jQuery("#lodingdiv").hide();
 			   }
 			   else
 			   {
@@ -347,6 +345,7 @@ function applycoupon() {
 
 function ajaxlogin()
 {
+ jQuery("#loadingbutton").click();	 
  jQuery("#userlogin_username").removeClass("opg-form-danger");
  jQuery("#userlogin_password").removeClass("opg-form-danger");
  usernameval = document.getElementById("userlogin_username").value;
@@ -367,6 +366,7 @@ function ajaxlogin()
     var r = '<div class="opg-alert opg-alert-danger" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + loginempty + "</p></div>";
 	jQuery("#loginerror").show();
 	jQuery("#loginerror").html(r);
+	jQuery("#loadingbtnclose").click();
  }
   else
   {
@@ -387,9 +387,11 @@ function ajaxlogin()
 				 var r = '<div class="opg-alert opg-alert-danger" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + loginerror + "</p></div>";
 				 jQuery("#loginerror").show();
 				 jQuery("#loginerror").html(r);
+				 jQuery("#loadingbtnclose").click();
 			  }
 			  else
 			  {
+				jQuery("#loadingbtnclose").click();   
 			    window.location.reload();
 			  }
 		    });
@@ -586,8 +588,8 @@ function submit_order() {
 		   jQuery("#customerror").html(r);
 		   
 		    jQuery("#loadingbtnclose").click();
-			jQuery("html").removeClass("opg-modal-page");
-			jQuery("#lodingdiv").hide();
+			
+			
 		   
 		    jQuery('html,body').animate({
 	    	    scrollTop: jQuery("#customerror").offset().top},
@@ -626,8 +628,8 @@ function submit_order() {
 					}
 					
 					jQuery("#loadingbtnclose").click();
-				    jQuery("html").removeClass("opg-modal-page");
-			  	    jQuery("#lodingdiv").hide();
+				    
+			  	    
 					return false;
 		   }
 		   else
@@ -655,8 +657,8 @@ function submit_order() {
 										  if(data == "error")
 										  {
 											    jQuery("#loadingbtnclose").click();
-											    jQuery("html").removeClass("opg-modal-page");
-										  	    jQuery("#lodingdiv").hide();
+											    
+										  	    
 										  }
 										  else
 										  {
@@ -677,8 +679,8 @@ function submit_order() {
 														   jQuery("#customerror").html(r);
 														   
 														   jQuery("#loadingbtnclose").click();
-														   jQuery("html").removeClass("opg-modal-page");
-													  	   jQuery("#lodingdiv").hide();
+														   
+													  	   
 														   jQuery('html,body').animate({
 													    	    scrollTop: jQuery("#customerror").offset().top},
 												    	    'slow');
@@ -687,8 +689,8 @@ function submit_order() {
 														 else
 														 {
 															jQuery("#loadingbtnclose").click();
-															jQuery("html").removeClass("opg-modal-page");
-														  	jQuery("#lodingdiv").hide();
+															
+														  	
 															
 															jQuery("#checkoutForm").submit();
 														 }
@@ -715,7 +717,12 @@ function submit_order() {
 		 }).done(
 			 function (data, textStatus) 
 				 {
-					 if(data == "error")
+					 if(data == "success")
+					 {
+						 jQuery("#loadingbtnclose").click();
+						 jQuery("#checkoutForm").submit();
+					 }
+					 else
 					 {
 						   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + invaliddata + "</p></div>";
 						   jQuery("#customerror").html("");
@@ -723,8 +730,8 @@ function submit_order() {
 						   jQuery("#customerror").html(r);
 						   
 						   jQuery("#loadingbtnclose").click();
-						   jQuery("html").removeClass("opg-modal-page");
-					  	   jQuery("#lodingdiv").hide();
+						   
+					  	   
 						   
 						   jQuery('html,body').animate({
 					    	    scrollTop: jQuery("#customerror").offset().top},
@@ -732,14 +739,8 @@ function submit_order() {
 						  return;
 						 
 					 }
-					 else
-					 {
-						jQuery("#loadingbtnclose").click();
-					    jQuery("html").removeClass("opg-modal-page");
-				  	    jQuery("#lodingdiv").hide();
+				
 						
-						jQuery("#checkoutForm").submit();
-					 }
 		 });
    }
 
@@ -769,8 +770,8 @@ function update_product()
     	    	   'slow');
 				   
 				   jQuery("#loadingbtnclose").click();
-				   jQuery("html").removeClass("opg-modal-page");
-			  	   jQuery("#lodingdiv").hide();
+				   
+			  	   
 				 }
 				 else
 				 {
@@ -971,8 +972,8 @@ function update_prices()
 				 
 			
 				   jQuery("#loadingbtnclose").click();
-				   jQuery("html").removeClass("opg-modal-page");
-			  	   jQuery("#lodingdiv").hide();
+				   
+			  	   
 		}
 			
 		 });

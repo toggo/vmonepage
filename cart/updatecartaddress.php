@@ -64,6 +64,7 @@ foreach($this->userFieldsCart['fields'] as $name => $cartfield)
 	 }
  }
 }
+$cart->_blockConfirm = false;
 $cart->setCartIntoSession(false,true);
 $cart->saveCartFieldsInCart();
 
