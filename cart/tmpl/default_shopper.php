@@ -204,9 +204,13 @@ defined('_JEXEC') or die('Restricted access');
 	<?php
       if($activetab == 3)
 	  {
-	   $displayreg = 'display:none;';
+	 	 $displayreg = 'display:none;';
 	  }
 	  else
+	  {
+	    $displayreg = "";
+	  }
+	  if($user->id > 0)
 	  {
 	    $displayreg = "";
 	  }
@@ -458,27 +462,18 @@ defined('_JEXEC') or die('Restricted access');
 </div>
  <?php
 	  $user = JFactory::getUser();
-	  if($user->id == 0)	
-	  { 
-	     $logindis = '';
-	  }
-	  else
-	  {
-	    $logindis = '';
-	  }
+	  $logindis = '';
 	  $activetab = $params->get('activetab',0);
 	  if($activetab == 3)
 	  {
 	    $logindis = 'display:none';
 	  }
+	  if($user->id > 0)
+	  {
+	    $logindis = "";
+	  }
 
 	?>
-
-
-
-	
-
-
 
 <div id="other-things" style="<?php echo $logindis; ?>">
 

@@ -20,6 +20,7 @@
 
 window.selectedpaymentid = 0;
 var action = "";
+var countrychange = "";
 
 jQuery(document).ready(function(){
 	jQuery(".uk-alert").hide();
@@ -402,7 +403,7 @@ function ajaxlogin()
 
 function submit_order() {	
 
-   jQuery("#loadingbutton").click();
+  
 
    
    jQuery("#customerror").html("");
@@ -587,10 +588,6 @@ function submit_order() {
 		   jQuery("#customerror").show();
 		   jQuery("#customerror").html(r);
 		   
-		    jQuery("#loadingbtnclose").click();
-			
-			
-		   
 		    jQuery('html,body').animate({
 	    	    scrollTop: jQuery("#customerror").offset().top},
     	    'slow');
@@ -598,6 +595,7 @@ function submit_order() {
 			return;
 	 }
 		
+    jQuery("#loadingbutton").click();
 	var register_state=true;
 
 	if(jQuery('#register').prop("checked") == true ) {

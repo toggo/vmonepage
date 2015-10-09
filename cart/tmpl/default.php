@@ -272,7 +272,7 @@ else
 	  <?php
 	  	echo $this->loadTemplate('modalpage');
 	  ?>
-	 <p style="text-align: center;"><small style="text-size:8px; color:#b4b4b4;"><a style="text-size:8px; color:#b4b4b4;" title="one page checkout virtuemart" target="_blank" href="http://vmonepage.com">VMonepage</a>is built by<a style="text-size:8px; color:#b4b4b4;" title="joomlaproffs webshop ecommerce" target="_blank" href="http://www.joomlaproffs.se">joomlaproffs.se</a></small></p>
+	 <p style="text-align: center;"><small style="text-size:8px; color:#b4b4b4;"><a style="text-size:8px; color:#b4b4b4;" title="one page checkout virtuemart" target="_blank" href="http://vmonepage.com">VMonepage</a>is built by&nbsp;<a style="text-size:8px; color:#b4b4b4;" title="joomlaproffs webshop ecommerce" target="_blank" href="http://www.joomlaproffs.se">joomlaproffs.se</a></small></p>
 </form>
 
 <?php
