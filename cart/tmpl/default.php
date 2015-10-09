@@ -133,6 +133,10 @@ foreach($this->userFieldsCart['fields'] as $name => $cartfield)
 	 }
   }
  } 
+ if (!class_exists('CurrencyDisplay'))
+				require(VMPATH_ADMIN . DS . 'helpers' . DS . 'currencydisplay.php');
+				$currency = CurrencyDisplay::getInstance();
+ 
 
 $acceptmessage =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_PLEASE_ACCEPT_TOS'), ENT_QUOTES);
 $privacymeessage =  htmlspecialchars(JText::_('PLG_VMUIKITONEPAGE_PRIVACY_POLICY_ERROR'), ENT_QUOTES);
@@ -145,8 +149,7 @@ $removeprouct =  htmlspecialchars(JText::_('COM_VIRTUEMART_PRODUCT_REMOVED_SUCCE
 $changetext   =  htmlspecialchars(JText::_('PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE'), ENT_QUOTES);
 $noshipmethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', ''), ENT_QUOTES);
 $nopaymethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', ''), ENT_QUOTES);
-$minpurchaseerror   =  htmlspecialchars(vmText::sprintf('COM_VIRTUEMART_CART_MIN_PURCHASE', $vendordata->vendor_min_pov), ENT_QUOTES);
-
+$minpurchaseerror   =  htmlspecialchars(vmText::sprintf('COM_VIRTUEMART_CART_MIN_PURCHASE',  $currency->priceDisplay($vendordata->vendor_min_pov)), ENT_QUOTES);
 
 $document->addScriptDeclaration("
       //<![CDATA[ 
