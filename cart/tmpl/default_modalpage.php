@@ -127,9 +127,35 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 </div><!-- Shipto Modal ended -->
 
 <?php
- foreach($this->cart->BTaddress["fields"] as $singlefield) 
+  $customernote = FALSE;
+  foreach($this->cart->BTaddress["fields"] as $field) 
   {
-     if($singlefield['name']=='customer_note') 
+     if($field['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	   $singlefield = $field;
+	   break;
+	 }
+  } 
+  foreach($this->cart->STaddress["fields"] as $field) 
+  {
+     if($field['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	   $singlefield = $field;
+	   break;
+	 }
+  } 
+  foreach($this->userFieldsCart["fields"] as $field) 
+  {
+     if($field['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	   $singlefield = $field;
+	   break;
+	 }
+  } 
+     if($customernote) 
 	 {
 	 ?>
 
@@ -161,7 +187,7 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 	</div><!-- comments Modal ended -->
 <?php
    }
-}
+
 ?>
 <!-- SHIPMENT SELECT MODAL START -->
 <?php

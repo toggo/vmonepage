@@ -117,6 +117,11 @@ defined('_JEXEC') or die('Restricted access');
 	    $logindis = 'display:none;';
 		$logindiv = 'display:none;';
 	  }
+	  if($user->id  > 0)
+	  {
+	      $logindis = '';
+		  $logindiv = '';
+	  }
 	  
 	  $user = JFactory::getUser();
 	  if (empty($this->url)){
