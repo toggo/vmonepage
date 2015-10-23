@@ -73,7 +73,7 @@ jQuery(document).ready(function(){
 
 	jQuery(".refreshbutton").each(function(){
 	   jQuery(this).click(function(){
-			update_product();	
+			update_product(jQuery(this).attr("data-itemid"));	
 	 	});
 	});
 
@@ -96,6 +96,7 @@ jQuery(window).load(function() {
 
 if(jQuery('#checkoutForm').length  > 0)
 	{
+		firsttime_updateprice  = "yes";	
 		Virtuemart.product(jQuery("div.product"));
 		update_prices();
 	}
@@ -743,10 +744,13 @@ function submit_order() {
    }
 
 }
-function update_product() 
+function update_product(vmid) 
 {
 	jQuery("#loadingbutton").click();
-	jQuery.ajax({
+	qtyvalue = jQuery("#quantity_"+vmid).val();
+	if(qtyvalue > 0)
+	{
+		jQuery.ajax({
 				type: "POST",
 		        cache: false,
 	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=ajaxupdate',
@@ -788,6 +792,11 @@ function update_product()
 				   update_shipment();
 				 }
 	 	 });
+	}
+	else
+	{
+		 removeproduct(vmid);	
+	}
 }
 function update_prices()
 {
@@ -969,8 +978,12 @@ function update_prices()
 			};
 				 
 			
-				   jQuery("#loadingbtnclose").click();
-				   
+				 if(firsttime_updateprice != "yes")
+				 {
+					  jQuery("#loadingbtnclose").click();
+				 }
+				 firsttime_updateprice = "no";
+				 
 			  	   
 		}
 			

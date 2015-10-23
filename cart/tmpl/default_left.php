@@ -90,17 +90,40 @@ $params=new JRegistry($plugin->params);
                </div>
 			       <div class="quantity opg-float-right opg-width-large-1-4 opg-width-small-3-6 opg-width-3-6 opg-text-left-small">
                     <div class="spacer" >
+					 <?php
+					   if (isset($prow->step_order_level))
+							$step=$prow->step_order_level;
+					   else
+						    $step=1;
+						if($step==0)
+							$step=1;
+						$alert=JText::sprintf ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED', $step);
+
+					   ?>
+					   <script type="text/javascript">
+                        function check_<?php echo $pkey?>(obj) {
+                            // use the modulus operator '%' to see if there is a remainder
+                            remainder=obj.value % <?php echo $step?>;
+                            quantity=obj.value;
+                            if (remainder  != 0) {
+                                alert('<?php echo $alert?>!');
+                                obj.value = quantity-remainder;
+                                return false;
+                            }
+                            return true;
+                        }
+                        </script>
 					         <input name="quantity" type="hidden" value="<?php echo $step ?>" />
 							 
-                             <input type="text" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="quantity-input js-recalculate opg-form-small opg-text-center" size="2" maxlength="4" value="<?php echo $prow->quantity ?>" id='quantity_<?php echo $vmproduct_id; ?>' name="quantityval[<?php echo $pkey; ?>]"  style="color:inherit !important;" />
+                             <input type="text" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="quantity-input js-recalculate opg-form-small opg-text-center" onblur="check_<?php echo $pkey; ?>(this);" size="2" maxlength="4" value="<?php echo $prow->quantity ?>" id='quantity_<?php echo $cartitemid; ?>' name="quantityval[<?php echo $pkey; ?>]"  style="color:inherit !important;" />
 									  
 				            <input type="hidden" name="stock[<?php echo $pkey; ?>]" value="<?php echo $prow->product_in_stock; ?>" />  
                             <input type="hidden" name="view" value="cart" /> 
                             <input type="hidden" name="virtuemart_product_id[]" value="<?php echo $vmproduct_id;  ?>" />
                             <div class="opg-button-group">
-                              <a href="javascript:void(0);" class="opg-button opg-button-primary quantity-minus opg-button-mini"><i class="opg-icon-minus"></i></a>
-							 <a id="refreshbutton" href="javascript:void(0);" name="update" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="refreshbutton opg-button opg-button-primary  opg-button-mini"><i class="opg-icon-refresh"></i></a>
-                                <a href="javascript:void(0);" class="opg-button opg-button-primary quantity-plus  opg-button-mini"><i class="opg-icon-plus"></i></a>
+                             <a href="javascript:void(0);" class="opg-button opg-button-primary quantity-minus opg-button-mini"><i class="opg-icon-minus"></i></a>
+							 <a href="javascript:void(0);" class="opg-button opg-button-primary quantity-plus  opg-button-mini"><i class="opg-icon-plus"></i></a>
+							 <a id="refreshbutton" data-itemid= "<?php echo $cartitemid;  ?>" href="javascript:void(0);" name="update" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="refreshbutton  opg-margin-small-left opg-button opg-button-primary  opg-button-mini"><?php echo JText::_('COM_VIRTUEMART_UPDATE'); ?></a>	
                          	</div>
                     </div>
                 </div>

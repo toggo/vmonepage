@@ -805,9 +805,14 @@ class VirtueMartViewCart extends VmView {
 				$addressList[0]->address_type_name = $newBT;
 			}
 
+			$lastaddressindex = 0;
+			if(count($addressList) > 0 )
+			{
+				$lastaddressindex = count($addressList)-1;
+			}
 			$_selectedAddress = (
 			empty($cart->selected_shipto)
-				? $addressList[0]->virtuemart_userinfo_id // Defaults to 1st BillTo
+				? $addressList[$lastaddressindex]->virtuemart_userinfo_id // Defaults to 1st BillTo
 				: $cart->selected_shipto
 			);
 
