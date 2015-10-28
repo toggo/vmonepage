@@ -20,7 +20,7 @@
 */
 defined('_JEXEC') or die('Restricted access');
 
-$plugin=JPluginHelper::getPlugin('system','vmuikit_onepage');
+$plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
 
 if(VmConfig::get('oncheckout_show_legal_info',1))
@@ -89,7 +89,8 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 		    $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
 		  }
 	    if($singlefield['name']=='shipto_zip') {
-			  $replacetext = 'input onchange="javascript:updateaddress(3);"';
+			// onchange="javascript:updateaddress(3);"
+			  $replacetext = 'input';
 			  $singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
 	    } 
 		else if($singlefield['name']=='customer_note') {
@@ -155,11 +156,10 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 	   break;
 	 }
   } 
-     if($customernote) 
+   if($customernote) 
 	 {
 	 ?>
-
- <div id="commentpopup" class="opg-modal"><!-- Comment Modal Started -->
+    <div id="commentpopup" class="opg-modal"><!-- Comment Modal Started -->
 	 <div class="opg-modal-dialog"><!-- Comment Modal Started -->
 		<a class="opg-modal-close opg-close"></a>
     	   <div class="opg-modal-header"><strong><?php echo JText::_('COM_VIRTUEMART_COMMENT_CART'); ?></strong></div>
@@ -185,12 +185,15 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 		   </div>
     </div> <!-- comments Modal ended -->
 	</div><!-- comments Modal ended -->
-<?php
+   <?php
    }
 
 ?>
 <!-- SHIPMENT SELECT MODAL START -->
 <?php
+	  $listshipments = $params->get("list_allshipment", 0);				
+	  if(!$listshipments)
+	  { //IF NOT LIST SHIPMENTS START
 				  echo '<div id="shipmentdiv" class="opg-modal">';
 				   echo '<div class="opg-modal-dialog">';
 				    echo '<a class="opg-modal-close opg-close"></a>';
@@ -223,34 +226,35 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 				<?php
 				echo '</div>';
 				echo '</div>';
+		} //IF NOT LIST SHIPMENTS END
 				?>
 <!-- SHHIPMENT SELECT MODAL ENDS -->
 <!-- PAYMENT SELECT MODAL STARTS -->
 <?php
-			 
-				 echo '<div id="paymentdiv" class="opg-modal">';
-				   echo '<div class="opg-modal-dialog">';
-				    echo '<a class="opg-modal-close opg-close"></a>';
-				      echo '<div class="opg-modal-header">Select Payment Method</div>';
-				  	  $paymentsarr = $this->paymentplugins_paymentsnew;
-					   echo '<div id="paymentsdiv">';
-						echo '<ul class="opg-list" id="payment_ul">';
-							foreach($paymentsarr as $pay)
-							{
-							  echo '<li>'.$pay.'<hr class="opg-margin-small-bottom opg-margin-small-top" /></li>';
-							}
-						echo '</ul>';
-					  echo '</div>';
-
-					
-				?>
-				
-				<div class="opg-modal-footer">
-				<a class="opg-button opg-button-primary" id="paymentset"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
-				<a id="paymentclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
-				</div>
-				<?php
-				echo '</div>';
-				echo '</div>';
+		 $listpayments = $params->get("list_allpayment", 0);	
+         if(!$listpayments)
+		 {  //IF NOT LIST PAYMENTS START
+		    echo '<div id="paymentdiv" class="opg-modal">';
+		    echo '<div class="opg-modal-dialog">';
+			    echo '<a class="opg-modal-close opg-close"></a>';
+			      echo '<div class="opg-modal-header">Select Payment Method</div>';
+			  	  $paymentsarr = $this->paymentplugins_paymentsnew;
+				   echo '<div id="paymentsdiv">';
+					echo '<ul class="opg-list" id="payment_ul">';
+						foreach($paymentsarr as $pay)
+						{
+						  echo '<li>'.$pay.'<hr class="opg-margin-small-bottom opg-margin-small-top" /></li>';
+						}
+					echo '</ul>';
+				  echo '</div>';
+			?>
+			<div class="opg-modal-footer">
+			<a class="opg-button opg-button-primary" id="paymentset"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
+			<a id="paymentclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
+			</div>
+			<?php
+			echo '</div>';
+			echo '</div>';
+		} //IF NOT LIST PAYMENTS END
    ?>
  <!-- PAYMENT SELECT MODAL ENDS -->

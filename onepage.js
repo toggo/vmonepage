@@ -409,6 +409,14 @@ function submit_order() {
    
    jQuery("#customerror").html("");
    errormsg = "";
+    if(captchaenabled)
+    {
+	   captcha_response  = grecaptcha.getResponse();
+	   if(captcha_response == "")
+	   {
+		    errormsg += "<p>"+captchainvalid+"</p>";
+	   }
+    }
    if(agree_to_tos_onorder == 1)
    {
 	  if(jQuery("#squaredTwo").prop("checked") == false) 
@@ -1058,9 +1066,17 @@ function update_shipment()
 					var shipments="";
 					if(data.length == 0)
 					{
-					     jQuery("#shipment_fulldiv").html("");
+						if(listshipments)
+						{ 
+						  divname = "shipment_nill";
+						}
+						else
+						{
+						  divname = "shipment_fulldiv";	
+						}
+					     jQuery("#"+divname).html("");
 						 newhtml = '<p id="shipmentnill" class="opg-text-warning"></p>';
-						 jQuery("#shipment_fulldiv").html(newhtml);
+						 jQuery("#"+divname).html(newhtml);
 					     country_ele = document.id('virtuemart_country_id');
 					     if(country_ele != null)
 						 {
@@ -1106,7 +1122,7 @@ function update_shipment()
 						   {
 						     var activeclasss = "";
 						   }
-						   if(activeclasss != "")
+						   if(activeclasss != "" && listshipments == 0)
 						   {
 							  texxt = data[i];
 							  tmptxt = strip_tags(texxt, '<span><img>');
@@ -1140,6 +1156,10 @@ function update_shipment()
 							texxts = texxts.replace('</span><span', '</span><br /><span');
 							texxts = texxts.replace('vmshipment_description', 'vmpayment_description opg-text-small');
 							texxts = texxts.replace('vmshipment_cost', 'vmpayment_cost opg-text-small');
+							if(listshipments)
+							{
+								texxts = texxts.replace('<input', '<input onclick="setshipment()"');
+							}
 	                        shipments+='<li class="'+activeclasss+'">';
 							shipments+='<label class="opg-width-1-1">'+texxts+'</label>';
 							shipments+='<hr class="opg-margin-small-bottom opg-margin-small-top" /></li>';
@@ -1227,9 +1247,18 @@ function updatepayment()
 				jQuery("#paymentsdiv").html("");
 				if(data.length == 0)
 				{
-				     jQuery("#payment_fulldiv").html("");
+					 if(listpayments)
+				 	 { 
+					   paydivname = "payment_nill";
+					 }
+				 	 else
+					 {
+					   paydivname = "payment_fulldiv";	
+					 }
+					 
+				     jQuery("#"+paydivname).html("");
 					 newhtml = '<p id="paymentnill" class="opg-text-warning"></p>';
-					 jQuery("#payment_fulldiv").html(newhtml);
+					 jQuery("#"+paydivname).html("");
 					 
 				     country_ele = document.id('virtuemart_country_id');
 				     if(country_ele != null)
@@ -1284,7 +1313,7 @@ function updatepayment()
 					       {
 					   		  var activeclasss = "";
 					       }
-						   if(activeclasss != "")
+						   if(activeclasss != ""  && listpayments == 0)
 						   {
 						      texxt = data[i];
 							  tmptxt = strip_tags(texxt, '<span><img><div>');
@@ -1295,7 +1324,7 @@ function updatepayment()
 							  tmptxt = tmptxt.replace('vmpayment_cost', 'vmpayment_cost opg-text-small');
 							  document.id('paymentdetails').set('html', tmptxt);
 								  
-						 	  if(data.length > 1)
+						 	  if(data.length > 1 )
 							  {	
 							     if(document.getElementById("shipchange") == null)
 							 	 {
@@ -1322,6 +1351,10 @@ function updatepayment()
 						   tmptxts = tmptxts.replace('</span><span', '</span><br /><span');
 						   tmptxts = tmptxts.replace('vmpayment_description', 'vmpayment_description opg-text-small');
 						   tmptxts = tmptxts.replace('vmpayment_cost', 'vmpayment_cost opg-text-small');
+						   if(listpayments)
+						   {
+								tmptxts = tmptxts.replace('type="radio"', 'type="radio" onclick="setpayment()" ');
+						   }
 						   payments+='<li class="'+activeclasss+'">';
 						   payments+='<label class="opg-width-1-1">'+tmptxts+'</label>';
 						   payments+="<hr class='opg-margin-small-bottom opg-margin-small-top' /></li>";

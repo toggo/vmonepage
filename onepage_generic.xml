@@ -7,7 +7,7 @@
         <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
         <authorEmail>support@vmuikit.com</authorEmail>
         <authorUrl>http://vmonepage.com/</authorUrl>
-        <version>1.0</version>
+        <version>3.8</version>
 		<description><![CDATA[ 
 	 <table class="table"><tr><td><a href="http://vmonepage.com"><img src="http://vmkco.com/images/logo_vmonepage.png"></a></td><td><h3>Onepage Generic successfully installed.</h3><hr>For more information and to download the latest FREE version of this One Page Checkout please visit <a target="_blank" href="http://vmonepage.com">http://vmonepage.com</a> </h4></td></tr></table>
 	  <table class="table"><tr><td><a href="http://vmkco.com"><img src="http://vmkco.com/images/klarna_logo_mini.png"></a></td><td style="vertical-align: middle;">Looking for Klarna Checkout module? Please visit <a target="_blank" href="http://www.vmkco.com">www.vmkco.com</a> for Free Klarna Checkout Enhanced plugin</td></tr></table>
@@ -46,6 +46,19 @@
 							<option value="0">JNO</option>
 							<option value="1">JYES</option>
 						</field>	
+						
+						<field 	name="list_allpayment"	type="radio" class="btn-group btn-group-yesno"	label="List all payments"
+			description="" default="0">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>	
+						<field 	name="list_allshipment"	type="radio" class="btn-group btn-group-yesno"	label="List all shipments"
+			description="" default="0">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>	
+						
+						
 						<field 	name="show_onlyguest" type="radio" class="btn-group btn-group-yesno" label="Show Guest" 	description="" default="0">
 							<option value="0">JNO</option>
 							<option value="1">JYES</option>
@@ -81,12 +94,18 @@
 						</field>	
 						
 						
-						<field 	name="loadingmsg" type="text" class="btn-group btn-group-yesno" label="Loading Message"  description="" default="" />
 						
 						<field 	name="country_reload"	type="radio" class="btn-group btn-group-yesno"	label="Reload Page while change Country"	description="" default="0">
 							<option value="0">JNO</option>
 							<option value="1">JYES</option>
 						</field>	
+						<field 	name="use_recaptcha"	type="radio" class="btn-group btn-group-yesno"	label="Use Google Recaptcha(Must filed Recaptcha Key)" description="" default="0">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>
+						<field 	name="recaptchakey" type="text" class="btn-group btn-group-yesno" label="Recaptcha Key"  description="" default="" />	
+						<field 	name="secretkey" type="text" class="btn-group btn-group-yesno" label="Recaptcha Secret Key"  description="" default="" />	
+
 
 	                </fieldset>
 	        </fields>

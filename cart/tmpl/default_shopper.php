@@ -562,6 +562,23 @@ defined('_JEXEC') or die('Restricted access');
 		  </div>
 		<?php
 		}
+		 $usecaptcha = $params->get("use_recaptcha", 0);
+		 $captchakey = $params->get("recaptchakey", '');
+	 	 if($usecaptcha && !empty($captchakey))
+		 {
+		  ?>
+		  <div class="opg-width-1-1">
+		   <div class="g-recaptcha opg-container-center" data-sitekey="<?php echo $captchakey; ?>" style="width:200px;"></div>
+		   </div>
+		   <style type="text/css">
+		   .g-recaptcha {
+    transform: scale(0.77);
+    transform-origin: -76px 50% 0;
+}
+
+		   </style>
+		  <?php
+		  }
 			if (!VmConfig::get('use_as_catalog')) {
 			   echo '<p id="bottom_total" class="opg-text-large opg-text-primary opg-text-bold opg-text-center">'.JText::_("COM_VIRTUEMART_CART_TOTAL").'&nbsp;:&nbsp;<strong class="opg-text-large opg-text-primary opg-text-bold" id="carttotal"></strong></p>';
 				echo '<a class="opg-button opg-button-primary opg-button-large opg-margin-top opg-width-1-1" href="javascript:void(0);" onclick="submit_order();"><span>' . JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU') . '</span></a>';

@@ -136,7 +136,16 @@ foreach($this->userFieldsCart['fields'] as $name => $cartfield)
  if (!class_exists('CurrencyDisplay'))
 				require(VMPATH_ADMIN . DS . 'helpers' . DS . 'currencydisplay.php');
 				$currency = CurrencyDisplay::getInstance();
- 
+ $listpayments = $params->get("list_allpayment", 0);				
+ $listshipments = $params->get("list_allshipment", 0);	
+ $captchaenabled = 0;				
+ $usecaptcha = $params->get("use_recaptcha", 0);
+ $captchakey = $params->get("recaptchakey", '');
+ if($usecaptcha && !empty($captchakey))
+ {
+   JHTML::script('https://www.google.com/recaptcha/api.js');
+   $captchaenabled = 1;
+ }
 
 $acceptmessage =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_PLEASE_ACCEPT_TOS'), ENT_QUOTES);
 $privacymeessage =  htmlspecialchars(JText::_('PLG_VMUIKITONEPAGE_PRIVACY_POLICY_ERROR'), ENT_QUOTES);
@@ -145,6 +154,7 @@ $selectpayment =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_SELECT_PAYMENT'
 $invaliddata   =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_CHECKOUT_DATA_NOT_VALID'), ENT_QUOTES);
 $productupdate =  htmlspecialchars(JText::_('COM_VIRTUEMART_PRODUCT_UPDATED_SUCCESSFULLY'), ENT_QUOTES);
 $chosecountry =  htmlspecialchars(JText::_('PLG_SYSTEM_VMUIKIT_CHOOSE_COUNTRY'), ENT_QUOTES);
+$captchainvalid =  htmlspecialchars(JText::_('PLG_SYSTEM_VMUIKIT_CAPTCHA_INVALID'), ENT_QUOTES);
 $removeprouct =  htmlspecialchars(JText::_('COM_VIRTUEMART_PRODUCT_REMOVED_SUCCESSFULLY'), ENT_QUOTES);
 $changetext   =  htmlspecialchars(JText::_('PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE'), ENT_QUOTES);
 $noshipmethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', ''), ENT_QUOTES);
@@ -175,6 +185,10 @@ $document->addScriptDeclaration("
 	  window.show_tax = ".VmConfig::get('show_tax').";
 	  window.customernote = ".$customernote.";
 	  window.countryreload = ".$countryreload.";
+	  window.captchaenabled = ".$captchaenabled.";
+	  window.captchainvalid = '".$captchainvalid."';
+  	  window.listshipments = '".$listshipments."';
+	  window.listpayments = '".$listpayments."';
       //]]>
       ");
 ?>
@@ -220,18 +234,6 @@ else
 		 <div id="lodingdiv" class="opg-modal"><!-- lodingdiv Modal Started -->
 		 <div class="opg-modal-dialog"><!-- lodingdiv Modal Started -->
 		     <a id="loadingbtnclose" class="opg-modal-close opg-close opg-hidden"></a>
-			 <h3 class="opg-h3 opg-text-primary">
-	 		 <?php
-			 if($params->get("loadingmsg") != "")
-			 {
-			    echo $params->get("loadingmsg");
-			 }
-			 else
-			 {
-			   echo "Processing... ";
-			 }
-			?>
-			</h3>
 			<div class="opg-progress opg-progress-striped opg-active">
 			    <div class="opg-progress-bar opg-text-center" style="width: 100%;">Loading...</div>
 			</div>

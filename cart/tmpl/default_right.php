@@ -23,6 +23,7 @@ defined('_JEXEC') or die('Restricted access');
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
 ?>
+
 <script type="text/javascript">
 var selected_payment  = <?php echo $this->selectedPayment; ?>;
 var selected_shipment  = <?php echo $this->selectedShipment; ?>;
@@ -46,10 +47,11 @@ jQuery(document).ready(function(){
 
 </script>
 
+
   <div class="opg-width-1-1 opg-margin-bottom">
  	  <h3 class="opg-h3"><?php echo JText::_('PLG_SYSTEM_VMUIKIT_ONEPAGE_CHECKOUT'); ?></h3>
   </div>
-  <div class="opg-width-1-1 opg-panel opg-panel-box">
+
   <?php
    $tempcount = 0;
    foreach($this->cart->BTaddress["fields"] as $singlefield) 
@@ -119,7 +121,7 @@ jQuery(document).ready(function(){
 		 echo '</div>';
     }
   ?>
-  </div>
+
   
   <?php
    $shipmenthideclass= "";
@@ -135,11 +137,56 @@ jQuery(document).ready(function(){
 	 {
 		 $oneshipmenthide = "yes";
 	 }
-  ?>
-  
-  <div id="shipment_select" class="opg-width-1-1 opg-panel-box opg-margin-small-top <?php echo  $shipmenthideclass; ?>">
+	 ?>
    <input type="hidden" name="oneshipmenthide" id="oneshipmenthide" value="<?php echo $oneshipmenthide; ?>" />
    <input type="hidden" name="auto_shipmentid" id="auto_shipmentid" value="<?php echo vmconfig::get("set_automatic_shipment");  ?>" />
+	 <?php
+	  $listshipments = $params->get("list_allshipment", 0);				
+	  if($listshipments)
+	  {
+	  ?>
+	  <div id="shipment_select" class="opg-width-1-1 opg-panel-box opg-margin-small-top <?php echo  $shipmenthideclass; ?>">
+	  <div id="shipmentdiv">
+		   <h3 class="opg-panel-title"><?php echo JText::_('COM_VIRTUEMART_CART_EDIT_SHIPPING'); ?></h3>
+	  <?php
+	      echo '<div id="shipment_nill"></div>';
+	      echo "<fieldset id='shipment_selection'>";					
+	      echo '<ul class="opg-list" id="shipment_ul">';
+		  foreach($this->shipments_shipment_rates as $rates) 
+		  {
+		     if(strpos($rates, "checked") !== false)
+		     {
+				 $actclass = "liselcted";
+			 }
+			 else
+			 {
+			     $actclass = "";
+			 }
+			 $replacetxt = "";
+			 $replacetxt = '<input onclick="setshipment()"';
+			 $rates = str_replace("<input", $replacetxt, $rates);
+		     echo '<li class="'.$actclass.'">';
+			 echo '<label class="opg-width-1-1">'.$rates.'</label>';
+			 echo '</li><hr class="opg-margin-small-bottom opg-margin-small-top" />';
+		  }
+		  echo "</ul>";
+		  if(count($this->shipments_shipment_rates) == 0)
+		  {
+			  $text = "";
+		  	  $shipmentnilltext = vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', $text);
+		  	  echo '<p id="shipmentnill" class="opg-text-warning">'.$shipmentnilltext.'</p>';
+		  }
+		  echo "</fieldset>";
+	  ?>
+	   </div>
+	  </div>
+	  <?php
+	  }
+	  else //LIST SHIPMENT ELSE START
+      {
+   ?>
+  
+  <div id="shipment_select" class="opg-width-1-1 opg-panel-box opg-margin-small-top <?php echo  $shipmenthideclass; ?>">
 		<h3 class="opg-panel-title"><?php echo JText::_('COM_VIRTUEMART_CART_EDIT_SHIPPING'); ?></h3>
 		<div id="shipment_fulldiv" class="opg-width-1-1">
         <?php
@@ -201,8 +248,10 @@ jQuery(document).ready(function(){
 				    }
 			?>
 			</div>
+		
    </div>
    <?php
+   }//LIST SHIPMENT ELSE END
    $paymenthideclass= "";
    $onepaymenthide = "no";
    if(count($this->paymentplugins_payments) == 1)
@@ -216,12 +265,47 @@ jQuery(document).ready(function(){
 	 {
 		 $onepaymenthide = "yes";
 	 }
-   
-   
-  ?>
-   <div id="payment_select" class="opg-width-1-1 opg-panel-box opg-margin-small-top <?php echo $paymenthideclass; ?>">
+   ?>
     <input type="hidden" name="onepaymenthide" id="onepaymenthide" value="<?php echo $onepaymenthide; ?>" />
     <input type="hidden" name="auto_paymentid" id="auto_paymentid" value="<?php echo vmconfig::get("set_automatic_payment");  ?>" />
+   <?php
+   $listpayments = $params->get("list_allpayment", 0);	
+   if($listpayments)
+   {
+   ?>
+   <div id="payment_select" class="opg-width-1-1 opg-panel-box opg-margin-small-top <?php echo $paymenthideclass; ?>">
+   <div id="paymentdiv">
+   <h3 class="opg-panel-title"><?php echo JText::_('COM_VIRTUEMART_CART_SELECTPAYMENT'); ?></h3>
+   <?php
+	    $paymentsarr = $this->paymentplugins_paymentsnew;
+		 echo '<div id="payment_nill"></div>';
+	    echo '<div id="paymentsdiv">';
+		echo '<ul class="opg-list" id="payment_ul">';
+		foreach($paymentsarr as $pay)
+		{
+		      $replacetxt = "";
+			  $replacetxt = '<input onclick="setpayment()"';
+			  $pay = str_replace("<input", $replacetxt, $pay);
+			  echo '<li>'.$pay.'<hr class="opg-margin-small-bottom opg-margin-small-top" /></li>';
+		}
+  	    echo '</ul>';
+		if(count($paymentsarr) == 0)
+		{
+		    $text = "";
+		    $paymentnilltext = vmInfo('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', $text);
+		    echo '<p id="paymentnill" class="opg-text-warning">'.$paymentnilltext.'</p>';
+		}
+		
+	    echo '</div>';
+   ?>
+   </div>
+   </div>	
+   <?php
+   }
+   else //LIST PAYMENTS ELSE START
+   {
+  ?>
+   <div id="payment_select" class="opg-width-1-1 opg-panel-box opg-margin-small-top <?php echo $paymenthideclass; ?>">
    <h3 class="opg-panel-title"><?php echo JText::_('COM_VIRTUEMART_CART_SELECTPAYMENT'); ?></h3>
 	  <div id="payment_fulldiv" class="opg-width-1-1">
       <?php
@@ -287,6 +371,8 @@ jQuery(document).ready(function(){
 				}
 			?>
 			</div>
-			
    </div>
+   <?php
+   } //LIST PAYMENT ELSE END			
+   ?>
    <?php echo $this->loadTemplate('shopper'); ?>

@@ -1,5 +1,14 @@
 input.inputbox, textarea, .textarea, select.inputbox, input.validate-email, select.inputbox, .quantity-input, table.user-details input, #com-form-login-username input, select, #company_field, #title, #first_name_field, #middle_name_field, #last_name_field, #address_1_field, #address_2_field, #zip_field, #city_field, #virtuemart_country_id, #phone_1_field, #phone_2_field, #fax_field, #agreed_field, .contentpane #name, .contentpane #email, .contentpane #counter, .contact-input-box input, .form-validate input, .login-fields #username, .login-fields #password, .coupon, input.vm-default,  .opg-form input:not([type="radio"]):not([type="checkbox"]), .opg-form select { min-height: 30px; font-family; inherit !important; font-weight: normal !important: font-size: 1.1em !important; }
 
+.opg-list li
+{
+list-style:none !important;
+}
+.opg-list label
+{ 
+display:inline-block;
+}  
+
 #paymentdetails .error_div
 {
 display:none;
@@ -24,11 +33,6 @@ div.product
   	width: 100% !important; 
   }
 }  
-#loadingmsg
-{
-  position:fixed;
-  top:40%;
-}
 .overlaylow
 {
  opacity : 0.5;
