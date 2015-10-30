@@ -96,13 +96,14 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 		else if($singlefield['name']=='customer_note') {
 		}
 		else if($singlefield['name']=='shipto_virtuemart_country_id') {
-		    	$singlefield['formcode']=str_replace('<select','<select onchange="javascript:updateaddress(1);"',$singlefield['formcode']);
+		    	//$singlefield['formcode']=str_replace('<select','<select onchange="javascript:updateaddress(1);"',$singlefield['formcode']);
 		    	$singlefield['formcode']=str_replace('class="virtuemart_country_id','class="shipto_virtuemart_country_id',$singlefield['formcode']);
 				$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
 
     	}else if($singlefield['name']=='shipto_virtuemart_state_id') {
 	    	$singlefield['formcode']=str_replace('id="virtuemart_state_id"','id="shipto_virtuemart_state_id"',$singlefield['formcode']);
 	        $replacetext = '<select onchange="javascript:updateaddress(2);"';
+			$replacetext = "<select ";
 	    	$singlefield['formcode']=str_replace('<select',$replacetext,$singlefield['formcode']);
 			if($singlefield['required'])
 			{

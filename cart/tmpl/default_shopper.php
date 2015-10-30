@@ -439,7 +439,15 @@ defined('_JEXEC') or die('Restricted access');
 			  $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
 			}
 		    if($singlefield['name']=='zip') {
-				$replacetext = 'input onchange="javascript:updateaddress(3);"';
+				$ajaxzip =   $onlyguest =  $params->get('ajax_zip',0);
+				if($ajaxzip)
+				{
+					$replacetext = 'input onchange="javascript:updateaddress(3);"';
+				}
+				else
+				{
+				    $replacetext = 'input ';
+				}
 		    	$singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
 		    } 
 			else if($singlefield['name']=='title') {

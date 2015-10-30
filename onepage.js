@@ -21,6 +21,7 @@
 window.selectedpaymentid = 0;
 var action = "";
 var countrychange = "";
+var popupopen = 0;
 
 jQuery(document).ready(function(){
 	jQuery(".uk-alert").hide();
@@ -32,7 +33,11 @@ jQuery(document).ready(function(){
                         'shipping_address_change': function (datas) {
 						  if(window.KLARNALOCALE == 'en-us'  || window.KLARNALOCALE == 'en-gb')
 						   {		
-							 	jQuery("#loadingbutton").click();											  
+							 	 if(!popupopen)
+								{
+								 	jQuery("#loadingbutton").click();											  
+									popupopen = true;
+								}											  
 								jQuery.ajax({
 						        	type: "POST",
 							        cache: false,
@@ -230,7 +235,7 @@ function validateshipto(returnval)
 	{
 	   jQuery("#shiptoicon").show();
 	   jQuery("#shiptobutton").addClass("opg-button-primary");
-	   updatecart();   
+	   updateaddress(4);
 	   jQuery("#shiptoclose").click();
 	}
 }
@@ -309,8 +314,11 @@ function strip_tags(str, allow) {
 
 function applycoupon() {
 	
-	jQuery("#loadingbutton").click();
-	
+	if(!popupopen)
+	{
+	 	jQuery("#loadingbutton").click();											  
+	    popupopen = true;
+    }
 	couponcode = jQuery("#coupon_code").val();
 	jQuery.ajax({
         	type: "POST",
@@ -328,7 +336,11 @@ function applycoupon() {
 				   jQuery('html,body').animate({
 	    			    scrollTop: jQuery("#customerror").offset().top},
 		    	   'slow');
-				   jQuery("#loadingbtnclose").click();
+				   if(popupopen == true)
+				   {
+				   	jQuery("#loadingbtnclose").click();
+					popupopen = false;
+				   }
 			   }
 			   else
 			   {
@@ -347,7 +359,11 @@ function applycoupon() {
 
 function ajaxlogin()
 {
- jQuery("#loadingbutton").click();	 
+ 	if(!popupopen)
+	{
+	 	jQuery("#loadingbutton").click();											  
+	    popupopen = true;
+    }	 
  jQuery("#userlogin_username").removeClass("opg-form-danger");
  jQuery("#userlogin_password").removeClass("opg-form-danger");
  usernameval = document.getElementById("userlogin_username").value;
@@ -368,7 +384,11 @@ function ajaxlogin()
     var r = '<div class="opg-alert opg-alert-danger" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + loginempty + "</p></div>";
 	jQuery("#loginerror").show();
 	jQuery("#loginerror").html(r);
-	jQuery("#loadingbtnclose").click();
+	if(popupopen == true)
+    {
+	   	jQuery("#loadingbtnclose").click();
+		popupopen = false;
+	}
  }
   else
   {
@@ -389,11 +409,19 @@ function ajaxlogin()
 				 var r = '<div class="opg-alert opg-alert-danger" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + loginerror + "</p></div>";
 				 jQuery("#loginerror").show();
 				 jQuery("#loginerror").html(r);
-				 jQuery("#loadingbtnclose").click();
+				 if(popupopen == true)
+				   {
+				   	jQuery("#loadingbtnclose").click();
+					popupopen = false;
+				   }
 			  }
 			  else
 			  {
-				jQuery("#loadingbtnclose").click();   
+				if(popupopen == true)
+				   {
+				   	jQuery("#loadingbtnclose").click();
+					popupopen = false;
+				   }   
 			    window.location.reload();
 			  }
 		    });
@@ -604,7 +632,11 @@ function submit_order() {
 			return;
 	 }
 		
-    jQuery("#loadingbutton").click();
+    if(!popupopen)
+	{
+	 	jQuery("#loadingbutton").click();											  
+	    popupopen = true;
+    }
 	var register_state=true;
 
 	if(jQuery('#register').prop("checked") == true ) {
@@ -634,7 +666,11 @@ function submit_order() {
     	    		   'slow');
 					}
 					
-					jQuery("#loadingbtnclose").click();
+					if(popupopen == true)
+				    {
+				   	 jQuery("#loadingbtnclose").click();
+				 	 popupopen = false;
+				    }
 				    
 			  	    
 					return false;
@@ -663,7 +699,11 @@ function submit_order() {
 									{
 										  if(data == "error")
 										  {
-											    jQuery("#loadingbtnclose").click();
+											    if(popupopen == true)
+											    {
+											   	 jQuery("#loadingbtnclose").click();
+												 popupopen = false;
+											    }
 											    
 										  	    
 										  }
@@ -685,7 +725,11 @@ function submit_order() {
 														   jQuery("#customerror").show();
 														   jQuery("#customerror").html(r);
 														   
-														   jQuery("#loadingbtnclose").click();
+														   if(popupopen == true)
+				   											{
+															   	jQuery("#loadingbtnclose").click();
+																popupopen = false;
+															 }
 														   
 													  	   
 														   jQuery('html,body').animate({
@@ -695,10 +739,11 @@ function submit_order() {
 														 }
 														 else
 														 {
-															jQuery("#loadingbtnclose").click();
-															
-														  	
-															
+															if(popupopen == true)
+															{
+															   	jQuery("#loadingbtnclose").click();
+																popupopen = false;
+														   }
 															jQuery("#checkoutForm").submit();
 														 }
 												     });
@@ -726,7 +771,11 @@ function submit_order() {
 				 {
 					 if(data == "success")
 					 {
-						 jQuery("#loadingbtnclose").click();
+						 if(popupopen == true)
+						   {
+						   	jQuery("#loadingbtnclose").click();
+							popupopen = false;
+					      }
 						 jQuery("#checkoutForm").submit();
 					 }
 					 else
@@ -736,7 +785,11 @@ function submit_order() {
 						   jQuery("#customerror").show();
 						   jQuery("#customerror").html(r);
 						   
-						   jQuery("#loadingbtnclose").click();
+						   if(popupopen == true)
+						   {
+						   	 jQuery("#loadingbtnclose").click();
+						 	 popupopen = false;
+						   }
 						   
 					  	   
 						   
@@ -754,7 +807,11 @@ function submit_order() {
 }
 function update_product(vmid) 
 {
-	jQuery("#loadingbutton").click();
+	if(!popupopen)
+	{
+	 	jQuery("#loadingbutton").click();											  
+	    popupopen = true;
+    }
 	qtyvalue = jQuery("#quantity_"+vmid).val();
 	if(qtyvalue > 0)
 	{
@@ -779,7 +836,11 @@ function update_product(vmid)
 				    	    scrollTop: jQuery("#customerror").offset().top},
     	    	   'slow');
 				   
-				   jQuery("#loadingbtnclose").click();
+				   if(popupopen == true)
+				   {
+				   	jQuery("#loadingbtnclose").click();
+					popupopen = false;
+				   }
 				   
 			  	   
 				 }
@@ -988,7 +1049,11 @@ function update_prices()
 			
 				 if(firsttime_updateprice != "yes")
 				 {
-					  jQuery("#loadingbtnclose").click();
+					  if(popupopen == true)
+				      {
+				    	jQuery("#loadingbtnclose").click();
+				    	popupopen = false;
+				      }
 				 }
 				 firsttime_updateprice = "no";
 				 
@@ -999,7 +1064,11 @@ function update_prices()
 }
 function removeproduct(vmproductid)
 {
-	     jQuery("#loadingbutton").click();
+	     	if(!popupopen)
+			{
+	 			jQuery("#loadingbutton").click();											  
+			    popupopen = true;
+    		}
 		 jQuery.ajax({
 				type: "POST",
 		        cache: false,
@@ -1049,7 +1118,11 @@ function removeproduct(vmproductid)
 }
 function update_shipment()
 {
-	jQuery("#loadingbutton").click();
+	if(!popupopen)
+	{
+	 	jQuery("#loadingbutton").click();											  
+	    popupopen = true;
+    }
 	jQuery.ajax({
 				type: "POST",
 		        cache: false,
@@ -1234,7 +1307,11 @@ function update_shipment()
 }
 function updatepayment()
 {
-	jQuery("#loadingbutton").click(); 
+	if(!popupopen)
+	{
+	 	jQuery("#loadingbutton").click();											  
+	    popupopen = true;
+    } 
 	jQuery.ajax({
 				type: "POST",
 		        cache: false,
@@ -1470,7 +1547,11 @@ function updatepayment()
 function setshipment()
 {
 	 jQuery("#shipmentclose").click();
-	 jQuery("#loadingbutton").click();
+	 if(!popupopen)
+	 {
+	  	jQuery("#loadingbutton").click();											  
+	    popupopen = true;
+     }
 	 
 	 datas = jQuery("#checkoutForm").serialize();
 	 datas = datas.replace("&task=confirm" , "");
@@ -1493,8 +1574,12 @@ function setshipment()
 function setpayment()
 {
 	 jQuery("#paymentclose").click();
-	 jQuery("#loadingbutton").click();
-	 
+ 	 if(!popupopen)
+	 {
+	 	jQuery("#loadingbutton").click();											  
+	    popupopen = true;
+     }
+	  
 	 datas = jQuery("#checkoutForm").serialize();
 	 datas = datas.replace("&task=confirm" , "");
 	 datas = datas.replace("&task=update" , "");
@@ -1518,7 +1603,11 @@ function updatecustomernote(element)
 }
 function updatecart()
 {
-	 jQuery("#loadingbutton").click();
+	if(!popupopen)
+	{
+	 	jQuery("#loadingbutton").click();											  
+	    popupopen = true;
+    }
 	 
 	 datas = jQuery("#checkoutForm").serialize();
 	 datas = datas.replace("&task=confirm" , "");
@@ -1543,7 +1632,11 @@ function updateaddress(fieldtype)
 	 {
 		 countrychange = "yes";
 	 }
-	 jQuery("#loadingbutton").click();
+	 if(!popupopen)
+	 {
+	 	jQuery("#loadingbutton").click();											  
+	    popupopen = true;
+     }
 	
 	 datas = jQuery("#checkoutForm").serialize();
 	 datas = datas.replace("&task=confirm" , "");
