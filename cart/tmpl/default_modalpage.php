@@ -181,8 +181,8 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 			   ?>
 		   </div>
 		   <div class="opg-modal-footer">
-	  			 <a class="opg-button opg-button-primary" href="Javascript:void(0);" onclick="validatecomment();">Submit</a>
-				 <a id="commentclose" class="opg-modal-close opg-button">Cancel</a>
+	  			 <a class="opg-button opg-button-primary" href="Javascript:void(0);" onclick="validatecomment();"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
+				 <a id="commentclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
 		   </div>
     </div> <!-- comments Modal ended -->
 	</div><!-- comments Modal ended -->
@@ -244,6 +244,8 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 					echo '<ul class="opg-list" id="payment_ul">';
 						foreach($paymentsarr as $pay)
 						{
+						  $pos = strpos($pay, '</span></span>');
+						  $pay = substr($pay, 0, $pos);
 						  echo '<li>'.$pay.'<hr class="opg-margin-small-bottom opg-margin-small-top" /></li>';
 						}
 					echo '</ul>';

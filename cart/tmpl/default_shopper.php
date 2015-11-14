@@ -21,14 +21,40 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-   $plugin=JPluginHelper::getPlugin('system','onepage_generic');
-   $params=new JRegistry($plugin->params);
-
-   echo "<fieldset id='payments'>"; 
-   foreach($this->paymentplugins_payments as $payments) {
-				$display = str_replace('type="radio"','type="radio" class="opg-hidden" onclick="javascript:updateaddress(5);"',$payments);
-				$display = str_replace('<label','<label class="opg-hidden"',$display);
-				echo $display;
+    $plugin=JPluginHelper::getPlugin('system','onepage_generic');
+    $params=new JRegistry($plugin->params);
+    echo "<fieldset id='payments'>"; 
+    foreach($this->paymentplugins_payments as $payments) 
+    {
+	    $splittexts = array();
+		$splittexts = explode('"', $payments);
+		$getvalue = false;
+		$value = 0;
+		$paymethod_id = 0;
+		foreach($splittexts as $key => $splittext)
+		{
+		   if($getvalue && $key == $value)
+		   {
+		      $paymethod_id = $splittext;
+			  break;
+		   } 
+		   if(strpos($splittext, "payment_id_") !== false)	
+		   {
+		      $getvalue = true;
+ 		      $value  = $key + 2;
+		   }
+		} 
+		$display = str_replace('type="radio"','type="radio" class="opg-hidden" onclick="javascript:updateaddress(5);"',$payments);
+		$display = str_replace('<label','<label class="opg-hidden"',$display);
+		if($this->selectedPayment == $paymethod_id)
+		{
+		  $displayvar = "";
+		}
+		else
+		{
+		  $displayvar = "display:none;";
+		}
+		echo '<div class="paydiv" id="paydiv_'.$paymethod_id.'" style="'.$displayvar.'">'.$display.'</div>';
     }
 	echo '</fieldset>';
 	if($this->klarnapaymentid > 0)
@@ -501,11 +527,38 @@ defined('_JEXEC') or die('Restricted access');
 		<?php // Leave A Comment Field ?>
 		
 		<?php
-  foreach($this->cart->BTaddress["fields"] as $singlefield) 
+		 $customernote = FALSE;
+  foreach($cart->BTaddress["fields"] as $field) 
   {
-     if($singlefield['name']=='customer_note') 
-	 {
-		if(!empty($this->cart->BT['customer_note']))
+     if($field['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	   $singlefield = $field;
+	   break;
+	 }
+  } 
+  foreach($cart->STaddress["fields"] as $field) 
+  {
+     if($field['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	   $singlefield = $field;
+	   break;
+	 }
+  } 
+  foreach($cart->userFieldsCart["fields"] as $field) 
+  {
+     if($field['name']=='customer_note') 
+ 	 {
+	   $customernote = true;
+	   $singlefield = $field;
+	   break;
+	 }
+  } 
+   if($customernote) 
+	 {	
+  
+		if(!empty($singlefield['value']))
 	 	{
 		  $commenticon  = '';
 		  $commentactive = 'opg-button-primary';
@@ -518,11 +571,13 @@ defined('_JEXEC') or die('Restricted access');
 		?>
 		
 	 <div class="opg-width-1-1">
-		 <a id="commentbutton" class="opg-button <?php echo $commentactive; ?> opg-width-1-1" href="#commentpopup" data-opg-modal><i id="commenticon" style="<?php echo $commenticon; ?>" class="opg-icon opg-icon-check opg-margin-small-right"></i><?php echo JText::_('Add Notes and Special Requests'); ?></a>
+		 <a id="commentbutton" class="opg-button <?php echo $commentactive; ?> opg-width-1-1" href="#commentpopup" data-opg-modal><i id="commenticon" style="<?php echo $commenticon; ?>" class="opg-icon opg-icon-check opg-margin-small-right"></i>
+		  <?php echo JText::_('COM_VIRTUEMART_COMMENT_CART'); ?>
+		 </a>
 	 </div>
 	 <?php
 	 }
-  }
+
   ?>
 		<div class="checkout-button-top">
 

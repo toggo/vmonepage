@@ -178,8 +178,8 @@ $document->addScriptDeclaration("
 	  window.changetext = '".$changetext."';	  
 	  window.noshipmethod = '".$noshipmethod."';	  
 	  window.nopaymethod = '".$nopaymethod."';	  
-	  window.onlyregistered = ".VmConfig::get('oncheckout_only_registered').";	  
-	  window.couponenable = ".VmConfig::get('coupons_enable').";	  
+	  window.onlyregistered = ".VmConfig::get('oncheckout_only_registered', 0).";	  
+	  window.couponenable = ".VmConfig::get('coupons_enable', 0).";	  
 	  window.showextraterms = ".$showextraterms.";
 	  window.token = '".JSession::getFormToken()."';
 	  window.show_tax = ".VmConfig::get('show_tax').";

@@ -20,7 +20,18 @@
 */
 defined('_JEXEC') or die('Restricted access');
 
-
+$msg = '';
+$_dispatcher = JDispatcher::getInstance();
+$_retValues = $_dispatcher->trigger('plgVmOnSelectCheckPayment', array( $cart, &$msg));
+$dataValid = true;
+foreach ($_retValues as $_retVal) 
+{
+	if ($_retVal === true ) 
+	{
+		$cart->setCartIntoSession();
+		break;
+    }
+}
 
 $app = JFactory::getApplication();
 $postData = $app->input->post->getArray();

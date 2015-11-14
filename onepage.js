@@ -713,14 +713,25 @@ function submit_order() {
 					        							type: "POST",
 												        cache: false,
 														data : datas,
+														dataType : "json",
 											    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=completecheckout',
 														
 												 }).done(
 													 function (data, textStatus) 
 													 {
-														 if(data == "error")
+														 if(data.success == 1) 
 														 {
-														   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + invaliddata + "</p></div>";
+															if(popupopen == true)
+															{
+															   	jQuery("#loadingbtnclose").click();
+																popupopen = false;
+														   }
+															jQuery("#checkoutForm").submit();
+														 }
+														 else
+														 {
+														   errordata = data.message;	  
+														   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + invaliddata + "</p><p>"+errordata+"</p></div>";
 														   jQuery("#customerror").html("");
 														   jQuery("#customerror").show();
 														   jQuery("#customerror").html(r);
@@ -737,15 +748,8 @@ function submit_order() {
 												    	    'slow');
 															return;
 														 }
-														 else
-														 {
-															if(popupopen == true)
-															{
-															   	jQuery("#loadingbtnclose").click();
-																popupopen = false;
-														   }
-															jQuery("#checkoutForm").submit();
-														 }
+														 
+														 
 												     });
 										  }
 									});
@@ -761,15 +765,16 @@ function submit_order() {
 	 	datas = datas.replace("&task=confirm" , "");
 	 	datas = datas.replace("&task=update" , "");
 	 	datas = datas.replace("&task=user.login" , "");
-       jQuery.ajax({
+        jQuery.ajax({
 				type: "POST",
 		        cache: false,
 				data : datas,
+				dataType : "json",
 	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=completecheckout',
 		 }).done(
 			 function (data, textStatus) 
 				 {
-					 if(data == "success")
+					 if(data.success == 1) 
 					 {
 						 if(popupopen == true)
 						   {
@@ -780,7 +785,8 @@ function submit_order() {
 					 }
 					 else
 					 {
-						   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + invaliddata + "</p></div>";
+						   errordata = data.message;	  
+						   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + invaliddata + "</p><p>"+errordata+"</p></div>";
 						   jQuery("#customerror").html("");
 						   jQuery("#customerror").show();
 						   jQuery("#customerror").html(r);
@@ -999,6 +1005,12 @@ function update_prices()
 						jQuery("#coupon_price").html('');
 					 }
 			     } 
+				 selectedpayid = jQuery("#paymentsdiv input[name='virtuemart_paymentmethod_id']:checked").val();
+		         if(jQuery("#paydiv_"+selectedpayid).length > 0)
+  	 	     	 {
+					  jQuery("#paydiv_"+selectedpayid+" div").find("*").removeClass("opg-hidden");
+
+			     }
 				 
 				(function($){
 				var klarna_id = $('#klarna_checkout_onepage').val();
@@ -1393,14 +1405,18 @@ function updatepayment()
 						   if(activeclasss != ""  && listpayments == 0)
 						   {
 						      texxt = data[i];
-							  tmptxt = strip_tags(texxt, '<span><img><div>');
 							  
+							  pos = texxt.indexOf("</span></span>"); 
+							  if(pos > 0)
+							  {
+								  texxt =  texxt.substring(0, pos); 
+							  }
+							  tmptxt = strip_tags(texxt, '<span><img><div>');
 							  tmptxt = tmptxt.replace('klarna-checkout-container', 'klarna-checkout-containers_div');
 							  tmptxt = tmptxt.replace('</span><span', '</span><br /><span');
 							  tmptxt = tmptxt.replace('vmpayment_description', 'vmpayment_description opg-text-small');
 							  tmptxt = tmptxt.replace('vmpayment_cost', 'vmpayment_cost opg-text-small');
 							  document.id('paymentdetails').set('html', tmptxt);
-								  
 						 	  if(data.length > 1 )
 							  {	
 							     if(document.getElementById("shipchange") == null)
@@ -1420,15 +1436,20 @@ function updatepayment()
 						   		 jQuery("#paychangediv").remove();
 						  	 }
 						   } 
-						    
 						   texxts = "";
 						   texxts = data[i];
+						   pos = texxts.indexOf("</span></span>"); 
+						   if(pos > 0)
+						   {
+							   texxts =  texxts.substring(0, pos); 
+						   }
+
 						   tmptxts = strip_tags(texxts, '<span><img><input><div>');
 						   tmptxts = tmptxts.replace('klarna-checkout-container', 'klarna-checkout-containers_div');
 						   tmptxts = tmptxts.replace('</span><span', '</span><br /><span');
 						   tmptxts = tmptxts.replace('vmpayment_description', 'vmpayment_description opg-text-small');
 						   tmptxts = tmptxts.replace('vmpayment_cost', 'vmpayment_cost opg-text-small');
-						   if(listpayments)
+						   if(listpayments > 0)
 						   {
 								tmptxts = tmptxts.replace('type="radio"', 'type="radio" onclick="setpayment()" ');
 						   }
@@ -1453,7 +1474,19 @@ function updatepayment()
 					}
 					jQuery("#paymentclose").click();
 				    document.id('paymentsdiv').set('html',payments);
-			   }		
+			   }	
+			    
+	                       //FOR AUTHORIZED .NET 		   
+  						   if(jQuery("#payment_ul .vmpayment_cardinfo").length > 0)
+						   {
+						     jQuery("#payment_ul .vmpayment_cardinfo").remove();
+						   }
+						   if(jQuery("#paymentrow .vmpayment_cardinfo").length > 0)
+						   {
+						     jQuery("#paymentrow .vmpayment_cardinfo").remove();
+						   }
+						   
+
 			   
 			   
 			 paymentchecked  = false;
@@ -1499,6 +1532,16 @@ function updatepayment()
 				   document.id('paymentsdiv').getElements('input')[0].checked=true;
 				   updatecart();
 			  }
+			}
+			
+		    jQuery(".paydiv").each(function(){
+			     jQuery(this).hide();									
+			});
+			selectedpayid = 0;
+			selectedpayid = jQuery("#paymentsdiv input[name='virtuemart_paymentmethod_id']:checked").val();
+		    if(jQuery("#paydiv_"+selectedpayid).length > 0)
+			{
+				jQuery("#paydiv_"+selectedpayid).show();
 			}
 			if(document.getElementById('klarna_checkout_onepage') != null)
 			{
@@ -1579,7 +1622,7 @@ function setpayment()
 	 	jQuery("#loadingbutton").click();											  
 	    popupopen = true;
      }
-	  
+	 selectedpayid = jQuery("#paymentsdiv input[name='virtuemart_paymentmethod_id']:checked").val();
 	 datas = jQuery("#checkoutForm").serialize();
 	 datas = datas.replace("&task=confirm" , "");
 	 datas = datas.replace("&task=update" , "");
@@ -1593,6 +1636,19 @@ function setpayment()
 		 }).done(
 			 function (data, textStatus){
 				updatepayment();
+		 }).fail(function() {
+			   
+			  	jQuery.ajax({
+				type: "POST",
+		        cache: false,
+	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=setsession&payid='+selectedpayid,
+				data : datas,
+
+				 }).done(
+					 function (data, textStatus){
+						 
+						 updatepayment();	
+					 });
 		 });
 }
 function updatecustomernote(element)

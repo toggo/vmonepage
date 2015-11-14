@@ -278,11 +278,13 @@ jQuery(document).ready(function(){
    <h3 class="opg-panel-title"><?php echo JText::_('COM_VIRTUEMART_CART_SELECTPAYMENT'); ?></h3>
    <?php
 	    $paymentsarr = $this->paymentplugins_paymentsnew;
-		 echo '<div id="payment_nill"></div>';
+		echo '<div id="payment_nill"></div>';
 	    echo '<div id="paymentsdiv">';
 		echo '<ul class="opg-list" id="payment_ul">';
 		foreach($paymentsarr as $pay)
 		{
+		      $pos = strpos($pay, '</span></span>');
+			  $pay = substr($pay, 0, $pos); 
 		      $replacetxt = "";
 			  $replacetxt = '<input onclick="setpayment()"';
 			  $pay = str_replace("<input", $replacetxt, $pay);
@@ -320,6 +322,8 @@ jQuery(document).ready(function(){
 					
 						    $tmpdis = strip_tags($tmppay , '<span><img>');
 						    echo '<table class="opg-table opg-table-striped" id="paymentable"><tr id="paymentrow"><td id="paymentdetails">';
+							$pos = strpos($tmpdis, '</span></span>');
+						    $tmpdis = substr($tmpdis, 0, $pos); 
 						    $tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_description" , "vmpaymentt_description opg-text-small", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_cost" , "vmpayment_cost opg-text-small", $tmpdis);
@@ -346,6 +350,8 @@ jQuery(document).ready(function(){
 					        $paym_arr = $this->paymentplugins_paymentsnew;
 				            $tmpdis = strip_tags($paym_arr[0] , '<span><img>');
 						    echo '<table class="opg-table opg-table-striped" id="paymentable"><tr id="paymentrow"><td id="paymentdetails">';
+							$pos = strpos($tmpdis, '</span></span>');
+						    $tmpdis = substr($tmpdis, 0, $pos); 
 						    $tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_description" , "vmpayment_description opg-text-small", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_cost" , "vmpayment_cost opg-text-small", $tmpdis);
@@ -360,6 +366,7 @@ jQuery(document).ready(function(){
 							}
 							echo '</tr></table>'; 
 							$paymentpresent = 1;
+							
 					}
 					else
 					{

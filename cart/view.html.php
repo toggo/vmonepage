@@ -249,18 +249,33 @@ class VirtueMartViewCart extends VmView {
 		
 		if($task == "completecheckout")
 		{ 
+
 		     require_once dirname(__FILE__)."/updatecartaddress.php";
 			
 			 $checkout = $cart->checkoutData(false);
-			
+		  	 $app = JFactory::getApplication();
+			 $messageQueue = $app->getMessageQueue();
+
+			 $return_error = "";
+			 if(count($messageQueue) > 0)
+			 {
+			    foreach($messageQueue as $message)
+				{
+				   $return_error .= $message['message'];
+				}
+			 }
+			 
+			 $returnarray = array();
 		     if($checkout)
 			 {
-				 echo "success";
+				 $returnarray["success"] = 1;
 			 }
 			 else
 			 {
-			    echo "error";
+			    $returnarray["success"] = 0;
 			 } 
+			 $returnarray['message'] =  $return_error;
+			 echo json_encode($returnarray);
 			 exit;
 		}
 		
@@ -275,6 +290,17 @@ class VirtueMartViewCart extends VmView {
 			$this->lSelectPayment();
 			echo json_encode($this->paymentplugins_payments);
 			exit;
+		  }
+		  if($task == "setsession")
+		  {
+		     $payid = JRequest::getVar("payid", 0);
+			 if($payid > 0)
+			 {
+			     $cart->setPaymentMethod(false, false, $payid);
+				 $cart->setCartIntoSession();
+			 }
+			 echo "success";
+			 exit;
 		  }
 		  if($task == "klarnaupdate")
 		  {
