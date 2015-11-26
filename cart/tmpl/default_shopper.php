@@ -20,6 +20,20 @@
 */
 
 defined('_JEXEC') or die('Restricted access');
+    
+
+    if (!empty($this->checkoutAdvertise)) {
+			?> <div id="checkout-advertise-box"> <?php
+			foreach ($this->checkoutAdvertise as $checkoutAdvertise) {
+				?>
+				<div class="checkout-advertise opg-width-1-1 opg-panel-box opg-margin-small-top ">
+					<?php echo $checkoutAdvertise; ?>
+				</div>
+			<?php
+			}
+			?></div><?php
+		}
+
 
     $plugin=JPluginHelper::getPlugin('system','onepage_generic');
     $params=new JRegistry($plugin->params);
@@ -65,6 +79,7 @@ defined('_JEXEC') or die('Restricted access');
 	   }
 	}
    ?>
+  
    <div id="otherpay_buttons" class="opg-panel-box opg-margin-top" style="<?php echo $otherpaycss; ?>"> <!-- Panel Box Started -->
      
 	 <?php

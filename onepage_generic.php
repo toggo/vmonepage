@@ -83,6 +83,10 @@ class plgSystemOnepage_generic extends JPlugin {
 		{
 			require_once(dirname(__FILE__) . DS . 'cart' . DS . 'view.html.php');
    	    }
+		else if($_option == 'com_virtuemart' && $_view == 'vmplg' && $_task == "pluginUserPaymentCancel")
+		{
+			  require_once(dirname(__FILE__) . DS . 'cart' . DS . 'view.html.php');
+		}
 	}
 }
 ?>

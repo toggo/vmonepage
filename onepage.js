@@ -431,10 +431,7 @@ function ajaxlogin()
 
 
 function submit_order() {	
-
   
-
-   
    jQuery("#customerror").html("");
    errormsg = "";
     if(captchaenabled)
