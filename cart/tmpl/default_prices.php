@@ -33,9 +33,15 @@ $params=new JRegistry($plugin->params);
             <div class="price-amount price-type opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2" id="coupon_price"><?php echo $this->currencyDisplay->createPriceDiv('salesPriceCoupon','', $this->cart->pricesUnformatted['salesPriceCoupon'],true) ?></div>
             <div class="clear"></div>
         </div>
-
-	 
-	 
+		<div class="product-subtotal opg-grid opg-text-right" id="coupon_taxfulldiv">
+		  <div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2">
+		    <?php echo JText::_('PLG_SYSTEM_VMUIKIT_ONEPAGE_COUPON_TAX').":"; ?>
+		  </div>
+          <div class="price-amount price-type opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2" id="coupon_tax">
+			<?php echo $this->currencyDisplay->createPriceDiv('couponTax','', @$this->cart->pricesUnformatted['couponTax'],false); ?>
+		  </div>
+          <div class="clear"></div>
+        </div>
         <div class="product-subtotal  opg-grid opg-text-right" id="sales_pricefulldiv">
 		  <div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2"><?php echo JText::_('COM_VIRTUEMART_ORDER_PRINT_PRODUCT_PRICES_TOTAL').': '; ?></div>
             <div class="price-amount price-type opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2" id="sales_price"><?php echo $this->currencyDisplay->createPriceDiv('salesPrice','', $this->cart->pricesUnformatted,true) ?></div>
@@ -49,13 +55,7 @@ $params=new JRegistry($plugin->params);
             <div class="clear"></div>
         </div>
 		
-         <div class="product-subtotal opg-width-1-1 opg-hidden" id="coupon_taxfulldiv">
-		  <div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2">
-		          <?php echo JText::_('Coupon Tax').":"; ?>
-			</div>
-             <div class="price-amount price-type opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2" id="coupon_tax"><?php echo $this->currencyDisplay->createPriceDiv('couponTax','', @$this->cart->pricesUnformatted['couponTax'],false); ?></div>
-            <div class="clear"></div>
-        </div>
+         
 
 			<?php
 		foreach($this->cart->cartData['DBTaxRulesBill'] as $rule){ ?>

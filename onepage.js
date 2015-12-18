@@ -986,11 +986,14 @@ function update_prices()
 					{
 						if(data.couponTax) 
 						{
+							
 							jQuery("#coupon_tax").html(data.couponTax);
+							jQuery("#coupon_taxfulldiv").show();
 						} 
 						else 
 						{
 							jQuery("#coupon_tax").html('');
+							jQuery("#coupon_taxfulldiv").hide();
 						}
 					 }
 					 if(data.salesPriceCoupon) 
