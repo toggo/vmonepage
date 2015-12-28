@@ -6,15 +6,15 @@
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 ** This source is free software. This version may have been modified pursuant
 ** to the GNU General Public License, and as distributed it includes or
-** is derivative of works licensed under the GNU General Public License or
+** is derivative of works licensed under the GNU General Public License or 
 ** other free or open source software licenses.
 **
 ** THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 ** KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
 ** IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
-** PARTICULAR PURPOSE.
+** PARTICULAR PURPOSE. 
 
-** <author>Joomlaproffs / Virtuemart team</author>
+** <author>Joomlaproffs / Virtuemart team</author> 
 ** <email>info@joomlaproffs.se</email>
 ** <date>2015</date>
 */
@@ -22,13 +22,13 @@
 defined('_JEXEC') or die('Restricted access');
 
  	$stockhandle = VmConfig::get('stockhandle','none');
-	$quantities =  $input->getString("quantityval");
 	$quantities = vRequest::getInt('quantityval');
 	$stock = vRequest::getInt('stock');
+	
 	foreach($quantities as $key=>$quantity)
 	{
 	  if (isset($cart->cartProductsData[$key]) and !empty($quantity)) 
-		{
+	  {
 		  if($quantity != $cart->cartProductsData[$key]['quantity'])
 			{
 				  $productsleft  = $stock[$key];
@@ -54,6 +54,7 @@ defined('_JEXEC') or die('Restricted access');
 				 $cart->cartProductsData[$key]['quantity'] = $quantity;
 			   }
 		  }
+		
 	  }
 	$cart->setCartIntoSession(true); 
 	$errorarray = array();

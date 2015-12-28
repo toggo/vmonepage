@@ -20,23 +20,35 @@
 */
 
 defined('_JEXEC') or die('Restricted access');
-    
-
-    if (!empty($this->checkoutAdvertise)) {
-			?> <div id="checkout-advertise-box"> <?php
-			foreach ($this->checkoutAdvertise as $checkoutAdvertise) {
-				?>
-				<div class="checkout-advertise opg-width-1-1 opg-panel-box opg-margin-small-top ">
-					<?php echo $checkoutAdvertise; ?>
-				</div>
-			<?php
-			}
-			?></div><?php
-		}
 
 
     $plugin=JPluginHelper::getPlugin('system','onepage_generic');
     $params=new JRegistry($plugin->params);
+	
+	$checkoutadv = FALSE;
+    foreach($this->checkoutAdvertise as $checkoutAdvertise)
+    {
+      if(!empty($checkoutAdvertise))
+	  {
+	    $checkoutadv = TRUE;
+	  } 
+    }
+    if ($checkoutadv) 
+	{
+	?>
+		 <div id="checkout-advertise-box"> <?php
+			foreach ($this->checkoutAdvertise as $checkoutAdvertise) 
+			{
+			?>
+				<div class="checkout-advertise uk-width-1-1 uk-panel-box uk-margin-small-top ">
+					<?php echo $checkoutAdvertise; ?>
+				</div>
+			<?php
+			}
+			?>
+			</div>
+	<?php
+	}
     echo "<fieldset id='payments'>"; 
     foreach($this->paymentplugins_payments as $payments) 
     {
@@ -71,6 +83,7 @@ defined('_JEXEC') or die('Restricted access');
 		echo '<div class="paydiv" id="paydiv_'.$paymethod_id.'" style="'.$displayvar.'">'.$display.'</div>';
     }
 	echo '</fieldset>';
+	$otherpaycss = "";
 	if($this->klarnapaymentid > 0)
 	{
 	   if($this->selectedPayment == $this->klarnapaymentid)
@@ -543,7 +556,7 @@ defined('_JEXEC') or die('Restricted access');
 		
 		<?php
 		 $customernote = FALSE;
-  foreach($cart->BTaddress["fields"] as $field) 
+  foreach($this->cart->BTaddress["fields"] as $field) 
   {
      if($field['name']=='customer_note') 
  	 {
@@ -552,7 +565,7 @@ defined('_JEXEC') or die('Restricted access');
 	   break;
 	 }
   } 
-  foreach($cart->STaddress["fields"] as $field) 
+  foreach($this->cart->STaddress["fields"] as $field) 
   {
      if($field['name']=='customer_note') 
  	 {
@@ -561,7 +574,7 @@ defined('_JEXEC') or die('Restricted access');
 	   break;
 	 }
   } 
-  foreach($cart->userFieldsCart["fields"] as $field) 
+  foreach($this->userFieldsCart["fields"] as $field) 
   {
      if($field['name']=='customer_note') 
  	 {

@@ -291,6 +291,16 @@ class VirtueMartViewCart extends VmView {
 			echo json_encode($this->paymentplugins_payments);
 			exit;
 		  }
+		  if($task == "ajaxpayandship")
+		  {
+		    $this->lSelectShipment();
+			$this->lSelectPayment();
+			$result = array();
+			$result['payments'] = $this->paymentplugins_payments;
+			$result['shipments'] = $this->shipments_shipment_rates;
+			echo json_encode($result);
+			exit;
+		  }
 		  if($task == "setsession")
 		  {
 		     $payid = JRequest::getVar("payid", 0);

@@ -101,7 +101,7 @@ $document->addStyleDeclaration('#facebox .content {display: block !important; he
 	 
  } 
 $agreetotos = VmConfig::get('agree_to_tos_onorder');
-foreach($this->BTaddress['fields'] as $name => $cartfield)
+foreach($this->cart->BTaddress['fields'] as $name => $cartfield)
 {
  if($cartfield['required'] == 1)
  {
@@ -112,7 +112,7 @@ foreach($this->BTaddress['fields'] as $name => $cartfield)
   }
  } 
 
-foreach($this->STaddress['fields'] as $name => $cartfield)
+foreach($this->cart->STaddress['fields'] as $name => $cartfield)
 {
  if($cartfield['required'] == 1)
  {
@@ -187,8 +187,8 @@ $document->addScriptDeclaration("
 	  window.countryreload = ".$countryreload.";
 	  window.captchaenabled = ".$captchaenabled.";
 	  window.captchainvalid = '".$captchainvalid."';
-  	  window.listshipments = '".$listshipments."';
-	  window.listpayments = '".$listpayments."';
+  	  window.listshipments = ".$listshipments.";
+	  window.listpayments = ".$listpayments.";
       //]]>
       ");
 ?>
@@ -235,7 +235,7 @@ else
 		 <div class="opg-modal-dialog"><!-- lodingdiv Modal Started -->
 		     <a id="loadingbtnclose" class="opg-modal-close opg-close opg-hidden"></a>
 			<div class="opg-progress opg-progress-striped opg-active">
-			    <div class="opg-progress-bar opg-text-center" style="width: 100%;">Loading...</div>
+			    <div class="opg-progress-bar opg-text-center" style="width: 100%;"></div>
 			</div>
     	</div> <!-- lodingdiv Modal ended -->
 		</div><!-- lodingdiv Modal ended -->

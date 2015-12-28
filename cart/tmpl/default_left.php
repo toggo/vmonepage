@@ -113,7 +113,7 @@ $params=new JRegistry($plugin->params);
                             return true;
                         }
                         </script>
-					         <input name="quantity" type="hidden" value="<?php echo $step ?>" />
+					         <input name="quantityv" type="hidden" value="<?php echo $step ?>" />
 							 
                              <input type="text" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="quantity-input js-recalculate opg-form-small opg-text-center" onblur="check_<?php echo $pkey; ?>(this);" size="2" maxlength="4" value="<?php echo $prow->quantity ?>" id='quantity_<?php echo $cartitemid; ?>' name="quantityval[<?php echo $pkey; ?>]"  style="color:inherit !important;" />
 									  

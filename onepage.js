@@ -1287,18 +1287,18 @@ function update_shipment()
 							 if(autoshipid > 0)
 							 {
 							    jQuery("#shipments #shipment_id_"+autoshipid).attr('checked', true);
-								updatecart();
+								setshipment();
 							 }
 							 else
 							 {
 							   document.id('shipment_selection').getElements('input')[0].checked=true;
-							   updatecart();
+							   setshipment();
 							 }
 						  }
 						  else  if(document.id('shipment_selection').getElements('input').length > 0)
 						  {
 						      document.id('shipment_selection').getElements('input')[0].checked=true;
-							  updatecart();
+							 setshipment();
 						  }
 					}
 					
@@ -1324,17 +1324,17 @@ function updatepayment()
 	 	jQuery("#loadingbutton").click();											  
 	    popupopen = true;
     } 
-	jQuery.ajax({
+	 jQuery.ajax({
 				type: "POST",
 		        cache: false,
-	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=ajaxpayment',
+	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=ajaxpayandship',
 				data : datas,
 				dataType: "json"
 		 }).done(
 			 function (data, textStatus){
 				 
 				jQuery("#paymentsdiv").html("");
-				if(data.length == 0)
+				if(data.payments.length == 0)
 				{
 					 if(listpayments)
 				 	 { 
@@ -1382,12 +1382,12 @@ function updatepayment()
 					 jQuery("#payment_fulldiv").html(newhtml);
 				}
 				var payments="";
-				if(data) 
+				if(data.payments) 
 				{
 				    payments+= '<ul class="opg-list" id="payment_ul">';
-				    for(var i=0;i<data.length;i++) 
+				    for(var i=0;i<data.payments.length;i++) 
 					{
-						   inputstr = data[i].toString();
+						   inputstr = data.payments[i].toString();
 						   var s = inputstr.search("klarna-checkout-container"); 
 						   if(s > 0)
 						   {
@@ -1404,7 +1404,7 @@ function updatepayment()
 					       }
 						   if(activeclasss != ""  && listpayments == 0)
 						   {
-						      texxt = data[i];
+						      texxt = data.payments[i];
 							  
 							  pos = texxt.indexOf("</span></span>"); 
 							  if(pos > 0)
@@ -1417,9 +1417,9 @@ function updatepayment()
 							  tmptxt = tmptxt.replace('vmpayment_description', 'vmpayment_description opg-text-small');
 							  tmptxt = tmptxt.replace('vmpayment_cost', 'vmpayment_cost opg-text-small');
 							  document.id('paymentdetails').set('html', tmptxt);
-						 	  if(data.length > 1 )
+						 	  if(data.payments.length > 1 )
 							  {	
-							     if(document.getElementById("shipchange") == null)
+							     if(document.getElementById("paychangediv") == null)
 							 	 {
 								     jQuery("#paychangediv").remove();
 							 	     temptext = "";
@@ -1437,7 +1437,7 @@ function updatepayment()
 						  	 }
 						   } 
 						   texxts = "";
-						   texxts = data[i];
+						   texxts = data.payments[i];
 						   pos = texxts.indexOf("</span></span>"); 
 						   if(pos > 0)
 						   {
@@ -1463,11 +1463,11 @@ function updatepayment()
 					onepayementhide = document.getElementById("onepaymenthide").value;
 					if(onepayementhide == "yes")
 					{
-					  if(data.length == 1)
+					  if(data.payments.length == 1)
 					  {
 					    jQuery("#payment_select").addClass("opg-hidden");
 					  }
-					  else if(data.length > 1 ||  data.length == 0)
+					  else if(data.payments.length > 1 ||  data.payments.length == 0)
 					  {
 					    jQuery("#payment_select").removeClass("opg-hidden");
 					  }
@@ -1515,14 +1515,14 @@ function updatepayment()
 				 {
 				   jQuery("#payments #payment_id_"+autopayid).attr('checked', true);
 				   jQuery("#paymentsdiv #payment_id_"+autopayid).attr('checked', true);
-				   updatecart();
+				   setpayment();
 				 }
 				 else
 				 {
 				   val_id = document.id('paymentsdiv').getElements('input')[0].value;
 				   jQuery("#payments #payment_id_"+val_id).attr('checked', true);
 				   document.id('paymentsdiv').getElements('input')[0].checked=true;
-				   updatecart();
+				   setpayment();
 				 }
 			  }
 			  else if(document.id('paymentsdiv').getElements('input').length > 0)
@@ -1530,7 +1530,7 @@ function updatepayment()
 			       val_id = document.id('paymentsdiv').getElements('input')[0].value;
 				   jQuery("#payments #payment_id_"+val_id).attr('checked', true);
 				   document.id('paymentsdiv').getElements('input')[0].checked=true;
-				   updatecart();
+				   setpayment();
 			  }
 			}
 			
@@ -1579,7 +1579,163 @@ function updatepayment()
 			} 
 			else 
 			{
-				update_shipment();
+				    document.id('shipment_selection').empty();
+					var shipments="";
+					if(data.shipments.length == 0)
+					{
+						if(listshipments)
+						{ 
+						  divname = "shipment_nill";
+						}
+						else
+						{
+						  divname = "shipment_fulldiv";	
+						}
+					     jQuery("#"+divname).html("");
+						 newhtml = '<p id="shipmentnill" class="opg-text-warning"></p>';
+						 jQuery("#"+divname).html(newhtml);
+					     country_ele = document.id('virtuemart_country_id');
+					     if(country_ele != null)
+						 {
+						     var validator = new JFormValidator();
+						     var cval2 =validator.validate(country_ele);
+							 if(cval2 == false)
+ 							 {
+								  shipmentnil  = chosecountry;
+								  jQuery("#shipmentnill").html("");
+								  jQuery("#shipmentnill").html(shipmentnil); 
+ 			 				 } 
+							 else
+							 {
+								  shipmentnil  = noshipmethod;
+								  jQuery("#shipmentnill").html("");
+								  jQuery("#shipmentnill").html(shipmentnil);
+						  	 }
+						 }
+						 else
+						 {
+							  shipmentnil  = noshipmethod;
+							  jQuery("#shipmentnill").html("");
+							  jQuery("#shipmentnill").html(shipmentnil);
+						 }
+					}
+					else
+					{
+						 jQuery("#shipment_fulldiv").html("");
+						 newhtml = '<table class="opg-table opg-table-striped" id="shipmenttable"><tr id="shipmentrow"><td id="shipmentdetails"></td></tr></table>';
+					 jQuery("#shipment_fulldiv").html(newhtml);
+					}
+					if(data.shipments)
+					{
+					    shipments+= '<ul class="opg-list" id="shipment_ul">';
+					    for(var i=0;i<data.shipments.length;i++) {
+						   inputstr = data.shipments[i].toString();
+						   var n = inputstr.search("checked"); 
+						   if(n > 0)
+						   {
+						     var activeclasss = "liselected";
+						   }
+						   else
+						   {
+						     var activeclasss = "";
+						   }
+						   if(activeclasss != "" && listshipments == 0)
+						   {
+							  texxt = data.shipments[i];
+							  tmptxt = strip_tags(texxt, '<span><img>');
+							  tmptxt = tmptxt.replace('</span><span', '</span><br /><span');
+							  tmptxt = tmptxt.replace('vmshipment_description', 'vmshipment_description opg-text-small');
+							  tmptxt = tmptxt.replace('vmshipment_cost', 'vmshipment_cost opg-text-small');
+							  
+							  document.id('shipmentdetails').set('html', tmptxt);
+							  if(data.shipments.length > 1)
+							  {
+							    if(document.getElementById("shipchange") == null)
+								{
+								     jQuery("#shipchangediv").remove();
+								     temptext = "";
+								  	 temptext =  '<td id="shipchangediv" class="opg-width-1-4">';
+								     target = "{target:'#shipmentdiv'}";
+							         temptext += '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'+target+'">';
+									 temptext += changetext;
+									 temptext += '</a></td>';
+									 jQuery("#shipmentrow").append(temptext);
+							    }
+							  }
+							  else
+							  {
+							    jQuery("#shipchangediv").remove();
+							  }
+						    } 
+						    texxts = "";
+							texxts = data.shipments[i];
+							texxts = strip_tags(texxts, '<span><img><input>');
+							texxts = texxts.replace('</span><span', '</span><br /><span');
+							texxts = texxts.replace('vmshipment_description', 'vmpayment_description opg-text-small');
+							texxts = texxts.replace('vmshipment_cost', 'vmpayment_cost opg-text-small');
+							if(listshipments)
+							{
+								texxts = texxts.replace('<input', '<input onclick="setshipment()"');
+							}
+	                        shipments+='<li class="'+activeclasss+'">';
+							shipments+='<label class="opg-width-1-1">'+texxts+'</label>';
+							shipments+='<hr class="opg-margin-small-bottom opg-margin-small-top" /></li>';
+					    }
+						shipments+='</ul>';
+						oneshipmenthide = document.getElementById("oneshipmenthide").value;
+						if(oneshipmenthide == "yes")
+						{
+						  if(data.shipments.length == 1)
+						  {
+						    jQuery("#shipment_select").addClass("opg-hidden");
+						  }
+						  else if(data.shipments.length > 1 ||  data.shipments.length == 0)
+						  {
+						    jQuery("#shipment_select").removeClass("opg-hidden");
+						  }
+						}
+						
+						document.id('shipment_selection').set('html','');
+						jQuery("#shipmentclose").click();
+					    document.id('shipment_selection').set('html',shipments);
+					}
+					var shipmentchecked=false;
+					if(document.id('shipment_selection')) 
+					{
+						for(var i=0;i<document.id('shipment_selection').getElements('input').length;i++) 
+						{
+							if(document.id('shipment_selection').getElements('input')[i].checked==true) 
+							{
+								shipmentchecked=true;
+								break;
+			    		    }	
+					    }
+					}
+					if(shipmentchecked == false)
+					{
+						 if(document.id('shipment_selection').getElements('input').length > 1)
+						  {
+						     autoshipid = document.getElementById("auto_shipmentid").value;
+							 if(autoshipid > 0)
+							 {
+							    jQuery("#shipments #shipment_id_"+autoshipid).attr('checked', true);
+								setshipment();
+							 }
+							 else
+							 {
+							   document.id('shipment_selection').getElements('input')[0].checked=true;
+							   setshipment();
+							 }
+						  }
+						  else  if(document.id('shipment_selection').getElements('input').length > 0)
+						  {
+						      document.id('shipment_selection').getElements('input')[0].checked=true;
+							 setshipment();
+						  }
+					}
+					
+				
+					  update_prices();	
 			}
 				
 			
@@ -1595,24 +1751,21 @@ function setshipment()
 	  	jQuery("#loadingbutton").click();											  
 	    popupopen = true;
      }
-	 
+	 selectedshipid = jQuery("#shipment_selection input[name='virtuemart_shipmentmethod_id']:checked").val();
 	 datas = jQuery("#checkoutForm").serialize();
 	 datas = datas.replace("&task=confirm" , "");
 	 datas = datas.replace("&task=update" , "");
 	 datas = datas.replace("&task=user.login" , "");
 	 
-
-	jQuery.ajax({
+	 jQuery.ajax({
 				type: "POST",
 		        cache: false,
-	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&task=updatecartJS',
+	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=setshipment&shipid='+selectedshipid,
 				data : datas,
-				dataType: "json"
-		 }).done(
-			 function (data, textStatus){
-				update_shipment();
-				
-		 });
+				 }).done(
+					 function (data, textStatus){
+						 update_shipment();	
+				 });
 }
 function setpayment()
 {
@@ -1630,32 +1783,45 @@ function setpayment()
 	 jQuery.ajax({
 				type: "POST",
 		        cache: false,
-	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&task=updatecartJS',
-				data : datas,
-				dataType: "json"
-		 }).done(
-			 function (data, textStatus){
-				updatepayment();
-		 }).fail(function() {
-			   
-			  	jQuery.ajax({
-				type: "POST",
-		        cache: false,
 	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=setsession&payid='+selectedpayid,
 				data : datas,
 
-				 }).done(
-					 function (data, textStatus){
-						 
-						 updatepayment();	
-					 });
-		 });
+	 }).done(
+				 function (data, textStatus){
+				 updatepayment();	
+	 });
+
 }
 function updatecustomernote(element)
 {
 	jQuery("#extracommentss #customer_note_field").val(jQuery(element).val());
 	jQuery("#commentpopup #customer_note_field").val(jQuery(element).val());
-	updatecart();
+	if(!popupopen)
+	{
+		jQuery("#loadingbutton").click();											  
+		popupopen = true;
+	}
+	
+	 datas = jQuery("#checkoutForm").serialize();
+	 datas = datas.replace("&task=confirm" , "");
+	 datas = datas.replace("&task=update" , "");
+	 datas = datas.replace("&task=user.login" , "");
+	 
+	 jQuery.ajax({
+				type: "POST",
+		        cache: false,
+	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=updatecartaddress',
+				data : datas,
+				dataType: "json"
+		 }).done(
+			 function (data, textStatus){
+				 
+				 if(popupopen == true)
+				  {
+				   	jQuery("#loadingbtnclose").click();
+					popupopen = false;
+				  }
+		 });
 }
 function updatecart()
 {
@@ -1707,7 +1873,7 @@ function updateaddress(fieldtype)
 				dataType: "json"
 		 }).done(
 			 function (data, textStatus){
-				setpayment(); 
+				updatepayment(); 
 		 });
   	
 }
