@@ -1783,7 +1783,7 @@ function setpayment()
 	 jQuery.ajax({
 				type: "POST",
 		        cache: false,
-	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=setsession&payid='+selectedpayid,
+	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=setpayment&payid='+selectedpayid,
 				data : datas,
 
 	 }).done(

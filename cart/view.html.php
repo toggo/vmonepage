@@ -301,10 +301,21 @@ class VirtueMartViewCart extends VmView {
 			echo json_encode($result);
 			exit;
 		  }
-		  if($task == "setsession")
+		   if($task == "setshipment")
 		  {
-		     $payid = JRequest::getVar("payid", 0);
-			 if($payid > 0)
+		     $shipid = JRequest::getVar("shipid", 0);
+		     if($shipid > 0)
+			 {
+			     $cart->setShipmentMethod(false, false, $shipid);
+				 $cart->setCartIntoSession();
+			 }
+			 echo "success";
+			 exit;
+		  }
+		  if($task == "setpayment")
+		  {
+ 		     $payid = JRequest::getVar("payid", 0);
+		     if($payid > 0)
 			 {
 			     $cart->setPaymentMethod(false, false, $payid);
 				 $cart->setCartIntoSession();
