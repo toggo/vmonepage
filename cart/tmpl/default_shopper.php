@@ -24,6 +24,8 @@ defined('_JEXEC') or die('Restricted access');
 
     $plugin=JPluginHelper::getPlugin('system','onepage_generic');
     $params=new JRegistry($plugin->params);
+	$popupaddress = $params->get("popup_address", 1);
+	
 	
 	$checkoutadv = FALSE;
     foreach($this->checkoutAdvertise as $checkoutAdvertise)
@@ -40,7 +42,7 @@ defined('_JEXEC') or die('Restricted access');
 			foreach ($this->checkoutAdvertise as $checkoutAdvertise) 
 			{
 			?>
-				<div class="checkout-advertise uk-width-1-1 uk-panel-box uk-margin-small-top ">
+				<div class="checkout-advertise opg-width-1-1 opg-panel-box opg-margin-small-top ">
 					<?php echo $checkoutAdvertise; ?>
 				</div>
 			<?php
@@ -472,62 +474,187 @@ defined('_JEXEC') or die('Restricted access');
 		}
 		echo '<div><hr /></div>';
 		echo '</div>';
-		echo '<div class="adminform" id="billto_fields_div" style="margin:0;">';
-		$skipped_fields_array = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2'); 
-		foreach($this->cart->BTaddress["fields"] as $singlefield) {
-		 if($singlefield['formcode'] != "")
-		 {
-			if(in_array($singlefield['name'],$skipped_fields_array)) {
-				continue;
-			}
-			echo "<div class='opg-width-1-1'>";
-			if($singlefield['type'] == "select")
-	        {	
-		      echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
-		      echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
-		      echo '</label><br />';
-		 	}
-			else
+		
+		if($popupaddress > 1)
+	    {
+			$samebt = "";
+			if($this->cart->STsameAsBT == 0)
 			{
-			  $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
-			  $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
+				$samebt = '';
+				$shiptodisplay = "";
 			}
-		    if($singlefield['name']=='zip') {
-				$ajaxzip =   $onlyguest =  $params->get('ajax_zip',0);
-				if($ajaxzip)
+		    else if($params->get('check_shipto_address') == 1)
+			{
+				$samebt = 'checked="checked"';
+				$shiptodisplay = "";
+			}
+		    else
+	 	    {
+		   		$samebt = '';
+			    $shiptodisplay = "";
+			}
+		   ?> 
+		   
+    	  <input class="inputbox opg-hidden" type="checkbox" name="STsameAsBT" checked="checked" id="STsameAsBT" value="0"/>
+		  <input class="inputbox opg-hidden" type="checkbox" name="BTsameAsST" checked="checked" id="BTsameAsST" value="1"/>
+		  <?php
+			if(!empty($this->cart->STaddress['fields'])){
+				if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'html.php');
+				//	echo JText::_('COM_VIRTUEMART_USER_FORM_ST_SAME_AS_BT');
+			?>
+			</label>
+	      <?php	
+			}
+ 			?>
+	    <?php if(!isset($this->cart->lists['current_id'])) $this->cart->lists['current_id'] = 0; ?>
+    	<?php
+			echo '	<div class="adminform" id="shipto_fields_div" style="'.$shiptodisplay.'">';
+			$skipped_fields_array = array('shipto_virtuemart_country_id' , 'customer_note', 'shipto_virtuemart_state_id', 'agreed','name','username','password','password2'); 
+			
+			foreach($this->cart->BTaddress["fields"] as $singlefield) 
+			{
+				 if($singlefield['formcode'] != "")
+				 {
+				    if($singlefield['name'] == "email") 
+					{
+					  echo str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
+					}
+				  }
+		    }
+			foreach($this->cart->STaddress["fields"] as $singlefield) {
+			 if(in_array($singlefield['name'],$skipped_fields_array)) 
 				{
-					$replacetext = 'input onchange="javascript:updateaddress(3);"';
+						continue;
+				}
+			 echo '<div class="opg-width-1-1 opg-margin-small">';
+	    	 if($singlefield['type'] == "select")
+		      {		
+			    echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
+			    echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
+			    echo '</label><br/>';
+			  }
+			  else
+			  {
+			    $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
+			  }
+		    if($singlefield['name']=='shipto_zip') {
+				  $ajaxzip =   $params->get('ajax_zip',0);
+				  $countryreload = $params->get("country_reload", 0);
+				  $fieldtype = 4;
+				  if($ajaxzip)
+					{
+						$replacetext = 'input onchange="javascript:updateaddress(3);"';
+					}
+					else
+					{
+					    $replacetext = 'input ';
+					}
+				  $singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
+	    	} 
+			else if($singlefield['name']=='customer_note') {
+			}
+			else if($singlefield['name']=='shipto_virtuemart_country_id') {
+		    	$singlefield['formcode']=str_replace('class="virtuemart_country_id','class="shipto_virtuemart_country_id',$singlefield['formcode']);
+				$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
+				
+	    	}else if($singlefield['name']=='shipto_virtuemart_state_id') {
+		    	$singlefield['formcode']=str_replace('id="virtuemart_state_id"','id="shipto_virtuemart_state_id"',$singlefield['formcode']);
+	    	    $replacetext = '<select onchange="javascript:updateaddress(4);"';
+				$replacetext = "<select ";
+		    	$singlefield['formcode']=str_replace('<select',$replacetext,$singlefield['formcode']);
+				if($singlefield['required'])
+				{
+				  $singlefield['formcode']=str_replace('vm-chzn-select','required',$singlefield['formcode']);
 				}
 				else
 				{
-				    $replacetext = 'input ';
-				}
-		    	$singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
-		    } 
-			else if($singlefield['name']=='title') {
-				$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
+				   $singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
+				} 
 		    }
-			
 		    echo $singlefield['formcode'];
 			echo '</div>';
-	      }
-		}
+		}	
 	    echo '</div>';
-		?>
+        }
+		else
+		{
+			echo '<div class="adminform" id="billto_fields_div" style="margin:0;">';
+			$skipped_fields_array = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2'); 
+			foreach($this->cart->BTaddress["fields"] as $singlefield) {
+			 if($singlefield['formcode'] != "")
+			 {
+				if(in_array($singlefield['name'],$skipped_fields_array)) {
+					continue;
+				}
+				echo "<div class='opg-width-1-1'>";
+				if($singlefield['type'] == "select")
+	    	    {	
+		    	  echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
+			      echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
+			      echo '</label><br />';
+			 	}
+				else
+				{
+				  $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
+				  $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
+				}
+			    if($singlefield['name']=='zip') {
+					$ajaxzip =   $onlyguest =  $params->get('ajax_zip',0);
+					if($ajaxzip)
+					{
+						$replacetext = 'input onchange="javascript:updateaddress(3);"';
+					}
+					else
+					{
+					    $replacetext = 'input ';
+					}
+			    	$singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
+			    } 
+				else if($singlefield['name']=='title') {
+					$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
+			    }
+			    echo $singlefield['formcode'];
+				echo '</div>';
+	    	  }
+			}
+		    echo '</div>';
+			?>
   </div>
-  <div class="opg-width-1-1 opg-margin-top" id="div_shipto"> 
-    <div class="shipto_fields_div">
-     <div class="opg-width-1-1">
-	     <?php
-		  $target = "{target:'#shiptopopup'}";
-		  ?>
-		 <a id="shiptobutton" class="opg-button opg-width-1-1" href="#" data-opg-modal="<?php echo $target; ?>"><i id="shiptoicon" style="display:none;" class="opg-icon opg-icon-check opg-margin-right"></i><?php echo JText::_('PLG_SYSTEM_VMUIKIT_CHANGE_SHIP_ADDRESS'); ?></a>
-	 </div>
+  <?php
+  }
+  if($popupaddress > 1)
+  {
+  ?>
+    <div class="opg-width-1-1 opg-margin-top" id="div_shipto"> 
+     <div class="shipto_fields_div">
+	    <div class="opg-width-1-1">
+	      <?php
+		   $target = "{target:'#billtopopup'}";
+		   ?>
+		  <a id="billtobutton" class="opg-button opg-width-1-1" href="#" data-opg-modal="<?php echo $target; ?>"><i id="billtoicon" style="display:none;" class="opg-icon opg-icon-check opg-margin-right"></i><?php echo JText::_('PLG_SYSTEM_VMUIKIT_CHANGE_BILLTO_ADDRESS'); ?></a>
+		 </div>
 	
-  </div>
-  <div class="clear"></div>
-</div>
+	  </div>
+	  <div class="clear"></div>
+   </div>
+   <?php
+   }
+   else
+   {
+   ?>
+	  <div class="opg-width-1-1 opg-margin-top" id="div_shipto"> 
+	    <div class="shipto_fields_div">
+    	 <div class="opg-width-1-1">
+		     <?php
+			  $target = "{target:'#shiptopopup'}";
+			  ?>
+			 <a id="shiptobutton" class="opg-button opg-width-1-1" href="#" data-opg-modal="<?php echo $target; ?>"><i id="shiptoicon" style="display:none;" class="opg-icon opg-icon-check opg-margin-right"></i><?php echo JText::_('PLG_SYSTEM_VMUIKIT_CHANGE_SHIP_ADDRESS'); ?></a>
+		 </div>
+	  </div>
+	  <div class="clear"></div>
+	</div>
  <?php
+   }
 	  $user = JFactory::getUser();
 	  $logindis = '';
 	  $activetab = $params->get('activetab',0);

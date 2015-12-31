@@ -54,8 +54,32 @@ jQuery(document).ready(function(){
                      });
             });
 	}
-	
-	jQuery('#shiptopopup').on({
+	if(popupaddress > 1)
+	{
+	     jQuery('#billtopopup').on({
+	     'show.uk.modal': function()
+	 	  {
+			 jQuery('#BTsameAsST').prop('checked', false);
+      	  },
+	      'hide.uk.modal': function(){
+		   value = validatebillto("yes");
+		   if(value == true)
+		   {
+			   jQuery("#billtobutton").removeClass("uk-button-danger");    
+			   jQuery("#billtobutton").addClass("uk-button-primary");  
+		   }
+		   else
+		   {	
+		     jQuery("#billtoicon").hide();
+	    	 jQuery("#billtobutton").removeClass("uk-button-primary");
+			 jQuery('#BTsameAsST').prop('checked', true);
+		   }
+		  }
+		});
+	}
+	else
+	{
+	  jQuery('#shiptopopup').on({
 		'show.uk.modal': function()
 		{
 			 jQuery('#STsameAsBT').prop('checked', false);
@@ -74,8 +98,8 @@ jQuery(document).ready(function(){
 			 jQuery('#STsameAsBT').prop('checked', true);
 		   }
 		}
-	});
-
+	  });
+	}
 	jQuery(".refreshbutton").each(function(){
 	   jQuery(this).click(function(){
 			update_product(jQuery(this).attr("data-itemid"));	
@@ -164,6 +188,74 @@ function removeshipto()
      jQuery('#STsameAsBT').prop('checked', true);
 	 updatecart();   
      jQuery("#shiptoclose").click();
+}
+
+function validatebillto(returnval)
+{
+	var validator=new JFormValidator();  
+	var billtoaddress_valid = true;
+	jQuery('#billto_fields_div input').each(function(){
+												 
+		var validatefield = validator.validate(this);
+		elementid = jQuery(this).attr("id");
+		if(validatefield == false)
+		{
+		  billtoaddress_valid = false;	 
+		  jQuery("#"+elementid).addClass("uk-form-danger");
+		}
+		else
+		{
+		  jQuery("#"+elementid).removeClass("uk-form-danger");
+		}
+	 });
+
+	 
+   	 country_ele =  document.getElementById('virtuemart_country_id');
+	 if(jQuery("#virtuemart_country_id").length > 0)
+	 {
+	     var validatefield = validator.validate(country_ele);
+		 if(validatefield == false)
+		 {
+			  billtoaddress_valid = false;
+			  jQuery("#virtuemart_country_id").addClass("uk-form-danger");
+ 		 }
+		 else
+		 {
+			  jQuery("#virtuemart_country_id").removeClass("uk-form-danger");
+	  	 }
+	 }
+	 
+	 state_ele =  document.getElementById('virtuemart_state_id');
+	 if(jQuery("#virtuemart_state_id").length > 0)
+	 {
+	     var validatefield = validator.validate(state_ele);
+		 if(validatefield == false)
+		 {
+			  billtoaddress_valid = false;
+			  jQuery("#virtuemart_state_id").addClass("uk-form-danger");
+	 	 }
+		 else
+		 {
+			  jQuery("#virtuemart_state_id").removeClass("uk-form-danger");
+	  	 }
+	}
+	if(returnval == "yes")
+	{
+	   return billtoaddress_valid;
+	}
+	if(!billtoaddress_valid) 
+	{
+	     jQuery("#billtoicon").hide();
+	     jQuery("#billtobutton").removeClass("uk-button-primary");
+		 return false;
+	}
+	else
+	{
+	   jQuery("#billtoicon").show();
+	   jQuery("#billtobutton").addClass("uk-button-primary");
+	   updateaddress(4);
+	}
+	
 }
 
 function validateshipto(returnval)
@@ -497,52 +589,98 @@ function submit_order() {
 			
 		});
      }
-
-     jQuery('#billto_fields_div input').each(function(){
-												 
+	 if(popupaddress > 1)
+	 {
+   	     var validator=new JFormValidator();
+	     jQuery('#shipto_fields_div input').each(function(){
+			var validatefield=validator.validate(this);
+			elementid = jQuery(this).attr("id");
+			if(validatefield == false)
+			{
+			  inputvalidation = false;	  
+			  jQuery("#"+elementid).addClass("uk-form-danger");
+			}
+			else
+			{
+			  jQuery("#"+elementid).removeClass("uk-form-danger");
+			}
+		});
+		 country_ele2 =  document.getElementById('shipto_virtuemart_country_id');
+		 if(jQuery('#shipto_virtuemart_country_id').length > 0)
+		 {
+		     var validatefield =validator.validate(country_ele2);
+			 if(validatefield == false)
+			 {
+				  inputvalidation = false;	  
+				  jQuery("#shipto_virtuemart_country_id").addClass("uk-form-danger");
+	 		 }
+			 else
+			 {
+			  jQuery("#shipto_virtuemart_country_id").removeClass("uk-form-danger");
+		  	 }
+		 }
+		 state_ele2 =  document.getElementById('shipto_virtuemart_state_id');
+		 if(jQuery('#shipto_virtuemart_state_id').length > 0)
+		 {
+	    	 var validatefield=validator.validate(state_ele2);
+			 if(validatefield == false)
+			 {
+				  inputvalidation = false;	  
+				  jQuery("#shipto_virtuemart_state_id").addClass("uk-form-danger");
+		 	 }	
+			 else
+			 {
+				  jQuery("#shipto_virtuemart_state_id").removeClass("uk-form-danger");
+		  	 }
+		 }
+	 }
+	 else
+	 {
+	    jQuery('#billto_fields_div input').each(function(){
 		var validatefield = validator.validate(this);
 		elementid = jQuery(this).attr("id");
-		if(validatefield == false)
-		{
-		  inputvalidation = false;	 
-		  jQuery("#"+elementid).addClass("opg-form-danger");
-		}
-		else
-		{
-		  jQuery("#"+elementid).removeClass("opg-form-danger");
-		}
-	 });
-
-   	 country_ele = document.getElementById("virtuemart_country_id");
-	 if(jQuery("#virtuemart_country_id").length > 0)
-	 {
-		 var validator=new JFormValidator();
-	     var validatefield = validator.validate(country_ele);
-		 if(validatefield == false)
+			if(validatefield == false)
+			{
+			  inputvalidation = false;	 
+			  jQuery("#"+elementid).addClass("opg-form-danger");
+			}
+			else
+			{
+			  jQuery("#"+elementid).removeClass("opg-form-danger");
+			}
+		 });
+	
+   		 country_ele = document.getElementById("virtuemart_country_id");
+		 if(jQuery("#virtuemart_country_id").length > 0)
 		 {
-			  inputvalidation = false;
-			  jQuery("#virtuemart_country_id").addClass("opg-form-danger");
- 		 }
-		 else
+			 var validator=new JFormValidator();
+		     var validatefield = validator.validate(country_ele);
+			 if(validatefield == false)
+			 {
+				  inputvalidation = false;
+				  jQuery("#virtuemart_country_id").addClass("opg-form-danger");
+ 			 }
+			 else
+			 {
+				  jQuery("#virtuemart_country_id").removeClass("opg-form-danger");
+		  	 }
+		 }
+		 state_ele = document.getElementById("virtuemart_state_id");
+		 if(jQuery("#virtuemart_state_id").length > 0)
 		 {
-			  jQuery("#virtuemart_country_id").removeClass("opg-form-danger");
-	  	 }
+		     var validatefield = validator.validate(state_ele);
+			 if(validatefield == false)
+			 {
+				  inputvalidation = false;
+				  jQuery("#virtuemart_state_id").addClass("opg-form-danger");
+		 	 }
+			 else
+			 {
+				  jQuery("#virtuemart_state_id").removeClass("opg-form-danger");
+		  	 }
+		}	
 	 }
-	 state_ele = document.getElementById("virtuemart_state_id");
-	 if(jQuery("#virtuemart_state_id").length > 0)
-	 {
-	     var validatefield = validator.validate(state_ele);
-		 if(validatefield == false)
-		 {
-			  inputvalidation = false;
-			  jQuery("#virtuemart_state_id").addClass("opg-form-danger");
-	 	 }
-		 else
-		 {
-			  jQuery("#virtuemart_state_id").removeClass("opg-form-danger");
-	  	 }
-	}
-    if(shipmentfileds > 0)
+    if(shipmentfileds > 0 && popupaddress == 1)
 	{
 		if(jQuery('#STsameAsBT').prop("checked") == true ) 
 		{
@@ -554,12 +692,11 @@ function submit_order() {
 				{
 					jQuery(this).val(jQuery("#billto_fields_div #"+name).val());
 				}
-
 			});
 		  	 if(jQuery("#virtuemart_country_id").length > 0 && jQuery("#shipto_virtuemart_country_id").length > 0)
 		     {
 				 jQuery("#shipto_virtuemart_country_id").val(jQuery("#virtuemart_country_id").val());
-    		 }
+	   		 }
 		} 
 		else
 		{
@@ -577,7 +714,6 @@ function submit_order() {
 				  jQuery("#"+elementid).removeClass("opg-form-danger");
 				}
 			});
-		
 		 country_ele2 =  document.getElementById('shipto_virtuemart_country_id');
 		 if(jQuery('#shipto_virtuemart_country_id').length > 0)
 		 {
@@ -595,22 +731,103 @@ function submit_order() {
 		 state_ele2 =  document.getElementById('shipto_virtuemart_state_id');
 		 if(jQuery('#shipto_virtuemart_state_id').length > 0)
 		 {
-	    	 var validatefield=validator.validate(state_ele2);
+	   		 var validatefield=validator.validate(state_ele2);
 			 if(validatefield == false)
 			 {
 				  inputvalidation = false;	  
 				  jQuery("#shipto_virtuemart_state_id").addClass("opg-form-danger");
-		 	 }	
+	 		 }	
 			 else
 			 {
 				  jQuery("#shipto_virtuemart_state_id").removeClass("opg-form-danger");
-		  	 }
+	  		 }
 		 }
-	
-
-		
 	  }
 	}
+	else
+	{
+		if(jQuery('#BTsameAsST').prop("checked") == true ) 
+		{
+			jQuery('#billto_fields_div input').each(function() 
+	   	    { 
+			    inputid = jQuery(this).attr('id');
+				var name= "shipto_"+inputid;
+				
+				if(jQuery("#shipto_fields_div #"+name).length > 0)
+				{
+					jQuery(this).val(jQuery("#shipto_fields_div #"+name).val());
+				}
+			});
+		  	 if(jQuery("#shipto_virtuemart_country_id").length > 0 && jQuery("#virtuemart_country_id").length > 0)
+		     {
+				 jQuery("#virtuemart_country_id").val(jQuery("#shipto_virtuemart_country_id").val());
+    		 }
+			 if(jQuery("#shipto_virtuemart_state_id").length > 0 && jQuery("#virtuemart_state_id").length > 0)
+		     {
+				 var stateoptions = jQuery("#shipto_virtuemart_state_id > option").clone();
+				 jQuery('#virtuemart_state_id').append(stateoptions);
+				 jQuery("#virtuemart_state_id").val(jQuery("#shipto_virtuemart_state_id").val());
+    		 }
+		} 
+		billtovalidate = true;
+	    jQuery('#billto_fields_div input').each(function(){
+			var validatefield = validator.validate(this);
+			elementid = jQuery(this).attr("id");
+			if(validatefield == false)
+			{
+			  inputvalidation = false;	 
+			  billtovalidate = false;
+			  jQuery("#"+elementid).addClass("uk-form-danger");
+			}
+			else
+			{
+			  jQuery("#"+elementid).removeClass("uk-form-danger");
+			}
+		 });
+	   	 country_ele =  document.getElementById('virtuemart_country_id');
+		 if(jQuery("#virtuemart_country_id").length > 0)
+		 {
+		     var validatefield = validator.validate(country_ele);
+			 if(validatefield == false)
+			 {
+				  inputvalidation = false;
+				  billtovalidate = false;
+				  jQuery("#virtuemart_country_id").addClass("uk-form-danger");
+	 		 }
+			 else
+			 {
+				  jQuery("#virtuemart_country_id").removeClass("uk-form-danger");
+		  	 }
+		 }
+		 state_ele =  document.getElementById('virtuemart_state_id');
+		 if(jQuery("#virtuemart_state_id").length > 0)
+		 {
+		     var validatefield = validator.validate(state_ele);
+			 if(validatefield == false)
+			 {
+				  inputvalidation = false;
+				  billtovalidate = false;
+				  jQuery("#virtuemart_state_id").addClass("uk-form-danger");
+		 	 }	
+			 else
+			 {
+				  jQuery("#virtuemart_state_id").removeClass("uk-form-danger");
+		  	 }
+		  }
+		  
+		  if(billtovalidate == false)
+		  {
+	 	     jQuery("#billtobutton").removeClass("uk-button-primary");  
+			 jQuery("#billtobutton").addClass("uk-button-danger");  
+		  }
+		  else
+		  {
+			 jQuery("#billtobutton").removeClass("uk-button-danger");    
+			 jQuery("#billtobutton").addClass("uk-button-primary");  
+			 
+		  }
+	}
+	
 	if(!inputvalidation ||  errormsg != "") 
 	{
 		  if(!inputvalidation)

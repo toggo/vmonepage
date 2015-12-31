@@ -38,6 +38,10 @@
 							<option value="0">JNO</option>
 							<option value="1">JYES</option>
 						</field>	 
+						<field 	name="popup_address"	type="radio" class="btn-group btn-group-yesno"	label="Which address show in Popup" description="" default="1">
+							<option value="1">Shipto</option>
+							<option value="2">Billto</option>
+						</field>
 						<field 	name="hide_oneshipment"	type="radio" class="btn-group btn-group-yesno"	label="Hide Shipment Block(If one Shipment)"	description="" default="0">
 							<option value="0">JNO</option>
 							<option value="1">JYES</option>

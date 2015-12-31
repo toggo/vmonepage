@@ -45,6 +45,7 @@ JHTML::script('plugins/system/onepage_generic/vmprices.js');
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
 $countryreload = $params->get("country_reload", 0);
+$popupaddress = $params->get("popup_address", 1);
 
 if($params->get("buttoncolour") != "")
 {
@@ -189,6 +190,7 @@ $document->addScriptDeclaration("
 	  window.captchainvalid = '".$captchainvalid."';
   	  window.listshipments = ".$listshipments.";
 	  window.listpayments = ".$listpayments.";
+	  window.popupaddress = ".$popupaddress.";
       //]]>
       ");
 ?>
@@ -282,4 +284,5 @@ else
 
 <?php
 }
+
 ?>

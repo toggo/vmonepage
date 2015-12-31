@@ -71,9 +71,24 @@ jQuery(document).ready(function(){
    {
 	       echo ' <div class="opg-width-1-1 opg-panel opg-panel-box">';
    }
-   foreach($this->cart->BTaddress["fields"] as $singlefield) 
+   
+   $popupaddress = $params->get("popup_address", 1);
+   if($popupaddress > 1)
+   {
+       $cartfields =  $this->cart->STaddress["fields"];
+	   $countryfield = 'shipto_virtuemart_country_id';
+	   $statefield  =  'shipto_virtuemart_state_id';
+   }
+   else
+   {
+	   $cartfields =  $this->cart->BTaddress["fields"];
+	   $countryfield = 'virtuemart_country_id';
+	   $statefield  =  'virtuemart_state_id';
+   }
+   
+   foreach($cartfields as $singlefield) 
     {
-	  if($singlefield['name']=='virtuemart_country_id') 
+	  if($singlefield['name']== $countryfield) 
 	  {
 	     $hidecountry_class = "";
 	     if($hidecountry)
@@ -90,7 +105,7 @@ jQuery(document).ready(function(){
 		 echo $singlefield['formcode'];
 		 echo '</div>';
 	  }
-	  else if($singlefield['name'] == "virtuemart_state_id")
+	  else if($singlefield['name'] == $statefield)
 	  {
 	     $hidestate_class = "";
 	     if($hidestate)
@@ -116,6 +131,7 @@ jQuery(document).ready(function(){
 		 echo '</div>';
 	  }
 	}
+  
    if($tempcount > 1)
     {
 		 echo '</div>';

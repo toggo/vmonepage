@@ -22,6 +22,7 @@ defined('_JEXEC') or die('Restricted access');
 
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
+$popupaddress = $params->get("popup_address", 1);
 
 if(VmConfig::get('oncheckout_show_legal_info',1))
 {
@@ -35,8 +36,66 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 	 </div>
   <?php
 }
-?>
 
+if($popupaddress > 1)
+{
+?>
+<div id="billtopopup" class="opg-modal"><!-- Billto Modal Started -->
+	 <div class="opg-modal-dialog"><!-- Billto Modal Started -->
+	   <a class="opg-modal-close opg-close"></a>
+    	<div class="opg-modal-header"><strong><?php echo JText::_('PLG_SYSTEM_VMUIKIT_CHANGE_BILLTO_ADDRESS_HEADING'); ?></strong></div>
+
+	  <?php 
+	  	echo '<div class="adminform" id="billto_fields_div" style="margin:0;">';
+		$skipped_fields_array = array('customer_note', 'agreed','name','username','password','password2','email'); 
+		foreach($this->cart->BTaddress["fields"] as $singlefield) {
+         
+		 if($singlefield['formcode'] != "")
+		 {
+		    if(in_array($singlefield['name'],$skipped_fields_array)) {
+				continue;
+			}
+			echo "<div class='opg-width-1-1 opg-margin-small'>";
+			if($singlefield['type'] == "select")
+	        {	
+			  $singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
+		      echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
+		      echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
+		      echo '</label><br />';
+			}
+			else
+			{
+			 $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
+			 $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
+			}
+
+		    if($singlefield['name']=='zip') {
+			    $replacetext = 'input ';
+		    	$singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
+		    } 
+			else if($singlefield['name']=='title') {
+				$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
+		    }
+		    echo $singlefield['formcode'];
+			echo '</div>';
+	      }
+		}
+	    echo '</div>';
+	?>
+	  <div class="opg-modal-footer">
+	  	 <a class="opg-button opg-button-primary" href="Javascript:void(0);" onclick="validatebillto('no');"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
+		 <a id="shiptoclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
+		 
+		 <a id="billtoclose" onclick="removebillto();" class="opg-modal-close opg-margin-left opg-button opg-button-danger"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REMOVE_BILLTO"); ?></a>
+	  </div>
+    </div> <!-- Billto Modal ended -->
+</div><!-- Billto Modal ended -->
+
+<?php
+}
+else
+{
+?>
 <div id="shiptopopup" class="opg-modal"><!-- Shipto Modal Started -->
 	 <div class="opg-modal-dialog"><!-- Shipto Modal Started -->
 		<a class="opg-modal-close opg-close"></a>
@@ -127,8 +186,8 @@ if(VmConfig::get('oncheckout_show_legal_info',1))
 	  </div>
     </div> <!-- Shipto Modal ended -->
 </div><!-- Shipto Modal ended -->
-
 <?php
+}
   $customernote = FALSE;
   foreach($this->cart->BTaddress["fields"] as $field) 
   {
