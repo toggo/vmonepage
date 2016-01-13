@@ -71,7 +71,7 @@ if(typeof Virtuemart === "undefined")
                        		 Virtuemart.productUpdate($(".vmCartModule"));
                          }
 						 if(window.CARTPAGE == "yes")
-						 {
+						 { 
 							 window.location.reload(); 
 						 }
 					}
@@ -79,7 +79,7 @@ if(typeof Virtuemart === "undefined")
 			}
 			Virtuemart.productUpdate =function(mod) {
 
-				//jQuery('body').trigger('updateVirtueMartCartModule');
+				jQuery('body').trigger('updateVirtueMartCartModule');
 			}
 			Virtuemart.sendtocart =  function (form){
 

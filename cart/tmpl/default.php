@@ -24,7 +24,7 @@ defined('_JEXEC') or die('Restricted access');
 JHTML::script('plugins/system/onepage_generic/onepage.js');
 JHTML::script('plugins/system/onepage_generic/onepage_generic.js');
 JHTML::stylesheet ( 'plugins/system/onepage_generic/onepage_generic.css');
-
+JHtml::_('behavior.framework');
 
 
 $taskRoute = "";
