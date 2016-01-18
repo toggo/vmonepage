@@ -377,6 +377,23 @@ class VirtueMartViewCart extends VmView {
 			echo json_encode($return);
 			exit;
 		  }
+		  if($task == "klarnacartupdate")
+		  {
+		    $post = JRequest::get("post");
+			foreach($this->userFieldsCart['fields'] as $name => $cartfield)
+			{
+			   if(!empty($post[$name]))
+			   {
+				   $cart->cartfields[$name] = $cartfield['title'];
+			   }
+	 		}
+			$cart->setCartIntoSession(false,true);
+			$cart->saveCartFieldsInCart();
+			$return = array();
+			$return['response'] = "success";
+			echo json_encode($return);
+			exit;
+		  }
 		  
 		  $cart->setCartIntoSession();
 		  parent::display($tpl);

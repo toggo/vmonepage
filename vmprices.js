@@ -128,7 +128,7 @@ if(typeof Virtuemart === "undefined")
 						 plaintext = plaintext.replace("/", "");
 						 plaintext = plaintext.replace("/", "");
 						 
-						 carthtmltxt = '<div class="uk-alert" data-uk-alert><a href="/" class="uk-alert-close uk-close"></a><p>'+plaintext+'</p></div>';
+						 carthtmltxt = '<div class="opg-alert" data-opg-alert><a href="/" class="opg-alert-close opg-close"></a><p>'+plaintext+'</p></div>';
 						 jQuery("#cartalert").html(carthtmltxt);
 						 document.addtocartalert = 0;
 					} 

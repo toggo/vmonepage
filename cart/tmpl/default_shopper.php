@@ -26,6 +26,37 @@ defined('_JEXEC') or die('Restricted access');
     $params=new JRegistry($plugin->params);
 	$popupaddress = $params->get("popup_address", 1);
 	
+	 echo '<div id="klarna_fields" class="opg-width-1-1 opg-panel opg-panel-box" style="display:none">';
+   foreach($this->userFieldsCart["fields"] as $singlefield) 
+   {
+     $skipped_fields = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2', 'tos');
+	 if(in_array($singlefield['name'],$skipped_fields)) 
+	 {
+
+	 }
+	 else
+	 {
+		 echo '<div class="opg-width-1-1 opg-margin-small">';
+	     if($singlefield['type'] == "select")
+		 {		
+		    echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
+		    echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
+		    echo '</label><br/>';
+		 }
+		 else if($singlefield['type'] == "checkbox") 
+		 {
+			  $singlefield['formcode']= '<label>'.$singlefield["formcode"].$singlefield["title"].'</label>';
+		 } 
+		 else
+		 {
+		    $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
+		 }
+	     echo $singlefield['formcode'];
+		 echo '</div>';
+	 }
+  } 
+  echo '</div>';
+	
 	
 	$checkoutadv = FALSE;
     foreach($this->checkoutAdvertise as $checkoutAdvertise)
@@ -533,6 +564,10 @@ defined('_JEXEC') or die('Restricted access');
 			    echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
 			    echo '</label><br/>';
 			  }
+			  else if($singlefield['type'] == "checkbox") 
+			  {
+				  $singlefield['formcode']= '<label>'.$singlefield["formcode"].$singlefield["title"].'</label>';
+			  }
 			  else
 			  {
 			    $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
@@ -593,8 +628,13 @@ defined('_JEXEC') or die('Restricted access');
 			      echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
 			      echo '</label><br />';
 			 	}
+				else if($singlefield['type'] == "checkbox") 
+				{
+				  $singlefield['formcode']= '<label>'.$singlefield["formcode"].$singlefield["title"].'</label>';
+				}
 				else
 				{
+				
 				  $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
 				  $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
 				}

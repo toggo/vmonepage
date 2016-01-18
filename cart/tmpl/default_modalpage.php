@@ -63,6 +63,10 @@ if($popupaddress > 1)
 		      echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
 		      echo '</label><br />';
 			}
+			else if($singlefield['type'] == "checkbox") 
+			{
+			  $singlefield['formcode']= '<label>'.$singlefield["formcode"].$singlefield["title"].'</label>';
+			}
 			else
 			{
 			 $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
@@ -142,6 +146,10 @@ else
 		    echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
 		    echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
 		    echo '</label><br/>';
+		  }
+		  else if($singlefield['type'] == "checkbox") 
+		  {
+		    $singlefield['formcode']= '<label>'.$singlefield["formcode"].$singlefield["title"].'</label>';
 		  }
 		  else
 		  {

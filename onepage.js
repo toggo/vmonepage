@@ -24,7 +24,7 @@ var countrychange = "";
 var popupopen = 0;
 
 jQuery(document).ready(function(){
-	jQuery(".uk-alert").hide();
+	jQuery(".opg-alert").hide();
 	jQuery("#system-message-container").hide();
 	
 	if (window._klarnaCheckout) {
@@ -52,6 +52,19 @@ jQuery(document).ready(function(){
 						    }
                         }
                      });
+					api.on({
+					    'change': function(data) {
+							jQuery.ajax({
+						        	type: "POST",
+							        cache: false,
+							        dataType: "json",
+									url: window.vmSiteurl + "index.php?&option=com_virtuemart&view=cart&vmtask=klarnacartupdate",
+									data :  jQuery("#klarna_fields :input").serialize(),
+						        }).done(
+							    function (data, textStatus){
+                			    });
+					    }
+			  		});
             });
 	}
 	if(popupaddress > 1)
@@ -65,13 +78,13 @@ jQuery(document).ready(function(){
 		   value = validatebillto("yes");
 		   if(value == true)
 		   {
-			   jQuery("#billtobutton").removeClass("uk-button-danger");    
-			   jQuery("#billtobutton").addClass("uk-button-primary");  
+			   jQuery("#billtobutton").removeClass("opg-button-danger");    
+			   jQuery("#billtobutton").addClass("opg-button-primary");  
 		   }
 		   else
 		   {	
 		     jQuery("#billtoicon").hide();
-	    	 jQuery("#billtobutton").removeClass("uk-button-primary");
+	    	 jQuery("#billtobutton").removeClass("opg-button-primary");
 			 jQuery('#BTsameAsST').prop('checked', true);
 		   }
 		  }
@@ -201,11 +214,11 @@ function validatebillto(returnval)
 		if(validatefield == false)
 		{
 		  billtoaddress_valid = false;	 
-		  jQuery("#"+elementid).addClass("uk-form-danger");
+		  jQuery("#"+elementid).addClass("opg-form-danger");
 		}
 		else
 		{
-		  jQuery("#"+elementid).removeClass("uk-form-danger");
+		  jQuery("#"+elementid).removeClass("opg-form-danger");
 		}
 	 });
 
@@ -217,11 +230,11 @@ function validatebillto(returnval)
 		 if(validatefield == false)
 		 {
 			  billtoaddress_valid = false;
-			  jQuery("#virtuemart_country_id").addClass("uk-form-danger");
+			  jQuery("#virtuemart_country_id").addClass("opg-form-danger");
  		 }
 		 else
 		 {
-			  jQuery("#virtuemart_country_id").removeClass("uk-form-danger");
+			  jQuery("#virtuemart_country_id").removeClass("opg-form-danger");
 	  	 }
 	 }
 	 
@@ -232,11 +245,11 @@ function validatebillto(returnval)
 		 if(validatefield == false)
 		 {
 			  billtoaddress_valid = false;
-			  jQuery("#virtuemart_state_id").addClass("uk-form-danger");
+			  jQuery("#virtuemart_state_id").addClass("opg-form-danger");
 	 	 }
 		 else
 		 {
-			  jQuery("#virtuemart_state_id").removeClass("uk-form-danger");
+			  jQuery("#virtuemart_state_id").removeClass("opg-form-danger");
 	  	 }
 	}
 	if(returnval == "yes")
@@ -246,13 +259,13 @@ function validatebillto(returnval)
 	if(!billtoaddress_valid) 
 	{
 	     jQuery("#billtoicon").hide();
-	     jQuery("#billtobutton").removeClass("uk-button-primary");
+	     jQuery("#billtobutton").removeClass("opg-button-primary");
 		 return false;
 	}
 	else
 	{
 	   jQuery("#billtoicon").show();
-	   jQuery("#billtobutton").addClass("uk-button-primary");
+	   jQuery("#billtobutton").addClass("opg-button-primary");
 	   updateaddress(4);
 	}
 	
@@ -598,11 +611,11 @@ function submit_order() {
 			if(validatefield == false)
 			{
 			  inputvalidation = false;	  
-			  jQuery("#"+elementid).addClass("uk-form-danger");
+			  jQuery("#"+elementid).addClass("opg-form-danger");
 			}
 			else
 			{
-			  jQuery("#"+elementid).removeClass("uk-form-danger");
+			  jQuery("#"+elementid).removeClass("opg-form-danger");
 			}
 		});
 		 country_ele2 =  document.getElementById('shipto_virtuemart_country_id');
@@ -612,11 +625,11 @@ function submit_order() {
 			 if(validatefield == false)
 			 {
 				  inputvalidation = false;	  
-				  jQuery("#shipto_virtuemart_country_id").addClass("uk-form-danger");
+				  jQuery("#shipto_virtuemart_country_id").addClass("opg-form-danger");
 	 		 }
 			 else
 			 {
-			  jQuery("#shipto_virtuemart_country_id").removeClass("uk-form-danger");
+			  jQuery("#shipto_virtuemart_country_id").removeClass("opg-form-danger");
 		  	 }
 		 }
 		 state_ele2 =  document.getElementById('shipto_virtuemart_state_id');
@@ -626,11 +639,11 @@ function submit_order() {
 			 if(validatefield == false)
 			 {
 				  inputvalidation = false;	  
-				  jQuery("#shipto_virtuemart_state_id").addClass("uk-form-danger");
+				  jQuery("#shipto_virtuemart_state_id").addClass("opg-form-danger");
 		 	 }	
 			 else
 			 {
-				  jQuery("#shipto_virtuemart_state_id").removeClass("uk-form-danger");
+				  jQuery("#shipto_virtuemart_state_id").removeClass("opg-form-danger");
 		  	 }
 		 }
 	 }
@@ -777,11 +790,11 @@ function submit_order() {
 			{
 			  inputvalidation = false;	 
 			  billtovalidate = false;
-			  jQuery("#"+elementid).addClass("uk-form-danger");
+			  jQuery("#"+elementid).addClass("opg-form-danger");
 			}
 			else
 			{
-			  jQuery("#"+elementid).removeClass("uk-form-danger");
+			  jQuery("#"+elementid).removeClass("opg-form-danger");
 			}
 		 });
 	   	 country_ele =  document.getElementById('virtuemart_country_id');
@@ -792,11 +805,11 @@ function submit_order() {
 			 {
 				  inputvalidation = false;
 				  billtovalidate = false;
-				  jQuery("#virtuemart_country_id").addClass("uk-form-danger");
+				  jQuery("#virtuemart_country_id").addClass("opg-form-danger");
 	 		 }
 			 else
 			 {
-				  jQuery("#virtuemart_country_id").removeClass("uk-form-danger");
+				  jQuery("#virtuemart_country_id").removeClass("opg-form-danger");
 		  	 }
 		 }
 		 state_ele =  document.getElementById('virtuemart_state_id');
@@ -807,23 +820,23 @@ function submit_order() {
 			 {
 				  inputvalidation = false;
 				  billtovalidate = false;
-				  jQuery("#virtuemart_state_id").addClass("uk-form-danger");
+				  jQuery("#virtuemart_state_id").addClass("opg-form-danger");
 		 	 }	
 			 else
 			 {
-				  jQuery("#virtuemart_state_id").removeClass("uk-form-danger");
+				  jQuery("#virtuemart_state_id").removeClass("opg-form-danger");
 		  	 }
 		  }
 		  
 		  if(billtovalidate == false)
 		  {
-	 	     jQuery("#billtobutton").removeClass("uk-button-primary");  
-			 jQuery("#billtobutton").addClass("uk-button-danger");  
+	 	     jQuery("#billtobutton").removeClass("opg-button-primary");  
+			 jQuery("#billtobutton").addClass("opg-button-danger");  
 		  }
 		  else
 		  {
-			 jQuery("#billtobutton").removeClass("uk-button-danger");    
-			 jQuery("#billtobutton").addClass("uk-button-primary");  
+			 jQuery("#billtobutton").removeClass("opg-button-danger");    
+			 jQuery("#billtobutton").addClass("opg-button-primary");  
 			 
 		  }
 	}
@@ -1071,6 +1084,23 @@ function update_product(vmid)
 						 currentview = "";
                     	 Virtuemart.productUpdate(jQuery(".vmCartModule"), currentview);
                     }  
+					else
+					{
+						 var $ = jQuery ;
+						 $.ajaxSetup({ cache: false })
+					  	 $.getJSON(window.vmSiteurl + "index.php?option=com_virtuemart&nosef=1&view=cart&task=viewJS&format=json" + window.vmLang,
+						function(datas, textStatus) 
+						{
+						  if (datas.totalProduct > 0) 
+						  {
+							 
+						  }
+						  else
+						  {
+							    window.location.reload();
+						  }
+						});
+				    }
 					var r = '<div class="opg-margin-small-top opg-alert opg-alert-success" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + productupdate + "</p></div>";
 				   jQuery("#customerror").html("");
 				   jQuery("#customerror").show();
@@ -1120,6 +1150,40 @@ function update_prices()
 		                 }								 
 
 					 });
+					  jQuery("#taxRulesBill").hide();
+					 if(typeof(data.taxRulesBill)!= 'undefined')
+					 {
+						  jQuery.each(data.taxRulesBill, function(id, taxdata) {
+			 	 			 if(jQuery("#taxdiv_"+id).length > 0)
+							 {
+								 jQuery("#taxRulesBill").show();
+								 jQuery("#tax_amount_"+id).html(taxdata.price);
+							 }
+							 else
+							 {
+							      jQuery("#taxRulesBill").show();
+							 	  htmldiv = '<div id="taxdiv_'+id+'"  class=" opg-grid opg-text-right"><div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.name+'</div><div id="tax_amount_'+id+'"   class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.price+'</div><div class="clear"></div></div>';
+								  jQuery("#taxRulesBill").append(htmldiv);
+							 }
+						  });
+					 }
+					 jQuery("#DATaxRulesBill").hide();
+					 if(typeof(data.DATaxRulesBill)!= 'undefined')
+					 {
+						  jQuery.each(data.DATaxRulesBill, function(id, taxdata) {
+			 	 			 if(jQuery("#dataxdiv_"+id).length > 0)
+							 {
+								 jQuery("#DATaxRulesBill").show();
+								 jQuery("#datax_amount_"+id).html(taxdata.price);
+							 }
+							 else
+							 {
+							      jQuery("#DATaxRulesBill").show();
+							 	  htmldiv = '<div id="dataxdiv_'+id+'"  class=" opg-grid opg-text-right"><div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.name+'</div><div id="datax_amount_'+id+'"   class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.price+'</div><div class="clear"></div></div>';
+								  jQuery("#taxRulesBill").append(htmldiv);
+							 }
+						  });
+					 }
 				   
 					if(data.salesPrice != "")
 					{
@@ -1247,6 +1311,7 @@ function update_prices()
 						    }
 						 }
 					     $("#klarna-checkout-container").slideDown();
+						 $("#klarna_fields").slideDown();
 					     $('#otherpay_buttons').slideUp();
 				  	     $('div.all_shopper_fields').slideUp();
 					     $('div#other-things').slideUp();
@@ -1258,6 +1323,7 @@ function update_prices()
 					        document.getElementById("extracommentss").style.display = "none";
 				    	} 
 					    $("#klarna-checkout-container").slideUp();
+						$("#klarna_fields").slideUp();
 					    $('#otherpay_buttons').slideDown();
 				        $('div.all_shopper_fields').slideDown();
 					    $('div#other-things').slideDown();
@@ -2061,7 +2127,10 @@ function updatecart()
 		 }).done(
 			 function (data, textStatus){
 				update_prices();
-		 });
+		 }).fail(
+		     function (data, textStatus){
+				update_prices();
+         });
 }
 function updateaddress(fieldtype)
 {

@@ -66,23 +66,27 @@ $params=new JRegistry($plugin->params);
             </div>
 			<?php } ?>
 
+		  <div id="taxRulesBill" style="display:none">
 		<?php
-		foreach($this->cart->cartData['taxRulesBill'] as $rule){ ?>
-            <div class=" opg-grid opg-text-right">
+		foreach($this->cart->cartData['taxRulesBill'] as $rule){ 
+		?>
+            <div id="taxdiv_<?php echo $rule['virtuemart_calc_id']; ?>" class=" opg-grid opg-text-right">
                 <div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2"><?php echo $rule['calc_name'].': ' ?></div>
-                <div class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2"><?php echo $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true); ?></div>
+                <div id="tax_amount_<?php echo $rule['virtuemart_calc_id']; ?>" class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2"><?php echo $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true); ?></div>
                 <div class="clear"></div>
             </div>
 			<?php } ?>
-
+		</div>
+        <div id="DATaxRulesBill" style="display:none"> 
 		<?php
 		foreach($this->cart->cartData['DATaxRulesBill'] as $rule){ ?>
-            <div class=" opg-grid opg-text-right">
+            <div id="dataxdiv_<?php echo $rule['virtuemart_calc_id']; ?>" class=" opg-grid opg-text-right">
                 <div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2"><?php echo $rule['calc_name'].': ' ?></div>
-                <div class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2"><?php echo $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true); ?></div>
+                <div id="datax_amount_<?php echo $rule['virtuemart_calc_id']; ?>" class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2"><?php echo $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true); ?></div>
                 <div class="clear"></div>
             </div>
 			<?php } ?>
+	    </div>
 
 		<?php if(!empty($this->cart->pricesUnformatted['billDiscountAmount'])) { ?>
         <div class=" opg-grid opg-text-right" id="total_amountfulldiv">

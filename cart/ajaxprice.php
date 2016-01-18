@@ -62,5 +62,30 @@ $cart->prepareCartData();
 		   $price_values["couponDescr"] = $cart->cartData["couponDescr"];
 	
 	$price_values["billTotalunformat"]= $cart->pricesUnformatted["billTotal"];
+	
+	if(count($this->cart->cartData['taxRulesBill']) > 0)
+	{
+	    $taxRulesBill = array();
+		foreach($this->cart->cartData['taxRulesBill'] as $rule)
+		{
+		   $virtuemart_calc_id = $rule['virtuemart_calc_id'];
+		   $calcname = $rule['calc_name'];
+		   $taxRulesBill[$virtuemart_calc_id]["name"] = $calcname;
+		   $taxRulesBill[$virtuemart_calc_id]["price"] = $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true);
+		}
+		$price_values["taxRulesBill"] = $taxRulesBill;
+	}
+	if(count($this->cart->cartData['DATaxRulesBill']) > 0)
+	{
+	    $DATaxRulesBill = array();
+		foreach($this->cart->cartData['DATaxRulesBill'] as $rule)
+		{
+		   $virtuemart_calc_id = $rule['virtuemart_calc_id'];
+		   $calcname = $rule['calc_name'];
+		   $DATaxRulesBill[$virtuemart_calc_id]["name"] = $calcname;
+		   $DATaxRulesBill[$virtuemart_calc_id]["price"] = $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true);
+		}
+		$price_values["DATaxRulesBill"] = $DATaxRulesBill;
+	}
 	echo json_encode($price_values);
 	exit;
