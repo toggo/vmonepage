@@ -386,6 +386,10 @@ class VirtueMartViewCart extends VmView {
 			   {
 				   $cart->cartfields[$name] = $cartfield['title'];
 			   }
+			   else if($cartfield['type'] == "checkbox")
+			   {
+			       $cart->cartfields[$name] = 0;
+			   }
 	 		}
 			$cart->setCartIntoSession(false,true);
 			$cart->saveCartFieldsInCart();

@@ -19,7 +19,6 @@
 */
 
 if(typeof Virtuemart === "undefined")
-
 		var Virtuemart = {};
 		
 			Virtuemart.setproducttype =  function (form, id) {
@@ -70,14 +69,15 @@ if(typeof Virtuemart === "undefined")
 						  if ($(".vmCartModule")[0]) {
                        		 Virtuemart.productUpdate($(".vmCartModule"));
                          }
-						 if(window.CARTPAGE == "yes")
+						 if(vmonepage.CARTPAGE == "yes")
 						 { 
 							 window.location.reload(); 
 						 }
 					}
 				);
 			}
-			Virtuemart.productUpdate =function(mod) {
+			Virtuemart.productUpdate =function(mod, curview) {
+				
 
 				jQuery('body').trigger('updateVirtueMartCartModule');
 			}
@@ -136,7 +136,7 @@ if(typeof Virtuemart === "undefined")
 					{
 	                    if(usefancy){
 							
-							if(window.CARTPAGE == "yes")
+							if(vmonepage.CARTPAGE == "yes")
 							 {
 								 window.location.reload(); 
 							 }
@@ -157,7 +157,7 @@ if(typeof Virtuemart === "undefined")
 							 }
 	                    } else {
 							jQuery('#add_to_cart_popup .inner-content').html(txt);
-							if(window.CARTPAGE == "yes")
+							if(vmonepage.CARTPAGE == "yes")
 							 {
 								 window.location.reload(); 
 							 }

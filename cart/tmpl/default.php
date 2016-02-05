@@ -101,7 +101,7 @@ $document->addStyleDeclaration('#facebox .content {display: block !important; he
 	 }
 	 
  } 
-$agreetotos = VmConfig::get('agree_to_tos_onorder');
+$agreetotos = 0;
 foreach($this->cart->BTaddress['fields'] as $name => $cartfield)
 {
  if($cartfield['required'] == 1)
@@ -162,37 +162,42 @@ $noshipmethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_C
 $nopaymethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', ''), ENT_QUOTES);
 $minpurchaseerror   =  htmlspecialchars(vmText::sprintf('COM_VIRTUEMART_CART_MIN_PURCHASE',  $currency->priceDisplay($vendordata->vendor_min_pov)), ENT_QUOTES);
 
-$document->addScriptDeclaration("
-      //<![CDATA[ 
-      window.CARTPAGE = 'yes';
-	  window.shipmentfileds = ".count($this->cart->STaddress['fields']).";
-      window.agree_to_tos_onorder = ".$agreetotos.";
-	  window.acceptmeessage = '".$acceptmessage."';
-	  window.privacymeessage = '".$privacymeessage."';
-      window.minpurchaseerror = '".$minpurchaseerror."';
-	  window.selectshipment = '".$selectshipment."';
-	  window.selectpayment = '".$selectpayment."';	  
-	  window.invaliddata = '".$invaliddata."';	  
-	  window.productupdate = '".$productupdate."';	  
-	  window.chosecountry = '".$chosecountry."';	  
-	  window.removeprouct = '".$removeprouct."';	  
-	  window.changetext = '".$changetext."';	  
-	  window.noshipmethod = '".$noshipmethod."';	  
-	  window.nopaymethod = '".$nopaymethod."';	  
-	  window.onlyregistered = ".VmConfig::get('oncheckout_only_registered', 0).";	  
-	  window.couponenable = ".VmConfig::get('coupons_enable', 0).";	  
-	  window.showextraterms = ".$showextraterms.";
-	  window.token = '".JSession::getFormToken()."';
-	  window.show_tax = ".VmConfig::get('show_tax').";
-	  window.customernote = ".$customernote.";
-	  window.countryreload = ".$countryreload.";
-	  window.captchaenabled = ".$captchaenabled.";
-	  window.captchainvalid = '".$captchainvalid."';
-  	  window.listshipments = ".$listshipments.";
-	  window.listpayments = ".$listpayments.";
-	  window.popupaddress = ".$popupaddress.";
-      //]]>
-      ");
+$document->addScriptDeclaration('
+if (typeof vmonepage == "undefined") {
+  var vmonepage = {};
+};
+var vmonepage = { 
+  "CARTPAGE" : "yes",
+  "shipmentfileds" : "'.count($this->cart->STaddress['fields']).'",
+  "agree_to_tos_onorder" : "'.$agreetotos.'",
+  "acceptmeessage" : "'.$acceptmessage.'",
+  "privacymeessage" : "'.$privacymeessage.'",
+  "minpurchaseerror" : "'.$minpurchaseerror.'",
+  "selectshipment" : "'.$selectshipment.'",
+  "selectpayment" : "'.$selectpayment.'",
+  "invaliddata" : "'.$invaliddata.'",
+  "productupdate" : "'.$productupdate.'",
+  "chosecountry" : "'.$chosecountry.'",
+  "removeprouct" : "'.$removeprouct.'",
+  "changetext" : "'.$changetext.'",
+  "noshipmethod" : "'.$noshipmethod.'",
+  "nopaymethod" : "'.$nopaymethod.'",
+  "onlyregistered" : "'.VmConfig::get('oncheckout_only_registered', 0).'",
+  "couponenable" : "'.VmConfig::get('coupons_enable', 0).'",
+  "showextraterms" : "'.$showextraterms.'",
+  "token" : "'.JSession::getFormToken().'",
+  "show_tax" :"'.VmConfig::get('show_tax').'",
+  "customernote" : "'.$customernote.'",
+  "countryreload" : "'.$countryreload.'",
+  "captchaenabled" : "'.$captchaenabled.'",
+  "captchainvalid" : "'.$captchainvalid.'",
+  "listshipments" : "'.$listshipments.'",
+  "listpayments" : "'.$listpayments.'",
+  "popupaddress" : "'.$popupaddress.'"
+  };
+');
+
+
 ?>
 
 <style>

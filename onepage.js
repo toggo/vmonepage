@@ -27,6 +27,8 @@ jQuery(document).ready(function(){
 	jQuery(".opg-alert").hide();
 	jQuery("#system-message-container").hide();
 	
+	
+	
 	if (window._klarnaCheckout) {
             window._klarnaCheckout(function (api) {
                     api.on({
@@ -67,7 +69,7 @@ jQuery(document).ready(function(){
 			  		});
             });
 	}
-	if(popupaddress > 1)
+	if(vmonepage.popupaddress > 1)
 	{
 	     jQuery('#billtopopup').on({
 	     'show.uk.modal': function()
@@ -539,21 +541,21 @@ function submit_order() {
   
    jQuery("#customerror").html("");
    errormsg = "";
-    if(captchaenabled)
+    if(vmonepage.captchaenabled > 0)
     {
 	   captcha_response  = grecaptcha.getResponse();
 	   if(captcha_response == "")
 	   {
-		    errormsg += "<p>"+captchainvalid+"</p>";
+		    errormsg += "<p>"+vmonepage.captchainvalid+"</p>";
 	   }
     }
-   if(agree_to_tos_onorder == 1)
+   if(vmonepage.agree_to_tos_onorder == 1)
    {
 	  if(jQuery("#squaredTwo").prop("checked") == false) 
 	  { 
 	      jQuery("div.squaredTwo").addClass("opg-form-danger");
 	      jQuery("div.squaredTwo").addClass("errorcheck");
-		  errormsg += "<p>"+acceptmeessage+"</p>";
+		  errormsg += "<p>"+vmonepage.acceptmeessage+"</p>";
 	  }
 	  else
 	  {
@@ -561,11 +563,11 @@ function submit_order() {
 		  jQuery("div.squaredTwo").removeClass("errorcheck");
 	  }
    }
-   if(showextraterms)
+   if(vmonepage.showextraterms > 0)
    {
 	  if(jQuery("#privacy_checkbox").prop("checked") == false ) 
 	  { 
-	        errormsg += "<p>"+privacymeessage+"</p>";
+	        errormsg += "<p>"+vmonepage.privacymeessage+"</p>";
 	  }
    }
    minpurchase =  parseFloat(document.getElementById("minmumpurchase").value);
@@ -574,18 +576,18 @@ function submit_order() {
 	{ 
 	  if(minpurchase > carttotalunformat)
 	  { 
-		    errormsg += '<p>' + minpurchaseerror + '</p>';
+		    errormsg += '<p>' + vmonepage.minpurchaseerror + '</p>';
 	  }
 	}
 	
-	if(selected_shipment==false)  errormsg += '<p>' + selectshipment + '</p>';
-	if(selected_payment==false)  errormsg += '<p>' + selectpayment + '</p>';
+	if(selected_shipment==false)  errormsg += '<p>' + vmonepage.selectshipment + '</p>';
+	if(selected_payment==false)  errormsg += '<p>' + vmonepage.selectpayment + '</p>';
 
 
 	var validator = new JFormValidator();
 	
     inputvalidation = true;
-	if(onlyregistered)
+	if(vmonepage.onlyregistered > 0)
 	{
 		jQuery('#user_fields_div input').each(function(){
 			var validatefield = validator.validate(this);
@@ -602,7 +604,7 @@ function submit_order() {
 			
 		});
      }
-	 if(popupaddress > 1)
+	 if(vmonepage.popupaddress > 1)
 	 {
    	     var validator=new JFormValidator();
 	     jQuery('#shipto_fields_div input').each(function(){
@@ -693,7 +695,7 @@ function submit_order() {
 		  	 }
 		}	
 	 }
-    if(shipmentfileds > 0 && popupaddress == 1)
+    if(vmonepage.shipmentfileds > 0 && vmonepage.popupaddress == 1)
 	{
 		if(jQuery('#STsameAsBT').prop("checked") == true ) 
 		{
@@ -845,7 +847,7 @@ function submit_order() {
 	{
 		  if(!inputvalidation)
 		  {
-		 	  errormsg += "<p>"+invaliddata+"</p>";
+		 	  errormsg += "<p>"+vmonepage.invaliddata+"</p>";
 		  }
 		   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + errormsg + "</p></div>";
 		   jQuery("#customerror").html("");
@@ -869,7 +871,7 @@ function submit_order() {
 	if(jQuery('#register').prop("checked") == true ) {
 		
 	  register_state=false;
-	  registerurl = "index.php?option=com_virtuemart&view=cart&vmtask=registeruser&"+token+"=1";	
+	  registerurl = "index.php?option=com_virtuemart&view=cart&vmtask=registeruser&"+vmonepage.token+"=1";	
 	  jQuery.ajax({
         	type: "POST",
 	        cache: false,
@@ -958,7 +960,7 @@ function submit_order() {
 														 else
 														 {
 														   errordata = data.message;	  
-														   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + invaliddata + "</p><p>"+errordata+"</p></div>";
+														   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + vmonepage.invaliddata + "</p><p>"+errordata+"</p></div>";
 														   jQuery("#customerror").html("");
 														   jQuery("#customerror").show();
 														   jQuery("#customerror").html(r);
@@ -1013,7 +1015,7 @@ function submit_order() {
 					 else
 					 {
 						   errordata = data.message;	  
-						   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + invaliddata + "</p><p>"+errordata+"</p></div>";
+						   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + vmonepage.invaliddata + "</p><p>"+errordata+"</p></div>";
 						   jQuery("#customerror").html("");
 						   jQuery("#customerror").show();
 						   jQuery("#customerror").html(r);
@@ -1082,7 +1084,7 @@ function update_product(vmid)
 					if (jQuery(".vmCartModule")[0]) 
 					{
 						 currentview = "";
-                    	 Virtuemart.productUpdate(jQuery(".vmCartModule"), currentview);
+						 jQuery('body').trigger('updateVirtueMartCartModule');
                     }  
 					else
 					{
@@ -1101,7 +1103,7 @@ function update_product(vmid)
 						  }
 						});
 				    }
-					var r = '<div class="opg-margin-small-top opg-alert opg-alert-success" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + productupdate + "</p></div>";
+					var r = '<div class="opg-margin-small-top opg-alert opg-alert-success" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + vmonepage.productupdate + "</p></div>";
 				   jQuery("#customerror").html("");
 				   jQuery("#customerror").show();
 				   jQuery("#customerror").html(r);
@@ -1133,7 +1135,7 @@ function update_prices()
 				 {
 
 					 jQuery.each(data.products, function(id, product) {
-						 if(show_tax)
+						 if(vmonepage.show_tax > 0)
 						 {
 	    	                 if (jQuery('#subtotal_tax_amount_'+id).length > 0) 
 							 {
@@ -1150,12 +1152,16 @@ function update_prices()
 		                 }								 
 
 					 });
-					  jQuery("#taxRulesBill").hide();
+					 jQuery("#taxRulesBill").hide();
+					 jQuery("#taxRulesBill .uk-grid").each(function(){
+					   jQuery(this).hide();											    
+ 			  	     });
 					 if(typeof(data.taxRulesBill)!= 'undefined')
 					 {
 						  jQuery.each(data.taxRulesBill, function(id, taxdata) {
 			 	 			 if(jQuery("#taxdiv_"+id).length > 0)
 							 {
+								 jQuery("#taxdiv_"+id).show();   
 								 jQuery("#taxRulesBill").show();
 								 jQuery("#tax_amount_"+id).html(taxdata.price);
 							 }
@@ -1168,11 +1174,15 @@ function update_prices()
 						  });
 					 }
 					 jQuery("#DATaxRulesBill").hide();
+					 jQuery("#DATaxRulesBill .uk-grid").each(function(){
+					   jQuery(this).hide();											    
+ 			  	     });
 					 if(typeof(data.DATaxRulesBill)!= 'undefined')
 					 {
 						  jQuery.each(data.DATaxRulesBill, function(id, taxdata) {
 			 	 			 if(jQuery("#dataxdiv_"+id).length > 0)
 							 {
+								 jQuery("#dataxdiv_"+id).show();    
 								 jQuery("#DATaxRulesBill").show();
 								 jQuery("#datax_amount_"+id).html(taxdata.price);
 							 }
@@ -1194,7 +1204,7 @@ function update_prices()
 					{
 					   jQuery("sales_pricefulldiv").hide();
 					}
-				    if(show_tax)
+				    if(vmonepage.show_tax > 0)
 				    {
 			 		  jQuery('#shipment_tax').html(data.shipmentTax);
 			 	    }
@@ -1207,7 +1217,7 @@ function update_prices()
 				   {
 				     jQuery("#shipmentfulldiv").hide();
 				   }
-				   if(show_tax)
+				   if(vmonepage.show_tax > 0)
 				   {
 				 	 jQuery('#payment_tax').html(data.paymentTax);
 					 if(data.billTaxAmount != "")
@@ -1246,7 +1256,7 @@ function update_prices()
 				}
 				jQuery("#couponpricediv").hide();
 				
-				if(couponenable)
+				if(vmonepage.couponenable > 0)
 				{
 					var coupontext = data.couponCode;
 					if (data.couponDescr != '') 
@@ -1263,7 +1273,7 @@ function update_prices()
                         jQuery("#coupon_code_txt").html("");
 						jQuery("#couponpricediv").hide();
 					}
-					if(show_tax)
+					if(vmonepage.show_tax > 0)
 					{
 						if(data.couponTax) 
 						{
@@ -1299,7 +1309,7 @@ function update_prices()
 				{
 					if ($("#paymentsdiv input[name='virtuemart_paymentmethod_id']:checked").val() == klarna_id) 
 					{
-					     if(customernote)
+					     if(vmonepage.customernote > 0)
 					     {
 					        document.getElementById("extracommentss").style.display = "block";
 				    	 }
@@ -1318,7 +1328,7 @@ function update_prices()
 					}
 					else 
 					{
-						if(customernote)
+						if(vmonepage.customernote > 0)
 					    {
 					        document.getElementById("extracommentss").style.display = "none";
 				    	} 
@@ -1376,37 +1386,32 @@ function removeproduct(vmproductid)
 				 }
 				 else
 				 {
-				   deletemsg = removeprouct;
+				   deletemsg = vmonepage.removeprouct;
+				   
 				   var r = '<div class="opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + deletemsg + "</p></div>";
 				   jQuery("#customerror").html("");
 				   jQuery("#customerror").show();
 				   jQuery("#customerror").html(r);
 					document.id('product_row_'+vmproductid).destroy();
-					mod=jQuery(".vmCartModule");
+					if (jQuery(".vmCartModule")[0]) 
+					{
+						 currentview = "";
+						 jQuery('body').trigger('updateVirtueMartCartModule');
+                    }  
 					jQuery.getJSON(vmSiteurl+"index.php?option=com_virtuemart&nosef=1&view=cart&task=viewJS&format=json"+vmLang,
-						function(datas, textStatus) {
-							if (datas.totalProduct >0) {
-								mod.find(".vm_cart_products").html("");
-								jQuery.each(datas.products, function(key, val) {
-									jQuery("#hiddencontainer .container").clone().appendTo(".vmCartModule .vm_cart_products");
-									jQuery.each(val, function(key, val) {
-										if (jQuery("#hiddencontainer .container ."+key)) 
-										{
-											mod.find(".vm_cart_products ."+key+":last").html(val) ;
-										}
-									});
-								});
+					   function(datas, textStatus) 
+					   {
+						  if (datas.totalProduct >0) 
+						   {
 								update_shipment();
-								mod.find(".total").html(datas.billTotal);
-								mod.find(".show_cart").html(datas.cart_show);
-							} else {
+						   } 
+						   else 
+						   {
 							    window.location.reload();
-								mod.find(".vm_cart_products").html("");
-								mod.find(".total").html(datas.billTotal);
-							}
-							mod.find(".total_products").html(datas.totalProductTxt);
+						   }
 						}
 					);
+					 
 				 }
 		 });
 			
@@ -1434,7 +1439,7 @@ function update_shipment()
 					var shipments="";
 					if(data.length == 0)
 					{
-						if(listshipments)
+						if(vmonepage.listshipments > 0)
 						{ 
 						  divname = "shipment_nill";
 						}
@@ -1452,20 +1457,20 @@ function update_shipment()
 						     var cval2 =validator.validate(country_ele);
 							 if(cval2 == false)
  							 {
-								  shipmentnil  = chosecountry;
+								  shipmentnil  = vmonepage.chosecountry;
 								  jQuery("#shipmentnill").html("");
 								  jQuery("#shipmentnill").html(shipmentnil); 
  			 				 } 
 							 else
 							 {
-								  shipmentnil  = noshipmethod;
+								  shipmentnil  = vmonepage.noshipmethod;
 								  jQuery("#shipmentnill").html("");
 								  jQuery("#shipmentnill").html(shipmentnil);
 						  	 }
 						 }
 						 else
 						 {
-							  shipmentnil  = noshipmethod;
+							  shipmentnil  = vmonepage.noshipmethod;
 							  jQuery("#shipmentnill").html("");
 							  jQuery("#shipmentnill").html(shipmentnil);
 						 }
@@ -1490,7 +1495,7 @@ function update_shipment()
 						   {
 						     var activeclasss = "";
 						   }
-						   if(activeclasss != "" && listshipments == 0)
+						   if(activeclasss != "" && vmonepage.listshipments == 0)
 						   {
 							  texxt = data[i];
 							  tmptxt = strip_tags(texxt, '<span><img>');
@@ -1508,7 +1513,7 @@ function update_shipment()
 								  	 temptext =  '<td id="shipchangediv" class="opg-width-1-4">';
 								     target = "{target:'#shipmentdiv'}";
 							         temptext += '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'+target+'">';
-									 temptext += changetext;
+									 temptext += vmonepage.changetext;
 									 temptext += '</a></td>';
 									 jQuery("#shipmentrow").append(temptext);
 							    }
@@ -1524,7 +1529,7 @@ function update_shipment()
 							texxts = texxts.replace('</span><span', '</span><br /><span');
 							texxts = texxts.replace('vmshipment_description', 'vmpayment_description opg-text-small');
 							texxts = texxts.replace('vmshipment_cost', 'vmpayment_cost opg-text-small');
-							if(listshipments)
+							if(vmonepage.listshipments > 0)
 							{
 								texxts = texxts.replace('<input', '<input onclick="setshipment()"');
 							}
@@ -1589,7 +1594,7 @@ function update_shipment()
 					{
 						update_prices();
 					}
-					else if(countrychange == "yes" && window.countryreload == 1)
+					else if(countrychange == "yes" && vmonepage.countryreload == 1)
 					{
 					 	  document.location.reload(); 
 					}
@@ -1619,7 +1624,7 @@ function updatepayment()
 				jQuery("#paymentsdiv").html("");
 				if(data.payments.length == 0)
 				{
-					 if(listpayments)
+					 if(vmonepage.listpayments > 0)
 				 	 { 
 					   paydivname = "payment_nill";
 					 }
@@ -1639,13 +1644,13 @@ function updatepayment()
 					     var cval2 =validator.validate(country_ele);
 						 if(cval2 == false)
 						 {
-							  paymentnil  = chosecountry;
+							  paymentnil  = vmonepage.chosecountry;
 							  jQuery("#paymentnill").html("");
 							  jQuery("#paymentnill").html(paymentnil); 
  		 				 } 
 						 else
 						 {
-							  paymentnil  = nopaymethod;
+							  paymentnil  = vmonepage.nopaymethod;
 							  jQuery("#paymentnill").html("");
 							  jQuery("#paymentnill").html(paymentnil);
 					  	 }
@@ -1653,7 +1658,7 @@ function updatepayment()
 					 else
 					 {
 					 
-					     paymentnil  = nopaymethod;
+					     paymentnil  = vmonepage.nopaymethod;
 						 jQuery("#paymentnill").html("");
 						 jQuery("#paymentnill").html(paymentnil);
 					 }
@@ -1685,7 +1690,7 @@ function updatepayment()
 					       {
 					   		  var activeclasss = "";
 					       }
-						   if(activeclasss != ""  && listpayments == 0)
+						   if(activeclasss != ""  && vmonepage.listpayments == 0)
 						   {
 						      texxt = data.payments[i];
 							  
@@ -1709,7 +1714,7 @@ function updatepayment()
 								  	 temptext =  '<td id="paychangediv" class="opg-width-1-4">';
 									 target = "{target:'#paymentdiv'}";
 							         temptext += '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'+target+'">';
-									 temptext += changetext;
+									 temptext += vmonepage.changetext;
 									 temptext += '</a></td>';
 									 jQuery("#paymentrow").append(temptext);
 							     }
@@ -1732,7 +1737,7 @@ function updatepayment()
 						   tmptxts = tmptxts.replace('</span><span', '</span><br /><span');
 						   tmptxts = tmptxts.replace('vmpayment_description', 'vmpayment_description opg-text-small');
 						   tmptxts = tmptxts.replace('vmpayment_cost', 'vmpayment_cost opg-text-small');
-						   if(listpayments > 0)
+						   if(vmonepage.listpayments > 0)
 						   {
 								tmptxts = tmptxts.replace('type="radio"', 'type="radio" onclick="setpayment()" ');
 						   }
@@ -1831,7 +1836,7 @@ function updatepayment()
 	            klarnapaymentid = document.getElementById('klarna_checkout_onepage').value;
 				if(klarnapaymentid == selectedpaymentid)
 				{ 
-				  if(customernote)
+				  if(vmonepage.customernote > 0)
 				  {
 				     document.getElementById("extracommentss").style.display = "block";
 				  }
@@ -1842,7 +1847,7 @@ function updatepayment()
 			    }
 				else
 				 {
-					  if(customernote)
+					  if(vmonepage.customernote > 0)
 					  {
 					      document.getElementById("extracommentss").style.display = "none";
 					  }
@@ -1850,7 +1855,7 @@ function updatepayment()
 			}
 			else
 			{
-				  if(customernote)
+				  if(vmonepage.customernote > 0)
 				  {
 					  document.getElementById("extracommentss").style.display = "none";
 				  }
@@ -1866,7 +1871,7 @@ function updatepayment()
 					var shipments="";
 					if(data.shipments.length == 0)
 					{
-						if(listshipments)
+						if(vmonepage.listshipments > 0)
 						{ 
 						  divname = "shipment_nill";
 						}
@@ -1884,20 +1889,20 @@ function updatepayment()
 						     var cval2 =validator.validate(country_ele);
 							 if(cval2 == false)
  							 {
-								  shipmentnil  = chosecountry;
+								  shipmentnil  = vmonepage.chosecountry;
 								  jQuery("#shipmentnill").html("");
 								  jQuery("#shipmentnill").html(shipmentnil); 
  			 				 } 
 							 else
 							 {
-								  shipmentnil  = noshipmethod;
+								  shipmentnil  = vmonepage.noshipmethod;
 								  jQuery("#shipmentnill").html("");
 								  jQuery("#shipmentnill").html(shipmentnil);
 						  	 }
 						 }
 						 else
 						 {
-							  shipmentnil  = noshipmethod;
+							  shipmentnil  = vmonepage.noshipmethod;
 							  jQuery("#shipmentnill").html("");
 							  jQuery("#shipmentnill").html(shipmentnil);
 						 }
@@ -1922,7 +1927,7 @@ function updatepayment()
 						   {
 						     var activeclasss = "";
 						   }
-						   if(activeclasss != "" && listshipments == 0)
+						   if(activeclasss != "" && vmonepage.listshipments == 0)
 						   {
 							  texxt = data.shipments[i];
 							  tmptxt = strip_tags(texxt, '<span><img>');
@@ -1940,7 +1945,7 @@ function updatepayment()
 								  	 temptext =  '<td id="shipchangediv" class="opg-width-1-4">';
 								     target = "{target:'#shipmentdiv'}";
 							         temptext += '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'+target+'">';
-									 temptext += changetext;
+									 temptext += vmonepage.changetext;
 									 temptext += '</a></td>';
 									 jQuery("#shipmentrow").append(temptext);
 							    }
@@ -1956,7 +1961,7 @@ function updatepayment()
 							texxts = texxts.replace('</span><span', '</span><br /><span');
 							texxts = texxts.replace('vmshipment_description', 'vmpayment_description opg-text-small');
 							texxts = texxts.replace('vmshipment_cost', 'vmpayment_cost opg-text-small');
-							if(listshipments)
+							if(vmonepage.listshipments > 0)
 							{
 								texxts = texxts.replace('<input', '<input onclick="setshipment()"');
 							}
@@ -2075,7 +2080,7 @@ function setpayment()
 	 });
 
 }
-function updatecustomernote(element)
+function customernote(element)
 {
 	jQuery("#extracommentss #customer_note_field").val(jQuery(element).val());
 	jQuery("#commentpopup #customer_note_field").val(jQuery(element).val());

@@ -22,20 +22,29 @@
 defined('_JEXEC') or die('Restricted access');
 
 
-    $plugin=JPluginHelper::getPlugin('system','onepage_generic');
-    $params=new JRegistry($plugin->params);
-	$popupaddress = $params->get("popup_address", 1);
-	
-	 echo '<div id="klarna_fields" class="opg-width-1-1 opg-panel opg-panel-box" style="display:none">';
+   $plugin=JPluginHelper::getPlugin('system','onepage_generic');
+   $params=new JRegistry($plugin->params);
+   $popupaddress = $params->get("popup_address", 1);
+   $userfieldscount = 0;
    foreach($this->userFieldsCart["fields"] as $singlefield) 
    {
-     $skipped_fields = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2', 'tos');
-	 if(in_array($singlefield['name'],$skipped_fields)) 
-	 {
-
-	 }
-	 else
-	 {
+    $skipped_fields = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2', 'tos');
+	  if(!in_array($singlefield['name'],$skipped_fields)) 
+	  {
+	    $userfieldscount++;
+	  }
+	} 
+   if($userfieldscount > 0)
+   {
+	 echo '<div id="klarna_fields" class="opg-width-1-1 opg-panel opg-panel-box" style="display:none">';
+    foreach($this->userFieldsCart["fields"] as $singlefield) 
+    {
+      $skipped_fields = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2', 'tos');
+	  if(in_array($singlefield['name'],$skipped_fields)) 
+	  {
+	  }
+	  else
+	  {
 		 echo '<div class="opg-width-1-1 opg-margin-small">';
 	     if($singlefield['type'] == "select")
 		 {		
@@ -53,9 +62,10 @@ defined('_JEXEC') or die('Restricted access');
 		 }
 	     echo $singlefield['formcode'];
 		 echo '</div>';
-	 }
-  } 
-  echo '</div>';
+	  }
+   } 
+   echo '</div>';
+  }
 	
 	
 	$checkoutadv = FALSE;
@@ -381,6 +391,7 @@ defined('_JEXEC') or die('Restricted access');
 	{
 	  $hidetitles = "";	   
 	}
+	$regchecked = 0;
 	?>
     <div class="opg-width-1-1"> 
 	
@@ -781,7 +792,30 @@ defined('_JEXEC') or die('Restricted access');
 				require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'userfields.php');
 			}
 			if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'html.php');
-			if(VmConfig::get('oncheckout_show_legal_info',1)){
+			$tosenabled = FALSE;
+		    foreach($this->cart->BTaddress["fields"] as $field) 
+		    {
+		      if($field['name']=='tos') 
+		 	  {	
+	    		$tosenabled = true;
+			  }
+		    } 
+		    foreach($this->cart->STaddress["fields"] as $field) 
+		    {
+		      if($field['name']=='tos') 
+		 	  {	
+			    $tosenabled = true;
+			  }
+		   } 
+		   foreach($this->userFieldsCart["fields"] as $field) 
+		   {
+		     if($field['name']=='tos') 
+		 	 {	
+			   $tosenabled = true;
+			 }
+		   } 
+		   if($tosenabled)
+		   {
 			?>
                 <section title=".squaredTwo">
 					    <div class="squaredTwo">
