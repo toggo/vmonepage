@@ -18,12 +18,15 @@
 ** <date>2015</date>
 */
 
-window.selectedpaymentid = 0;
-var action = "";
-var countrychange = "";
-var popupopen = 0;
 
 jQuery(document).ready(function(){
+								
+    var selectedpaymentid = 0;
+	var action = "";
+	var countrychange = "";
+	var popupopen = 0;
+								
+								
 	jQuery(".opg-alert").hide();
 	jQuery("#system-message-container").hide();
 	

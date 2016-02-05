@@ -16,6 +16,7 @@
 				<folder>languages</folder>
 				<folder>cart</folder>
 				<folder>fonts</folder>
+				<filename>License_GPL2.txt</filename>
                 <filename plugin="onepage_generic">onepage_generic.php</filename>
                 <filename plugin="onepage_generic">onepage_generic.css</filename>
 				<filename plugin="onepage_generic">onepage_generic.js</filename>
