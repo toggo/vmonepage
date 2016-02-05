@@ -32,4 +32,4 @@ This source is free software. This version may have been modified pursuant to th
 
 THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 
-### For help and suggestions etc please contact info@vmonepage.com
+### For help and suggestions etc please contact info@joomlaproffs.se
