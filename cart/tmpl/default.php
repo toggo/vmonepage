@@ -135,7 +135,7 @@ foreach($this->userFieldsCart['fields'] as $name => $cartfield)
   }
  } 
  if (!class_exists('CurrencyDisplay'))
-				require(VMPATH_ADMIN . DS . 'helpers' . DS . 'currencydisplay.php');
+				require(VMPATH_ADMIN . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'currencydisplay.php');
 				$currency = CurrencyDisplay::getInstance();
  $listpayments = $params->get("list_allpayment", 0);				
  $listshipments = $params->get("list_allshipment", 0);	
@@ -224,6 +224,7 @@ if(count($this->cart->products) == 0)
 			</div>
 			<?php endif; ?>		
 	</div>	
+	<div class="uk-margin" title="yootheme virtuemart theme" style="text-align:right; clear:both;"><small class="uk-text-muted"><a class="uk-link uk-text-muted" href="http://www.vmuikit.com" target="_blank">VMuikit</a> is built by <a href="http://www.joomlaproffs.se" title="joomlaproffs joomla" target="_blank" class="uk-link uk-text-muted">joomlaproffs.se</a></small></div>
 <?php
 }
 else

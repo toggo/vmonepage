@@ -128,7 +128,7 @@ else
 	  
 	  <?php
 		if(!empty($this->cart->STaddress['fields'])){
-			if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'html.php');
+			if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'html.php');
 				echo JText::_('COM_VIRTUEMART_USER_FORM_ST_SAME_AS_BT');
 		?>
 		</label>
@@ -296,7 +296,7 @@ else
 				echo '</div>';
 		} //IF NOT LIST SHIPMENTS END
 				?>
-<!-- SHHIPMENT SELECT MODAL ENDS -->
+<!-- SHHIPMENT SELECT MODAL ENDIRECTORY_SEPARATOR -->
 <!-- PAYMENT SELECT MODAL STARTS -->
 <?php
 		 $listpayments = $params->get("list_allpayment", 0);	
@@ -327,4 +327,4 @@ else
 			echo '</div>';
 		} //IF NOT LIST PAYMENTS END
    ?>
- <!-- PAYMENT SELECT MODAL ENDS -->
+ <!-- PAYMENT SELECT MODAL ENDIRECTORY_SEPARATOR -->

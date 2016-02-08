@@ -12,7 +12,7 @@
 ** THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 ** KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
 ** IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
-** PARTICULAR PURPOSE.
+** PARTICULAR PURPOSE. 
 
 ** <author>Joomlaproffs / Virtuemart team</author>
 ** <email>info@joomlaproffs.se</email>
@@ -22,7 +22,13 @@
 defined('_JEXEC') or die('Restricted access');
 
 $return =  $input->getString('return');
-$return = base64_decode($return);
+ if (empty($this->url)){
+		$uri = JFactory::getURI();
+		$return = $uri->toString(array('path', 'query', 'fragment'));
+	  } else{
+		$return = $this->url;
+  }
+
 if (!JURI::isInternal($return)) 
 {
 	 $return = '';

@@ -288,7 +288,7 @@ defined('_JEXEC') or die('Restricted access');
             <input type="hidden" id="loginempty" value="<?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_LOGIN_EMPTY"); ?>" /> 
             <input type="hidden" id="loginerrors" value="<?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_LOGIN_ERROR"); ?>" />
             <input type="hidden" name="task" value="user.login" />
-            <input type="hidden" name="return" value="<?php echo base64_encode($url) ?>" id="returnurl" />
+
            
 
 		  </div>
@@ -541,7 +541,7 @@ defined('_JEXEC') or die('Restricted access');
 		  <input class="inputbox opg-hidden" type="checkbox" name="BTsameAsST" checked="checked" id="BTsameAsST" value="1"/>
 		  <?php
 			if(!empty($this->cart->STaddress['fields'])){
-				if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'html.php');
+				if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'html.php');
 				//	echo JText::_('COM_VIRTUEMART_USER_FORM_ST_SAME_AS_BT');
 			?>
 			</label>
@@ -789,9 +789,9 @@ defined('_JEXEC') or die('Restricted access');
 
 			<?php // Terms Of Service Checkbox
 			if (!class_exists('VirtueMartModelUserfields')){
-				require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'userfields.php');
+				require(JPATH_VM_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'userfields.php');
 			}
-			if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'html.php');
+			if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'html.php');
 			$tosenabled = FALSE;
 		    foreach($this->cart->BTaddress["fields"] as $field) 
 		    {

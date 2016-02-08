@@ -20,7 +20,7 @@
 */
 
 defined('_JEXEC') or die('Restricted access');
-defined('DS') or define('DS', DIRECTORY_SEPARATOR);
+
 
 jimport('joomla.plugin.plugin');
 
@@ -69,11 +69,12 @@ class plgSystemOnepage_generic extends JPlugin {
 		$template = $app->getTemplate(true);
 		if (!class_exists ('VmConfig')) 
 		{
-			require(JPATH_ADMINISTRATOR . DS . 'components' . DS . 'com_virtuemart' . DS . 'helpers' . DS . 'config.php');
+			require(JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_virtuemart' . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'config.php');
 		}
 		VmConfig::loadConfig();
 		$uri = JFactory::getURI();
-		$post = JRequest::get('post');
+		$input = JFactory::getApplication()->input;
+		$post = $input->post->getArray();
 		$_option = $input->getString('option'); 
 		$_view =   $input->getString('view'); 
 		$_format = $input->getString('format');
@@ -81,11 +82,11 @@ class plgSystemOnepage_generic extends JPlugin {
 		$_tmpl =   $input->getString('tmpl');  
 	    if ($_option == 'com_virtuemart' && $_view == 'cart' && $_format != 'json') 
 		{
-			require_once(dirname(__FILE__) . DS . 'cart' . DS . 'view.html.php');
+			require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'view.html.php');
    	    }
 		else if($_option == 'com_virtuemart' && $_view == 'vmplg' && $_task == "pluginUserPaymentCancel")
 		{
-			  require_once(dirname(__FILE__) . DS . 'cart' . DS . 'view.html.php');
+			  require_once(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'cart' . DIRECTORY_SEPARATOR . 'view.html.php');
 		}
 	}
 }

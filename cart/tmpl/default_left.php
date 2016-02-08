@@ -151,7 +151,7 @@ $params=new JRegistry($plugin->params);
 						 }
 						 if (!empty($prow->customfields)) 
 					 	 {
-						    $customfiledstext = $this->customfieldsModel->CustomsFieldCartDisplay($prow);
+						   $customfiledstext = $this->customfieldsModel->CustomsFieldCartDisplay($prow);
 							$customfiledstext = str_replace("<br />", "", $customfiledstext);
 							echo str_replace('<span', '<span class="opg-text-small" ', $customfiledstext);
 						 } ?>

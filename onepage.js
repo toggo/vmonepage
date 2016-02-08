@@ -18,13 +18,14 @@
 ** <date>2015</date>
 */
 
-
-jQuery(document).ready(function(){
-								
-    var selectedpaymentid = 0;
+ var selectedpaymentid = 0;
 	var action = "";
 	var countrychange = "";
 	var popupopen = 0;
+
+jQuery(document).ready(function(){
+								
+   
 								
 								
 	jQuery(".opg-alert").hide();
@@ -478,7 +479,7 @@ function ajaxlogin()
  jQuery("#userlogin_password").removeClass("opg-form-danger");
  usernameval = document.getElementById("userlogin_username").value;
  passwordval = document.getElementById("userlogin_password").value;
- returnurlval = document.getElementById("returnurl").value;
+ 
  loginempty = document.getElementById("loginempty").value; 
  loginerror = document.getElementById("loginerrors").value; 
  if(usernameval == "" || passwordval == "")
@@ -504,7 +505,7 @@ function ajaxlogin()
   {
      jQuery("#loginerror").hide();
      var url= vmSiteurl+"index.php?option=com_virtuemart&view=cart";
-	 url += "&vmtask=userlogin&username=" + encodeURIComponent(usernameval) + "&passwd=" + encodeURIComponent(passwordval) + "&return=" + encodeURIComponent(returnurlval); 
+	 url += "&vmtask=userlogin&username=" + encodeURIComponent(usernameval) + "&passwd=" + encodeURIComponent(passwordval); 
 	  jQuery.ajax({
         	type: "POST",
 	        cache: false,
