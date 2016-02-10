@@ -36,6 +36,11 @@ if (VmConfig::get('enable_content_plugin', 0)) {
 		shopFunctionsF::triggerContentPlugin($vendordata, 'vendor','vendor_terms_of_service');
 }
 
+$lang = JFactory::getLanguage();
+$extension = 'com_users';
+$lang->load($extension);
+
+
 $this->assignRef("vendordata", $vendordata);
 
 vmJsApi::jPrice();
@@ -162,6 +167,12 @@ $noshipmethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_C
 $nopaymethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', ''), ENT_QUOTES);
 $minpurchaseerror   =  htmlspecialchars(vmText::sprintf('COM_VIRTUEMART_CART_MIN_PURCHASE',  $currency->priceDisplay($vendordata->vendor_min_pov)), ENT_QUOTES);
 
+
+$button_primary  = $params->get("button_primary","opg-button-primary");
+$button_danger  = $params->get("button_danger","opg-button-danger");
+$form_danger  = $params->get("form_danger","opg-form-danger");
+
+
 $document->addScriptDeclaration('
 if (typeof vmonepage == "undefined") {
   var vmonepage = {};
@@ -193,7 +204,10 @@ var vmonepage = {
   "captchainvalid" : "'.$captchainvalid.'",
   "listshipments" : "'.$listshipments.'",
   "listpayments" : "'.$listpayments.'",
-  "popupaddress" : "'.$popupaddress.'"
+  "popupaddress" : "'.$popupaddress.'",
+  "button_primary" : "'.$button_primary.'",
+  "button_danger" : "'.$button_danger.'",
+  "form_danger" : "'.$form_danger.'"
   };
 ');
 
@@ -219,7 +233,7 @@ if(count($this->cart->products) == 0)
 			<?php if(!empty($this->continue_link_html)) : ?>
 			<div class="opg-text-center">
 				<?php 
-				echo str_replace("continue_link", "opg-button opg-button-primary", $this->continue_link_html);
+				echo str_replace("continue_link", "opg-button ".$button_primary, $this->continue_link_html);
 				?>
 			</div>
 			<?php endif; ?>		

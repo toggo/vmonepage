@@ -23,6 +23,10 @@ defined('_JEXEC') or die('Restricted access');
  
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
+
+$button_primary_class  = $params->get("button_primary","opg-button-primary");
+
+
 ?>
 <div class="opg-width-1-1 opg-margin-bottom">
    <h3 class="opg-h3"><?php echo JText::_('COM_VIRTUEMART_CART_TITLE'); ?></h3>
@@ -121,9 +125,9 @@ $params=new JRegistry($plugin->params);
                             <input type="hidden" name="view" value="cart" /> 
                             <input type="hidden" name="virtuemart_product_id[]" value="<?php echo $vmproduct_id;  ?>" />
                             <div class="opg-button-group">
-                             <a href="javascript:void(0);" class="opg-button opg-button-primary quantity-minus opg-button-mini"><i class="opg-icon-minus"></i></a>
-							 <a href="javascript:void(0);" class="opg-button opg-button-primary quantity-plus  opg-button-mini"><i class="opg-icon-plus"></i></a>
-							 <a id="refreshbutton" data-itemid= "<?php echo $cartitemid;  ?>" href="javascript:void(0);" name="update" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="refreshbutton  opg-margin-small-left opg-button opg-button-primary  opg-button-mini"><?php echo JText::_('COM_VIRTUEMART_UPDATE'); ?></a>	
+                             <a href="javascript:void(0);" class="uk-button <?php echo $button_primary_class; ?> quantity-minus opg-button-mini"><i class="opg-icon-minus"></i></a>
+							 <a href="javascript:void(0);" class="uk-button <?php echo $button_primary_class; ?> quantity-plus  opg-button-mini"><i class="opg-icon-plus"></i></a>
+							 <a id="refreshbutton" data-itemid= "<?php echo $cartitemid;  ?>" href="javascript:void(0);" name="update" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="refreshbutton  opg-margin-small-left <?php echo $button_primary_class; ?>  opg-button-mini"><?php echo JText::_('COM_VIRTUEMART_UPDATE'); ?></a>	
                          	</div>
                     </div>
                 </div>

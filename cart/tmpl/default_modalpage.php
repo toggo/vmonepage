@@ -23,6 +23,8 @@ defined('_JEXEC') or die('Restricted access');
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
 $popupaddress = $params->get("popup_address", 1);
+$button_primary_class  = $params->get("button_primary","opg-button-primary");
+$button_danger_class  = $params->get("button_danger","opg-button-danger");
 
 if(VmConfig::get('oncheckout_show_legal_info',1))
 {
@@ -87,10 +89,10 @@ if($popupaddress > 1)
 	    echo '</div>';
 	?>
 	  <div class="opg-modal-footer">
-	  	 <a class="opg-button opg-button-primary" href="Javascript:void(0);" onclick="validatebillto('no');"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
+	  	 <a class="opg-button <?php echo $button_primary_class; ?>" href="Javascript:void(0);" onclick="validatebillto('no');"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
 		 <a id="shiptoclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
 		 
-		 <a id="billtoclose" onclick="removebillto();" class="opg-modal-close opg-margin-left opg-button opg-button-danger"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REMOVE_BILLTO"); ?></a>
+		 <a id="billtoclose" onclick="removebillto();" class="opg-modal-close opg-margin-left opg-button <?php echo $button_danger_class; ?>"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REMOVE_BILLTO"); ?></a>
 	  </div>
     </div> <!-- Billto Modal ended -->
 </div><!-- Billto Modal ended -->
@@ -187,10 +189,10 @@ else
     echo '</div>';
 	?>
 	  <div class="opg-modal-footer">
-	  	 <a class="opg-button opg-button-primary" href="Javascript:void(0);" onclick="validateshipto();"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
+	  	 <a class="opg-button <?php echo $button_primary_class;  ?>" href="Javascript:void(0);" onclick="validateshipto();"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
 		 <a id="shiptoclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
 		 
-		 <a id="shiptoclose" onclick="removeshipto();" class="opg-modal-close opg-margin-left opg-button opg-button-danger"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REMOVE_SHIPTO"); ?></a>
+		 <a id="shiptoclose" onclick="removeshipto();" class="opg-modal-close opg-margin-left opg-button <?php echo $button_danger_class; ?>"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REMOVE_SHIPTO"); ?></a>
 	  </div>
     </div> <!-- Shipto Modal ended -->
 </div><!-- Shipto Modal ended -->
@@ -248,7 +250,7 @@ else
 			   ?>
 		   </div>
 		   <div class="opg-modal-footer">
-	  			 <a class="opg-button opg-button-primary" href="Javascript:void(0);" onclick="validatecomment();"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
+	  			 <a class="opg-button <?php echo $button_primary_class;  ?>" href="Javascript:void(0);" onclick="validatecomment();"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
 				 <a id="commentclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
 		   </div>
     </div> <!-- comments Modal ended -->
@@ -288,7 +290,7 @@ else
 			
 				?>
 				<div class="opg-modal-footer">
-				<a class="opg-button opg-button-primary" id="shipmentset"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
+				<a class="opg-button <?php echo $button_primary_class;  ?>" id="shipmentset"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
 				<a id="shipmentclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
 				</div>
 				<?php
@@ -319,7 +321,7 @@ else
 				  echo '</div>';
 			?>
 			<div class="opg-modal-footer">
-			<a class="opg-button opg-button-primary" id="paymentset"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
+			<a class="opg-button <?php echo $button_primary_class;  ?>" id="paymentset"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_SUBMIT"); ?></a>
 			<a id="paymentclose" class="opg-modal-close opg-button"><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CANCEL"); ?></a>
 			</div>
 			<?php

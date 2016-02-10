@@ -72,6 +72,11 @@
 						</field>
 						
 						<field name="buttoncolour" type="color" label="Button Color" />
+						
+						<field 	name="button_primary" type="text" label="Button Primary class"  description="Primary Button html class to use(leave blank to use default)" default="" />
+						<field 	name="button_danger" type="text" label="Button Danger Class"  description="Danger Button html class to use(leave blank to use default)" default="" />
+						<field 	name="form_danger" type="text" label="Form Danger Class"  description="Danger Form html class to use(leave blank to use default)" default="" />
+						
 						<field 	name="activetab" type="radio" class="btn-group btn-group-yesno" label="Active Tab" 	description="" default="0">							<option value="1">REGISTER</option>
 							<option value="2">GUEST</option>
 							<option value="3">LOGIN</option>
@@ -119,6 +124,9 @@
 
 
 	                </fieldset>
+
+						
+
 	        </fields>
         </config>
 </extension>

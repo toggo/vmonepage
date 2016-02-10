@@ -24,6 +24,10 @@ defined('_JEXEC') or die('Restricted access');
 
    $plugin=JPluginHelper::getPlugin('system','onepage_generic');
    $params=new JRegistry($plugin->params);
+   
+   $button_primary_class  = $params->get("button_primary","opg-button-primary");
+
+   
    $popupaddress = $params->get("popup_address", 1);
    $userfieldscount = 0;
    foreach($this->userFieldsCart["fields"] as $singlefield) 
@@ -163,7 +167,7 @@ defined('_JEXEC') or die('Restricted access');
 			 else if(VmConfig::get('oncheckout_only_registered') == 1)
 			 {
 			     echo '<div class="opg-width-1-1 opg-button-group " id="loginbtns" data-opg-button-radio>';
-				 echo '<a id="regcheckout" onclick="changemode(2);"  class="opg-width-1-2 opg-button opg-button-primary"  href="javascript:void(0);">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER").'</a>';
+				 echo '<a id="regcheckout" onclick="changemode(2);"  class="opg-width-1-2 opg-button '.$button_primary_class.'"  href="javascript:void(0);">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER").'</a>';
 	    		 echo '<a id="loginbtn" href="javascript:void(0);" onclick="changemode(1);" class="opg-button opg-width-1-2">'.JText::_("COM_VIRTUEMART_LOGIN").'</a>';
 				 echo '</div>';
 				 echo '<hr />';
@@ -172,7 +176,7 @@ defined('_JEXEC') or die('Restricted access');
 			 else if($activetab == 1 || $activetab == 2 || $activetab == 0)
 			 {
 				 echo '<div class="opg-width-1-1 opg-button-group " id="loginbtns" data-opg-button-radio>';
-				 echo '<a id="regbtn" href="javascript:void(0);"  onclick="changemode(2);" class="opg-button opg-width-1-2 opg-button-primary">'.JText::_("COM_VIRTUEMART_ORDER_REGISTER_GUEST_CHECKOUT").'</a>';
+				 echo '<a id="regbtn" href="javascript:void(0);"  onclick="changemode(2);" class="opg-button opg-width-1-2 '.$button_primary_class.'">'.JText::_("COM_VIRTUEMART_ORDER_REGISTER_GUEST_CHECKOUT").'</a>';
 	    		 echo '<a id="loginbtn" href="javascript:void(0);" onclick="changemode(1);" class="opg-button opg-width-1-2">'.JText::_("COM_VIRTUEMART_LOGIN").'</a>';
 				 echo '</div>';
 				 echo '<hr />';
@@ -182,7 +186,7 @@ defined('_JEXEC') or die('Restricted access');
 			 {
 				 echo '<div class="opg-width-1-1 opg-button-group " id="loginbtns" data-opg-button-radio>';
 				 echo '<a id="regbtn" href="javascript:void(0);"  onclick="changemode(2);" class="opg-button opg-width-1-2">'.JText::_("COM_VIRTUEMART_ORDER_REGISTER_GUEST_CHECKOUT").'</a>';
-	    		 echo '<a id="loginbtn" href="javascript:void(0);" onclick="changemode(1);" class="opg-button opg-width-1-2 opg-button-primary">'.JText::_("COM_VIRTUEMART_LOGIN").'</a>';
+	    		 echo '<a id="loginbtn" href="javascript:void(0);" onclick="changemode(1);" class="opg-button opg-width-1-2 '.$button_primary_class.'">'.JText::_("COM_VIRTUEMART_LOGIN").'</a>';
 				 echo '</div>';
 				 echo '<hr />';
 			 }
@@ -280,7 +284,7 @@ defined('_JEXEC') or die('Restricted access');
                 </div>
 
                 <div class="login opg-width-large-1-1 opg-width-small-1-1 opg-margin-small-top" id="com-form-login-remember">
-				 <a class="opg-button opg-button-primary opg-width-1-1" href="javascript:void(0);" onclick="ajaxlogin()"><?php echo JText::_('COM_VIRTUEMART_LOGIN') ?></a>
+				 <a class="opg-button <?php echo $button_primary_class;  ?> opg-width-1-1" href="javascript:void(0);" onclick="ajaxlogin()"><?php echo JText::_('COM_VIRTUEMART_LOGIN') ?></a>
 
                 </div>
                 <div class="clear"></div>
@@ -288,6 +292,7 @@ defined('_JEXEC') or die('Restricted access');
             <input type="hidden" id="loginempty" value="<?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_LOGIN_EMPTY"); ?>" /> 
             <input type="hidden" id="loginerrors" value="<?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_LOGIN_ERROR"); ?>" />
             <input type="hidden" name="task" value="user.login" />
+			 <input type="hidden" name="return" value="" id="returnurl" />
 
            
 
@@ -340,7 +345,7 @@ defined('_JEXEC') or die('Restricted access');
 		   ?>
 			 <div class="opg-button-group opg-width-1-1" data-opg-button-radio="">
 			   <a id="guestchekcout" class="opg-button opg-width-1-2" onClick="changecheckout(1)" href="javascript:void(0);"><i id="guesticon" class="opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_GUEST"); ?></a>
-		  	   <a id="regcheckout"  class="opg-button opg-width-1-2 opg-button-primary" onClick="changecheckout(2)" href="javascript:void(0);"><i id="regicon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER"); ?></a> 
+		  	   <a id="regcheckout"  class="opg-button opg-width-1-2 <?php echo $button_primary_class;  ?>" onClick="changecheckout(2)" href="javascript:void(0);"><i id="regicon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER"); ?></a> 
       		</div>
 	 	   <?php
 		 
@@ -349,7 +354,7 @@ defined('_JEXEC') or die('Restricted access');
 		 {
 		   ?>
 			 <div class="opg-button-group opg-width-1-1" data-opg-button-radio="">
-			   <a id="guestchekcout" class="opg-button opg-width-1-2 opg-button-primary" onClick="changecheckout(1)" href="javascript:void(0);"><i id="guesticon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_GUEST"); ?></a>
+			   <a id="guestchekcout" class="opg-button opg-width-1-2 <?php echo $button_primary_class;  ?>" onClick="changecheckout(1)" href="javascript:void(0);"><i id="guesticon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_GUEST"); ?></a>
 		  	   <a id="regcheckout"  class="opg-button opg-width-1-2" onClick="changecheckout(2)" href="javascript:void(0);"><i id="regicon" class="opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER"); ?></a> 
       		</div>
 	 	   <?php
@@ -359,7 +364,7 @@ defined('_JEXEC') or die('Restricted access');
 		 {
 	  	  ?>
 			 <div class="opg-button-group opg-width-1-1" data-opg-button-radio="">
-			   <a id="guestchekcout" class="opg-button opg-width-1-2 opg-button-primary" onClick="changecheckout(1)" href="javascript:void(0);"><i id="guesticon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_GUEST"); ?></a>
+			   <a id="guestchekcout" class="opg-button opg-width-1-2 <?php echo $button_primary_class;  ?>" onClick="changecheckout(1)" href="javascript:void(0);"><i id="guesticon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_GUEST"); ?></a>
 		  	   <a id="regcheckout"  class="opg-button opg-width-1-2" onClick="changecheckout(2)" href="javascript:void(0);"><i id="regicon" class="opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER"); ?></a> 
       		</div>
  	   <?php
@@ -767,7 +772,7 @@ defined('_JEXEC') or die('Restricted access');
 		if(!empty($singlefield['value']))
 	 	{
 		  $commenticon  = '';
-		  $commentactive = 'opg-button-primary';
+		  $commentactive = $button_primary_class;
 		}
 		else
 		{
@@ -873,7 +878,7 @@ defined('_JEXEC') or die('Restricted access');
 		  }
 			if (!VmConfig::get('use_as_catalog')) {
 			   echo '<p id="bottom_total" class="opg-text-large opg-text-primary opg-text-bold opg-text-center">'.JText::_("COM_VIRTUEMART_CART_TOTAL").'&nbsp;:&nbsp;<strong class="opg-text-large opg-text-primary opg-text-bold" id="carttotal"></strong></p>';
-				echo '<a class="opg-button opg-button-primary opg-button-large opg-margin-top opg-width-1-1" href="javascript:void(0);" onclick="submit_order();"><span>' . JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU') . '</span></a>';
+				echo '<a class="opg-button '.$button_primary_class.' opg-button-large opg-margin-top opg-width-1-1" href="javascript:void(0);" onclick="submit_order();"><span>' . JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU') . '</span></a>';
 			}
 			$text = JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU');
 			?>

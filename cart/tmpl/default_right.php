@@ -22,6 +22,9 @@ defined('_JEXEC') or die('Restricted access');
  
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
+
+$button_primary_class  = $params->get("button_primary","opg-button-primary");
+
 ?>
 
 <script type="text/javascript">
@@ -226,7 +229,7 @@ jQuery(document).ready(function(){
 							{
 							    $target = "{target:'#shipmentdiv'}";
 							    echo '<td id="shipchangediv" class="opg-width-1-4">';
-					            echo '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
+					            echo '<a class="opg-button <?php echo $button_primary_class;  ?>" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}
 							echo '</tr></table>';
@@ -249,7 +252,7 @@ jQuery(document).ready(function(){
 							{
 							    $target = "{target:'#shipmentdiv'}";
 							    echo '<td id="shipchangediv" class="opg-width-1-4">';
-					            echo '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
+					            echo '<a class="opg-button <?php echo $button_primary_class;  ?>" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}
 							echo '</tr></table>'; 
@@ -349,7 +352,7 @@ jQuery(document).ready(function(){
 							{  
 							    $target = "{target:'#paymentdiv'}";
 							    echo '<td id="paychangediv" class="opg-width-1-4">';
-					            echo '<a class="opg-button opg-button-primary" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
+					            echo '<a class="opg-button <?php echo $button_primary_class;  ?>" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}
 							echo '</tr></table>'; 
@@ -377,7 +380,7 @@ jQuery(document).ready(function(){
 							{
 							    $target = "{target:'#paymentdiv'}";
 							    echo '<td id="paychangediv" class="opg-width-1-4" >';
-					            echo '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
+					            echo '<a class="opg-button <?php echo $button_primary_class;  ?>" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}
 							echo '</tr></table>'; 
