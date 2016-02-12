@@ -850,6 +850,9 @@ function submit_order() {
 		  }
 	}
 	
+	jQuery("#user_error").hide();
+    jQuery("#email_error").hide();
+	
 	if(!inputvalidation ||  errormsg != "") 
 	{
 		  if(!inputvalidation)
@@ -1160,7 +1163,7 @@ function update_prices()
 
 					 });
 					 jQuery("#taxRulesBill").hide();
-					 jQuery("#taxRulesBill .uk-grid").each(function(){
+					 jQuery("#taxRulesBill .opg-grid").each(function(){
 					   jQuery(this).hide();											    
  			  	     });
 					 if(typeof(data.taxRulesBill)!= 'undefined')
@@ -1181,7 +1184,7 @@ function update_prices()
 						  });
 					 }
 					 jQuery("#DATaxRulesBill").hide();
-					 jQuery("#DATaxRulesBill .uk-grid").each(function(){
+					 jQuery("#DATaxRulesBill .opg-grid").each(function(){
 					   jQuery(this).hide();											    
  			  	     });
 					 if(typeof(data.DATaxRulesBill)!= 'undefined')
@@ -2175,3 +2178,73 @@ function updateaddress(fieldtype)
 		 });
   	
 }
+function checkemail()
+{
+   emailval  = jQuery("#email_field").val();	  
+   if(jQuery('#register').prop("checked") == true && emailval != "") 
+   {
+	     jQuery("#email_error").hide(); 
+		 jQuery("#email_field").removeClass("opg-form-danger");
+		if (validatesEmail(emailval)) 
+		{
+			 jQuery.ajax({
+					type: "POST",
+			        cache: false,
+	    		    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=checkemail',
+					data : { "emailval" : emailval },
+					dataType: "json"
+			 }).done(
+				 function (data, textStatus){
+					 if(data.exists == "yes")
+					 {
+						 jQuery("#email_field").addClass("opg-form-danger");
+					     var errormsg = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p >' + data.msg + "</p></div>";
+						 jQuery("#email_error").show();
+						 jQuery("#email_error").html(errormsg);
+					 }
+			 });
+		}
+		else
+		{
+			jQuery("#email_field").addClass("opg-form-danger");
+		}
+   }
+}
+function checkuser()
+{
+	userval  = jQuery("#username_field").val();	  
+   if(jQuery('#register').prop("checked") == true && userval != "") 
+   {
+	     jQuery("#user_error").hide(); 
+		 jQuery("#username_field").removeClass("opg-form-danger");
+		 jQuery.ajax({
+				type: "POST",
+		        cache: false,
+    		    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=checkuser',
+				data : { "userval" : userval },
+				dataType: "json"
+		 }).done(
+			 function (data, textStatus){
+				 if(data.exists == "yes")
+				 {
+					 jQuery("#username_field").addClass("opg-form-danger");
+				     var errormsg = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p >' + data.msg + "</p></div>";
+					 jQuery("#user_error").show();
+					 jQuery("#user_error").html(errormsg);
+				 }
+		 });
+		
+   }
+	
+}
+
+function validatesEmail(sEmail) {
+var filter = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+if (filter.test(sEmail)) {
+return true;
+}
+else {
+return false;
+}
+}
+

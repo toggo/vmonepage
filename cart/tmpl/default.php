@@ -238,7 +238,7 @@ if(count($this->cart->products) == 0)
 			</div>
 			<?php endif; ?>		
 	</div>	
-	<div class="uk-margin" title="yootheme virtuemart theme" style="text-align:right; clear:both;"><small class="uk-text-muted"><a class="uk-link uk-text-muted" href="http://www.vmuikit.com" target="_blank">VMuikit</a> is built by <a href="http://www.joomlaproffs.se" title="joomlaproffs joomla" target="_blank" class="uk-link uk-text-muted">joomlaproffs.se</a></small></div>
+	<div class="opg-margin" title="yootheme virtuemart theme" style="text-align:right; clear:both;"><small class="opg-text-muted"><a class="opg-link opg-text-muted" href="http://www.vmuikit.com" target="_blank">VMuikit</a> is built by <a href="http://www.joomlaproffs.se" title="joomlaproffs joomla" target="_blank" class="opg-link opg-text-muted">joomlaproffs.se</a></small></div>
 <?php
 }
 else
@@ -249,7 +249,12 @@ else
 <div class="opg-width-1-1" id="fullerrordiv">
 </div>
 	
-
+   <?php
+   if ($this->allowChangeShopper){
+		echo $this->loadTemplate ('shopperform');
+	}
+   ?>
+	
 	<form method="post" id="checkoutForm" name="checkoutForm" action="<?php echo JRoute::_( 'index.php?option=com_virtuemart&view=cart'.$taskRoute,$this->useXHTML,$this->useSSL ); ?>" class="opg-form opg-width-1-1 ">
 	
 	 <a id="loadingbutton" class="opg-hidden" href="Javascript:void(0);" data-opg-modal="{target:'#lodingdiv', bgclose:false}"></a>

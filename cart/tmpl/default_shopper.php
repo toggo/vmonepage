@@ -516,6 +516,11 @@ defined('_JEXEC') or die('Restricted access');
 			 $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"'. (VmConfig::get('oncheckout_only_registered') == 1 ? ' class="required"' : '') ,$singlefield['formcode']);
 			 $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
 			}
+			if($singlefield['name'] == "username") 
+			{
+				 $singlefield['formcode'] = '<div id ="user_error" class="opg-width-1-1 style="display:none;"></div>'.$singlefield['formcode'];
+			      $singlefield['formcode'] = str_replace('<input','<input onblur="checkuser();" ', $singlefield['formcode']);
+		   }
 		    echo $singlefield['formcode'];
 		    echo '</div>';
 		}
@@ -564,7 +569,12 @@ defined('_JEXEC') or die('Restricted access');
 				 {
 				    if($singlefield['name'] == "email") 
 					{
-					  echo str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
+					   echo "<div class='opg-width-1-1 opg-margin-small'>";
+					  echo '<div id	="email_error" class="opg-width-1-1 style="display:none;">';
+					  echo '</div>';
+					  echo str_replace('<input','<input onblur="checkemail();" placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
+					
+					  echo '</div>';
 					}
 				  }
 		    }
@@ -654,6 +664,11 @@ defined('_JEXEC') or die('Restricted access');
 				  $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
 				  $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
 				}
+				if($singlefield['name'] == "email") 
+					{
+					   $singlefield['formcode'] = '<div id	="email_error" class="opg-width-1-1 style="display:none;"></div>'.$singlefield['formcode'];
+					   $singlefield['formcode'] = str_replace('<input','<input onblur="checkemail();" ', $singlefield['formcode']);
+					}
 			    if($singlefield['name']=='zip') {
 					$ajaxzip =   $onlyguest =  $params->get('ajax_zip',0);
 					if($ajaxzip)

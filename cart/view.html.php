@@ -32,6 +32,11 @@ class VirtueMartViewCart extends VmView {
 
 		$app = JFactory::getApplication();
 		$input = JFactory::getApplication()->input;
+		
+		$lang = JFactory::getLanguage();
+		$extension = 'com_users';
+		$lang->load($extension);
+
   
 		$this->prepareContinueLink(); 
 		if (VmConfig::get('use_as_catalog',0)) {
@@ -314,6 +319,49 @@ class VirtueMartViewCart extends VmView {
 			 }
 			 echo "success";
 			 exit;
+		  }
+		   if($task == "checkemail")
+		  {
+			$post = $input->post->getArray();
+			$emailval = $post['emailval'];
+			$db = JFactory::getDBO();
+			$query = "SELECT * FROM #__users WHERE email = '".$emailval."'";
+			$db->setQuery($query);
+			$result = $db->LoadObject();
+			$return = array();
+			if($result)
+			{
+			  $return["exists"] = "yes";
+			  $return["msg"] = JText::_("COM_USERS_REGISTER_EMAIL1_MESSAGE");
+			}
+			else
+			{ 
+			  $return["exists"] = "no";
+			}
+			echo json_encode($return);
+			exit;
+		  }
+		  if($task == "checkuser")
+		  {
+		    $post = $input->post->getArray();
+			$userval = $post['userval'];
+			$db = JFactory::getDBO();
+			$query = "SELECT * FROM #__users WHERE username = '".$userval."'";
+			$db->setQuery($query);
+			$result = $db->LoadObject();
+			$return = array();
+			if($result)
+			{
+			  $return["exists"] = "yes";
+			  $return["msg"] = JText::_("COM_USERS_REGISTER_USERNAME_MESSAGE");
+			}
+			else
+			{ 
+			  $return["exists"] = "no";
+			}
+			echo json_encode($return);
+			exit;
+		  
 		  }
 		  if($task == "klarnaupdate")
 		  {

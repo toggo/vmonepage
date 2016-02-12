@@ -87,7 +87,7 @@ input.quantity-input
 {
   display:none;
 }
-#customerror .opg-alert, #loginerror .opg-alert
+#customerror .opg-alert, #loginerror .opg-alert, #cartalert .opg-alert, #email_error .opg-alert, #user_error .opg-alert
 {
   display:block;
 }

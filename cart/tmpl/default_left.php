@@ -125,8 +125,8 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
                             <input type="hidden" name="view" value="cart" /> 
                             <input type="hidden" name="virtuemart_product_id[]" value="<?php echo $vmproduct_id;  ?>" />
                             <div class="opg-button-group">
-                             <a href="javascript:void(0);" class="uk-button <?php echo $button_primary_class; ?> quantity-minus opg-button-mini"><i class="opg-icon-minus"></i></a>
-							 <a href="javascript:void(0);" class="uk-button <?php echo $button_primary_class; ?> quantity-plus  opg-button-mini"><i class="opg-icon-plus"></i></a>
+                             <a href="javascript:void(0);" class="opg-button <?php echo $button_primary_class; ?> quantity-minus opg-button-mini"><i class="opg-icon-minus"></i></a>
+							 <a href="javascript:void(0);" class="opg-button <?php echo $button_primary_class; ?> quantity-plus  opg-button-mini"><i class="opg-icon-plus"></i></a>
 							 <a id="refreshbutton" data-itemid= "<?php echo $cartitemid;  ?>" href="javascript:void(0);" name="update" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="refreshbutton  opg-margin-small-left <?php echo $button_primary_class; ?>  opg-button-mini"><?php echo JText::_('COM_VIRTUEMART_UPDATE'); ?></a>	
                          	</div>
                     </div>
