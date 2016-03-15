@@ -11,7 +11,7 @@ This is a free GPL One Page Checkout for Virtuemart. We encurage developers to h
 
 ## Getting started
 
-Download latest version here or on [vmonepage.com](http://vmonepage). 
+Download latest version here or on [vmonepage.com](http://vmonepage.com). 
 
 Its a plugin so just install in Joomla and enable and off you go. 
 
@@ -24,12 +24,25 @@ Click image below to jump to Youtube and check news and features in a video:
 
 ## Copyright and License
 
-Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015. All Right Reserved.
-Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
-Some parts might even be Joomla and is Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved. 
-http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
-This source is free software. This version may have been modified pursuant to the GNU General Public License, and as distributed it includes or is derivative of works licensed under the GNU General Public License or other free or open source software licenses.
+GPLv2 license: [link to full license](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html). 
 
-THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
+Virtuemart FREE One PAge Checkout
+Copyright (C) 2016 Joomlaproffs.se
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+This General Public License does not permit incorporating your program into
+proprietary programs.  If your program is a subroutine library, you may
+consider it more useful to permit linking proprietary applications with the
+library.  If this is what you want to do, use the GNU Library General
+Public License instead of this License.
+
+Joomlaproffs.se contact information: info@joomlaproffs.se (Phone +46 31 38 60 600)
+
 
 ### For help and suggestions etc please contact info@joomlaproffs.se
