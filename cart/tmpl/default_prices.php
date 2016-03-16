@@ -54,13 +54,6 @@ $params=new JRegistry($plugin->params);
 		        <div class="price-amount price-type opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2" id="shipment"><?php echo strip_tags($this->currencyDisplay->createPriceDiv('salesPriceShipment','', $this->cart->pricesUnformatted['salesPriceShipment'],false)); ?></div>
             <div class="clear"></div>
         </div>
-		<div class=" opg-grid opg-text-right" id="paymentfulldiv">
-		  <div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2">
-		          <?php echo JText::_('COM_VIRTUEMART_CART_PAYMENT').":"; ?>
-			</div>
-		        <div class="price-amount price-type opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2" id="paymentprice"><?php echo strip_tags($this->currencyDisplay->createPriceDiv('salesPricePayment','', $this->cart->pricesUnformatted['salesPricePayment'],false)); ?></div>
-            <div class="clear"></div>
-        </div>
 		
          
 

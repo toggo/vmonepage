@@ -1227,15 +1227,6 @@ function update_prices()
 				   {
 				     jQuery("#shipmentfulldiv").hide();
 				   }
-				   if(data.salesPricePayment != "")
- 				    { 
-				      jQuery("#paymentfulldiv").show();
-					  jQuery('#paymentprice').html(data.salesPricePayment);
-			        }
-			   	   else
-				   {
-				     jQuery("#paymentfulldiv").hide();
-				   }
 				   if(vmonepage.show_tax > 0)
 				   {
 				 	 jQuery('#payment_tax').html(data.paymentTax);
