@@ -1,6 +1,6 @@
 <?php
 /**
-** Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015 All Right Reserved.
+** Parts of this code is written by joomlaprofessionals.com Copyright (c) 2012, 2015 All Right Reserved.
 ** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
 ** Some parts might even be Joomla and is Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -15,7 +15,7 @@
 ** PARTICULAR PURPOSE.
 
 ** <author>Joomlaproffs / Virtuemart team</author>
-** <email>info@joomlaproffs.se</email>
+** <email>info@joomlaprofessionals.com</email>
 ** <date>2015</date>
 */
 
@@ -238,7 +238,7 @@ if(count($this->cart->products) == 0)
 			</div>
 			<?php endif; ?>		
 	</div>	
-	<div class="opg-margin" title="yootheme virtuemart theme" style="text-align:right; clear:both;"><small class="opg-text-muted"><a class="opg-link opg-text-muted" href="http://www.vmuikit.com" target="_blank">VMuikit</a> is built by <a href="http://www.joomlaproffs.se" title="joomlaproffs joomla" target="_blank" class="opg-link opg-text-muted">joomlaproffs.se</a></small></div>
+	<div class="opg-margin" title="Gnereic VMonepage" style="text-align:right; clear:both;"><small class="opg-text-muted"><a class="opg-link opg-text-muted" href="http://www.vmuikit.com" target="_blank">VMuikit</a> is built by <a href="http://www.joomlaprofessionals.com" title="Joomla Pros / Professionals" target="_blank" class="opg-link opg-text-muted">joomlaprofessionals.com</a></small></div>
 <?php
 }
 else
@@ -304,7 +304,7 @@ else
 	  <?php
 	  	echo $this->loadTemplate('modalpage');
 	  ?>
-	 <p style="text-align: center;"><small style="text-size:8px; color:#b4b4b4;"><a style="text-size:8px; color:#b4b4b4;" title="one page checkout virtuemart" target="_blank" href="http://vmonepage.com">VMonepage</a>&nbsp;is built by&nbsp;<a style="text-size:8px; color:#b4b4b4;" title="joomlaproffs webshop ecommerce" target="_blank" href="http://www.joomlaproffs.se">joomlaproffs.se</a></small></p>
+	 <p style="text-align: center;"><small style="text-size:8px; color:#b4b4b4;"><a style="text-size:8px; color:#b4b4b4;" title="one page checkout virtuemart" target="_blank" href="http://vmonepage.com">VMonepage</a>&nbsp;is built by&nbsp;<a style="text-size:8px; color:#b4b4b4;" title="joomlaproffs webshop ecommerce" target="_blank" href="http://www.joomlaprofessionals.com">joomlaprofessionals.com</a></small></p>
 </form>
 
 <?php

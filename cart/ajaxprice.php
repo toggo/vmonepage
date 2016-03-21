@@ -1,6 +1,6 @@
 <?php
 /**
-** Parts of this code is written by Joomlaproffs.se (Contact Claes Norin - info@joomlaproffs.se) Copyright (c) 2012 - 2016 All Right Reserved.
+** Parts of this code is written by joomlaprofessionals.com (Contact Claes Norin - info@joomlaprofessionals.com) Copyright (c) 2012 - 2016 All Right Reserved.
 ** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2016. All rights reserved.
 ** Some parts might even be Joomla and is Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -14,8 +14,8 @@
 ** IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
 ** PARTICULAR PURPOSE.
 
-** <author>Joomlaproffs.se</author>
-** <email>info@joomlaproffs.se</email>
+** <author>joomlaprofessionals.com</author>
+** <email>info@joomlaprofessionals.com</email>
 ** <date>2016</date>
 */
 defined('_JEXEC') or die('Restricted access');

@@ -1,5 +1,5 @@
 /**
-** Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015 All Right Reserved.
+** Parts of this code is written by joomlaprofessionals.com Copyright (c) 2012, 2015 All Right Reserved.
 ** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
 ** Some parts might even be Joomla and is Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -14,7 +14,7 @@
 ** PARTICULAR PURPOSE.
 
 ** <author>Joomlaproffs / Virtuemart team</author>
-** <email>info@joomlaproffs.se</email>
+** <email>info@joomlaprofessionals.com</email>
 ** <date>2015</date>
 */
 
@@ -1522,7 +1522,7 @@ function update_shipment()
 								     temptext = "";
 								  	 temptext =  '<td id="shipchangediv" class="opg-width-1-4">';
 								     target = "{target:'#shipmentdiv'}";
-							         temptext += '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'+target+'">';
+							         temptext += '<a class="opg-button '+button_primary+'" href="#" data-opg-modal="'+target+'">';
 									 temptext += vmonepage.changetext;
 									 temptext += '</a></td>';
 									 jQuery("#shipmentrow").append(temptext);
@@ -1723,7 +1723,7 @@ function updatepayment()
 							 	     temptext = "";
 								  	 temptext =  '<td id="paychangediv" class="opg-width-1-4">';
 									 target = "{target:'#paymentdiv'}";
-							         temptext += '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'+target+'">';
+							         temptext += '<a class="opg-button '+button_primary+'" href="#" data-opg-modal="'+target+'">';
 									 temptext += vmonepage.changetext;
 									 temptext += '</a></td>';
 									 jQuery("#paymentrow").append(temptext);
@@ -1954,7 +1954,7 @@ function updatepayment()
 								     temptext = "";
 								  	 temptext =  '<td id="shipchangediv" class="opg-width-1-4">';
 								     target = "{target:'#shipmentdiv'}";
-							         temptext += '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'+target+'">';
+							         temptext += '<a class="opg-button '+button_primary+'" href="#" data-opg-modal="'+target+'">';
 									 temptext += vmonepage.changetext;
 									 temptext += '</a></td>';
 									 jQuery("#shipmentrow").append(temptext);
