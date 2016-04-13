@@ -229,7 +229,7 @@ jQuery(document).ready(function(){
 							{
 							    $target = "{target:'#shipmentdiv'}";
 							    echo '<td id="shipchangediv" class="opg-width-1-4">';
-					            echo '<a class="opg-button <?php echo $button_primary_class;  ?>" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
+					            echo '<a class="opg-button '.$button_primary_class.'" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}
 							echo '</tr></table>';
@@ -352,7 +352,7 @@ jQuery(document).ready(function(){
 							{  
 							    $target = "{target:'#paymentdiv'}";
 							    echo '<td id="paychangediv" class="opg-width-1-4">';
-					            echo '<a class="opg-button '.$button_primary_class.' data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
+					            echo '<a class="opg-button '.$button_primary_class.'" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}
 							echo '</tr></table>'; 

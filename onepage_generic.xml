@@ -2,15 +2,19 @@
 <extension version="3.4" type="plugin" group="system" method="upgrade">
         <name>One Page Checkout for Virtuemart</name>
         <author>Claes Norin</author>
-        <creationDate>FEB 2016</creationDate>
+        <creationDate>Mar 2016</creationDate>
         <copyright> Copyright (c) 2012, 2015 All Right Reserved, http://www.joomlaprofessionals.com.</copyright>
         <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-        <authorEmail>support@vmuikit.com</authorEmail>
+        <authorEmail>info@joomlaprofessionals.com</authorEmail>
         <authorUrl>http://www.joomlaprofessionals.com/</authorUrl>
         <version>2.2.7</version>
 		<description><![CDATA[ 
 	 <table class="table"><tr><td><a href="http://vmonepage.com"><img src="http://vmkco.com/images/logo_vmonepage.png"></a></td><td><h3>Onepage Generic successfully installed.</h3><hr>For more information and to download the latest FREE version of this One Page Checkout please visit <a target="_blank" href="http://vmonepage.com">http://vmonepage.com</a> </h4></td></tr></table>
-	  <table class="table"><tr><td><a href="http://vmkco.com"><img src="http://vmkco.com/images/klarna_logo_mini.png"></a></td><td style="vertical-align: middle;">Looking for Klarna Checkout module? Please visit <a target="_blank" href="http://www.vmkco.com">www.vmkco.com</a> for Free Klarna Checkout Enhanced plugin</td></tr></table>
+	  <table class="table"><tr><td><a href="http://vmkco.com"><img src="http://vmkco.com/images/klarna_logo_mini.png"></a></td><td style="vertical-align: middle;">Looking for Klarna Checkout module? Please visit <a target="_blank" href="http://www.vmkco.com">www.vmkco.com</a> for Free Klarna Checkout Enhanced plugin</td></tr>
+	  <tr><td>
+	  <a  target="_blank" href="http://www.joomlaprofessionals.com"><img src="http://vmuikit.com/images/vm3_logo.png" /></a>
+	  </td><td>VMonepage is built by <a  title="Joomla Pros / Professionals"  target="_blank" href="http://www.joomlaprofessionals.com">www.joomlaprofessionals.com</a></h4></td></tr>
+	  </table>
 		]]></description>
         <files>
 				<folder>languages</folder>

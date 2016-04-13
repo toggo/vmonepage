@@ -267,7 +267,7 @@ else
 				  echo '<div id="shipmentdiv" class="opg-modal">';
 				   echo '<div class="opg-modal-dialog">';
 				    echo '<a class="opg-modal-close opg-close"></a>';
-				     echo '<div class="opg-modal-header">Select Shipment Method</div>';
+				     echo '<div class="opg-modal-header">'.JText::_("COM_VIRTUEMART_CART_SELECT_SHIPMENT").'</div>';
 				      echo "<fieldset id='shipment_selection'>";					
 					   echo '<ul class="opg-list" id="shipment_ul">';
 						foreach($this->shipments_shipment_rates as $rates) 
@@ -307,7 +307,7 @@ else
 		    echo '<div id="paymentdiv" class="opg-modal">';
 		    echo '<div class="opg-modal-dialog">';
 			    echo '<a class="opg-modal-close opg-close"></a>';
-			      echo '<div class="opg-modal-header">Select Payment Method</div>';
+			      echo '<div class="opg-modal-header">'.JText::_("COM_VIRTUEMART_CART_SELECT_PAYMENT").'</div>';
 			  	  $paymentsarr = $this->paymentplugins_paymentsnew;
 				   echo '<div id="paymentsdiv">';
 					echo '<ul class="opg-list" id="payment_ul">';

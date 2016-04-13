@@ -891,6 +891,7 @@ function submit_order() {
        }).done(
 	   function (data, textStatus) 
 	   {
+		   alert(data);
 		   if(data.error && data.error==1) 
 		   {
 			      	erromsg = '<div data-opg-alert="" class="opg-alert opg-alert-warning"><a href="#" class="opg-alert-close opg-close"></a><p>'+data.message+'</p></div>';

@@ -27,6 +27,7 @@ $postData = $app->input->post->getArray();
 
 $user_modal = VmModel::getModel('user');
 $virtuemart_response = $user_modal->store($postData);
+
 if(!isset($virtuemart_response["success"]) || $virtuemart_response["success"]==false || $virtuemart_response == false) 
 {
 	$messages=array();
