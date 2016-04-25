@@ -68,6 +68,10 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 		$pModel = VmModel::getModel('product');
 		$tmpProduct = $pModel->getProduct($vmproduct_id, true, false,true,1);
 		$pModel->addImages($tmpProduct,1);
+		$min = $prow->min_order_level;
+		$max = $prow->max_order_level;
+		$maxerror = vmText::sprintf('COM_VIRTUEMART_CART_MAX_ORDER', $max, $prow->product_name);
+		$minerror = vmText::sprintf('COM_VIRTUEMART_CART_MIN_ORDER', $min, $prow->product_name);
 		?>
  		<div class="product opg-width-1-1 opg-margin" id="product_row_<?php echo $cartitemid; ?>">
           <div class="spacer">
@@ -102,24 +106,85 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 						if($step==0)
 							$step=1;
 						$alert=JText::sprintf ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED', $step);
-
+						
+						$init = 1;
+				if(isset($viewData['init'])){
+					$init = $viewData['init'];
+				}
+				if(!empty($prow->min_order_level) and $init<$prow->min_order_level){
+					$init = $prow->min_order_level;
+				}
+				$step=1;
+				if (!empty($prow->step_order_level)){
+					$step=$prow->step_order_level;
+					if(!empty($init)){
+						if($init<$step){
+							$init = $step;
+						} else {
+							$init = ceil($init/$step) * $step;
+			 			}
+					}
+					if(empty($prow->min_order_level) and !isset($viewData['init'])){
+						$init = $step;
+					}
+				}
+				$maxOrder= '';
+				if (!empty($prow->max_order_level)){
+					$maxOrder = ' max="'.$prow->max_order_level.'" ';
+				}
 					   ?>
 					   <script type="text/javascript">
                         function check_<?php echo $pkey?>(obj) {
+						
                             // use the modulus operator '%' to see if there is a remainder
                             remainder=obj.value % <?php echo $step?>;
                             quantity=obj.value;
+							Ste = <?php echo $step?>;
+							if (isNaN(Ste)) Ste = 1;
+							
                             if (remainder  != 0) {
-                                alert('<?php echo $alert?>!');
-                                obj.value = quantity-remainder;
-                                return false;
+                                 alert('<?php echo $alert?>!');
+	                              return false;
                             }
+							Qtt = quantity;
+							
+							if (!isNaN(Qtt)) 
+						     {
+							      maxQtt = jQuery(obj).attr("max");
+								  maxerror = jQuery(obj).attr("data-maxerror"); 
+								  init = jQuery(obj).attr("data-init");
+
+	        					  if(!isNaN(maxQtt) && Qtt > maxQtt)
+								  {
+									   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + maxerror + "</p></div>";
+									   jQuery("#customerror").html("");
+									   jQuery("#customerror").show();
+									   jQuery("#customerror").html(r);
+								  
+				        		     jQuery(obj).val(maxQtt);
+									 return false;
+						          }
+								  else if(Qtt < init)
+								  {
+									   minerror = jQuery(obj).attr("data-minerror"); 
+									   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + minerror + "</p></div>";
+									   jQuery("#customerror").html("");
+									   jQuery("#customerror").show();
+									   jQuery("#customerror").html(r);
+								  
+				        		     jQuery(obj).val(init);
+									 return false;
+								  
+								  }
+					         }
                             return true;
                         }
                         </script>
 					         <input name="quantityv" type="hidden" value="<?php echo $step ?>" />
 							 
-                             <input type="text" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="quantity-input js-recalculate opg-form-small opg-text-center" onblur="check_<?php echo $pkey; ?>(this);" size="2" maxlength="4" value="<?php echo $prow->quantity ?>" id='quantity_<?php echo $cartitemid; ?>' name="quantityval[<?php echo $pkey; ?>]"  style="color:inherit !important;" />
+							   
+							 
+                             <input type="text" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="quantity-input js-recalculate opg-form-small opg-text-center" onchange="check_<?php echo $pkey; ?>(this);" size="2" maxlength="4" value="<?php echo $prow->quantity ?>" id='quantity_<?php echo $cartitemid; ?>'  data-init="<?php echo $init; ?>"  data-step="<?php echo $step; ?>" name="quantityval[<?php echo $pkey; ?>]"  style="color:inherit !important;" data-minerror = "<?php echo $minerror; ?>" data-maxerror="<?php echo $maxerror; ?>" <?php echo $maxOrder; ?> />
 									  
 				            <input type="hidden" name="stock[<?php echo $pkey; ?>]" value="<?php echo $prow->product_in_stock; ?>" />  
                             <input type="hidden" name="view" value="cart" /> 

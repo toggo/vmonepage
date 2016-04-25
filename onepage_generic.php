@@ -27,7 +27,7 @@ jimport('joomla.plugin.plugin');
 class plgSystemOnepage_generic extends JPlugin {
 	function __construct($config,$params) {
 		parent::__construct($config,$params);
-		JHTML::script('plugins/system/onepage_generic/vmprices.js');
+		
 	}
 
 	function onBeforeCompileHead()

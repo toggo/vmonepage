@@ -44,7 +44,7 @@ $lang->load($extension);
 $this->assignRef("vendordata", $vendordata);
 
 vmJsApi::jPrice();
-JHTML::script('plugins/system/onepage_generic/vmprices.js');
+
 
 
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
@@ -309,5 +309,5 @@ else
 
 <?php
 }
-
+JHTML::script('plugins/system/onepage_generic/vmprices.js');
 ?>
