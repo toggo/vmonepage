@@ -293,10 +293,10 @@ else
 			 $rightdiv_width = "opg-width-large-2-5 opg-width-medium-2-5";
 		}
 		?>
-		 <div id="leftdiv" class="opg-width-1-1 <?php echo $leftdiv_width; ?> opg-width-small-1-1 opg-float-left   opg-border-rounded">
+		 <div id="leftdiv" class="opg-width-1-1 <?php echo $leftdiv_width; ?> opg-width-small-1-1    opg-border-rounded">
 			<?php echo $this->loadTemplate('left'); ?>
 		 </div>
-		 <div id="right_div" class="tm-sidebar-a opg-width-1-1 <?php echo $rightdiv_width; ?> opg-width-small-1-1 opg-float-right" >
+		 <div id="right_div" class="tm-sidebar-a opg-width-1-1 <?php echo $rightdiv_width; ?> opg-width-small-1-1 o" >
 		    <?php echo $this->loadTemplate('right'); ?>
 		 </div>
 		 

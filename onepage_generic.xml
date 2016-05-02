@@ -34,6 +34,7 @@
 			<language tag="nl-NL">nl-NL.plg_system_onepage_generic.ini</language>
 			<language tag="nb-NO">nb-NO.plg_system_onepage_generic.ini</language>
 			<language tag="it-IT">it-IT.plg_system_onepage_generic.ini</language>
+			<language tag="pl-PL">pl-PL.plg_system_onepage_generic.ini</language>
         </languages>
 	    <updateservers>
   	      <server type="extension" name="VMOnepage Update Site"><![CDATA[http://vmonepage.com/releases/vmonepage_update.xml]]></server>
