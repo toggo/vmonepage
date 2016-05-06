@@ -1121,7 +1121,7 @@ function update_product(vmid)
 				   jQuery('html,body').animate({
 				    	    scrollTop: jQuery("#customerror").offset().top},
     	    	   'slow')
-				   update_shipment();
+				   updatepayment();
 				 }
 	 	 });
 	}
@@ -1426,7 +1426,7 @@ function removeproduct(vmproductid)
 					   {
 						  if (datas.totalProduct >0) 
 						   {
-								update_shipment();
+								updatepayment();
 						   } 
 						   else 
 						   {
