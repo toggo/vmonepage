@@ -91,9 +91,13 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 						<?php echo JHTML::link($prow->url, $prow->product_name, 'class="opg-link"') ?>
                     </div>
                </div>
-			   <div class="opg-text-primary opg-text-bold  opg-width-large-1-6 opg-width-small-3-6 opg-width-3-6 opg-text-right">
-                    <div class="spacer" id="subtotal_with_tax_<?php echo $pkey; ?>">
-						<?php echo $this->currencyDisplay->createPriceDiv('salesPrice','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity); //No quantity or you must use product_final_price ?>
+			 
+			 
+			    <div class="opg-text-primary opg-hidden-small opg-text-bold  opg-width-large-1-6 opg-width-small-2-6 opg-width-2-6 opg-text-left-small">
+
+                    <div class="spacer" >
+						<?php echo $this->currencyDisplay->createPriceDiv('salesPrice','', $this->cart->pricesUnformatted[$pkey],true,false,1); //No quantity or you must use product_final_price ?>
+						<?php //echo $this->currencyDisplay->createPriceDiv('basePriceVariant','', $this->cart->pricesUnformatted[$pkey],false); ?>
                     </div>
                </div>
 			       <div class="quantity  opg-width-large-1-4 opg-width-small-3-6 opg-width-3-6 opg-text-left-small">
@@ -197,13 +201,13 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
                     </div>
                 </div>
 				
-      <div class="opg-text-primary opg-hidden-small opg-text-bold  opg-width-large-1-6 opg-width-small-2-6 opg-width-2-6 opg-text-left-small">
-
-                    <div class="spacer" >
-						<?php echo $this->currencyDisplay->createPriceDiv('salesPrice','', $this->cart->pricesUnformatted[$pkey],true,false,1); //No quantity or you must use product_final_price ?>
-						<?php //echo $this->currencyDisplay->createPriceDiv('basePriceVariant','', $this->cart->pricesUnformatted[$pkey],false); ?>
+				  <div class="opg-text-primary opg-text-bold  opg-width-large-1-6 opg-width-small-3-6 opg-width-3-6 opg-text-right">
+                    <div class="spacer" id="subtotal_with_tax_<?php echo $pkey; ?>">
+						<?php echo $this->currencyDisplay->createPriceDiv('salesPrice','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity); ?>
                     </div>
                </div>
+				
+   
        	<div class="clear"></div>
         </div>
 		<hr class="opg-margin-remove" />

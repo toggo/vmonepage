@@ -1630,6 +1630,9 @@ function update_shipment()
 }
 function updatepayment()
 {
+	
+	
+	
 	if(!popupopen)
 	{
 	 	jQuery("#loadingbutton").click();											  
@@ -1639,7 +1642,6 @@ function updatepayment()
 				type: "POST",
 		        cache: false,
 	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=ajaxpayandship',
-				data : datas,
 				dataType: "json"
 		 }).done(
 			 function (data, textStatus){
