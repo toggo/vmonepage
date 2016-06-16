@@ -1,8 +1,8 @@
 <?php
 /**
-** Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015 All Right Reserved.
-** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
-** Some parts might even be Joomla and is Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved. 
+** Parts of this code is written by joomlaprofessionals.com (Contact Claes Norin - info@joomlaprofessionals.com) Copyright (c) 2012 - 2016 All Right Reserved.
+** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2016. All rights reserved.
+** Some parts might even be Joomla and is Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
 ** This source is free software. This version may have been modified pursuant
 ** to the GNU General Public License, and as distributed it includes or
@@ -14,9 +14,9 @@
 ** IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
 ** PARTICULAR PURPOSE.
 
-** <author>Joomlaproffs / Virtuemart team</author>
-** <email>info@joomlaproffs.se</email>
-** <date>2015</date>
+** <author>joomlaprofessionals.com</author>
+** <email>info@joomlaprofessionals.com</email>
+** <date>2016</date>
 */
 defined('_JEXEC') or die('Restricted access');
 $cart->prepareCartData();
@@ -27,6 +27,8 @@ $cart->prepareCartData();
 		{
 			continue;
 		}
+
+		
 		$price_values["products"][$id]["subtotal_tax_amount"]=!empty($cart->pricesUnformatted[$id]["taxAmount"])?$currency->priceDisplay($cart->pricesUnformatted[$id]["taxAmount"]):"";
 		$price_values["products"][$id]["subtotal_discount"]=!empty($cart->pricesUnformatted[$id]["subtotal_discount"])?$currency->priceDisplay($cart->pricesUnformatted[$id]["discountAmount"]):"";
 		$price_values["products"][$id]["subtotal_with_tax"] = "";
@@ -62,5 +64,30 @@ $cart->prepareCartData();
 		   $price_values["couponDescr"] = $cart->cartData["couponDescr"];
 	
 	$price_values["billTotalunformat"]= $cart->pricesUnformatted["billTotal"];
+	
+	if(count($this->cart->cartData['taxRulesBill']) > 0)
+	{
+	    $taxRulesBill = array();
+		foreach($this->cart->cartData['taxRulesBill'] as $rule)
+		{
+		   $virtuemart_calc_id = $rule['virtuemart_calc_id'];
+		   $calcname = $rule['calc_name'];
+		   $taxRulesBill[$virtuemart_calc_id]["name"] = $calcname;
+		   $taxRulesBill[$virtuemart_calc_id]["price"] = $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true);
+		}
+		$price_values["taxRulesBill"] = $taxRulesBill;
+	}
+	if(count($this->cart->cartData['DATaxRulesBill']) > 0)
+	{
+	    $DATaxRulesBill = array();
+		foreach($this->cart->cartData['DATaxRulesBill'] as $rule)
+		{
+		   $virtuemart_calc_id = $rule['virtuemart_calc_id'];
+		   $calcname = $rule['calc_name'];
+		   $DATaxRulesBill[$virtuemart_calc_id]["name"] = $calcname;
+		   $DATaxRulesBill[$virtuemart_calc_id]["price"] = $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true);
+		}
+		$price_values["DATaxRulesBill"] = $DATaxRulesBill;
+	}
 	echo json_encode($price_values);
 	exit;

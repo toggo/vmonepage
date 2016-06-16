@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.4" type="plugin" group="system" method="upgrade">
-        <name>Onepage Generic</name>
+        <name>One Page Checkout for Virtuemart</name>
         <author>Claes Norin</author>
-        <creationDate>June 2015</creationDate>
-        <copyright> Copyright (c) 2012, 2015 All Right Reserved, http://www.joomlaproffs.se.</copyright>
+        <creationDate>Mar 2016</creationDate>
+        <copyright> Copyright (c) 2012, 2015 All Right Reserved, http://www.joomlaprofessionals.com.</copyright>
         <license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
-        <authorEmail>support@vmuikit.com</authorEmail>
-        <authorUrl>http://vmonepage.com/</authorUrl>
-        <version>3.8</version>
+        <authorEmail>info@joomlaprofessionals.com</authorEmail>
+        <authorUrl>http://www.joomlaprofessionals.com/</authorUrl>
+        <version>2.2.7</version>
 		<description><![CDATA[ 
 	 <table class="table"><tr><td><a href="http://vmonepage.com"><img src="http://vmkco.com/images/logo_vmonepage.png"></a></td><td><h3>Onepage Generic successfully installed.</h3><hr>For more information and to download the latest FREE version of this One Page Checkout please visit <a target="_blank" href="http://vmonepage.com">http://vmonepage.com</a> </h4></td></tr></table>
-	  <table class="table"><tr><td><a href="http://vmkco.com"><img src="http://vmkco.com/images/klarna_logo_mini.png"></a></td><td style="vertical-align: middle;">Looking for Klarna Checkout module? Please visit <a target="_blank" href="http://www.vmkco.com">www.vmkco.com</a> for Free Klarna Checkout Enhanced plugin</td></tr></table>
+	  <table class="table"><tr><td><a href="http://vmkco.com"><img src="http://vmkco.com/images/klarna_logo_mini.png"></a></td><td style="vertical-align: middle;">Looking for Klarna Checkout module? Please visit <a target="_blank" href="http://www.vmkco.com">www.vmkco.com</a> for Free Klarna Checkout Enhanced plugin</td></tr>
+	  <tr><td>
+	  <a  target="_blank" href="http://www.joomlaprofessionals.com"><img src="http://vmuikit.com/images/vm3_logo.png" /></a>
+	  </td><td>VMonepage is built by <a  title="Joomla Pros / Professionals"  target="_blank" href="http://www.joomlaprofessionals.com">www.joomlaprofessionals.com</a></h4></td></tr>
+	  </table>
 		]]></description>
         <files>
 				<folder>languages</folder>
 				<folder>cart</folder>
 				<folder>fonts</folder>
+				<filename>index.html</filename>
+				<filename>License_GPL2.txt</filename>
                 <filename plugin="onepage_generic">onepage_generic.php</filename>
                 <filename plugin="onepage_generic">onepage_generic.css</filename>
 				<filename plugin="onepage_generic">onepage_generic.js</filename>
@@ -26,7 +32,13 @@
         	<language tag="en-GB">en-GB.plg_system_onepage_generic.ini</language>
 			<language tag="sv-SE">sv-SE.plg_system_onepage_generic.ini</language>
 			<language tag="nl-NL">nl-NL.plg_system_onepage_generic.ini</language>
+			<language tag="nb-NO">nb-NO.plg_system_onepage_generic.ini</language>
+			<language tag="it-IT">it-IT.plg_system_onepage_generic.ini</language>
+			<language tag="pl-PL">pl-PL.plg_system_onepage_generic.ini</language>
         </languages>
+	    <updateservers>
+  	      <server type="extension" name="VMOnepage Update Site"><![CDATA[http://vmonepage.com/releases/vmonepage_update.xml]]></server>
+        </updateservers>
         <config>
 	        <fields name="params">
 	                <fieldset name="basic">
@@ -38,6 +50,10 @@
 							<option value="0">JNO</option>
 							<option value="1">JYES</option>
 						</field>	 
+						<field 	name="popup_address"	type="radio" class="btn-group btn-group-yesno"	label="Which address show in Popup" description="" default="1">
+							<option value="1">Shipto</option>
+							<option value="2">Billto</option>
+						</field>
 						<field 	name="hide_oneshipment"	type="radio" class="btn-group btn-group-yesno"	label="Hide Shipment Block(If one Shipment)"	description="" default="0">
 							<option value="0">JNO</option>
 							<option value="1">JYES</option>
@@ -66,6 +82,11 @@
 						</field>
 						
 						<field name="buttoncolour" type="color" label="Button Color" />
+						
+						<field 	name="button_primary" type="text" label="Button Primary class"  description="Primary Button html class to use(leave blank to use default)" default="" />
+						<field 	name="button_danger" type="text" label="Button Danger Class"  description="Danger Button html class to use(leave blank to use default)" default="" />
+						<field 	name="form_danger" type="text" label="Form Danger Class"  description="Danger Form html class to use(leave blank to use default)" default="" />
+						
 						<field 	name="activetab" type="radio" class="btn-group btn-group-yesno" label="Active Tab" 	description="" default="0">							<option value="1">REGISTER</option>
 							<option value="2">GUEST</option>
 							<option value="3">LOGIN</option>
@@ -113,6 +134,9 @@
 
 
 	                </fieldset>
+
+						
+
 	        </fields>
         </config>
 </extension>

@@ -1,6 +1,6 @@
 <?php 
 /**
-** Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015 All Right Reserved.
+** Parts of this code is written by joomlaprofessionals.com Copyright (c) 2012, 2015 All Right Reserved.
 ** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
 ** Some parts might even be Joomla and is Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -15,35 +15,47 @@
 ** PARTICULAR PURPOSE.
 
 ** <author>Joomlaproffs / Virtuemart team</author>
-** <email>info@joomlaproffs.se</email>
+** <email>info@joomlaprofessionals.com</email>
 ** <date>2015</date>
 */
 defined('_JEXEC') or die('Restricted access');
  
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
+
+$button_primary_class  = $params->get("button_primary","opg-button-primary");
+
 ?>
 
 <script type="text/javascript">
 var selected_payment  = <?php echo $this->selectedPayment; ?>;
 var selected_shipment  = <?php echo $this->selectedShipment; ?>;
 jQuery(document).ready(function(){
- for(var i=0;i<document.id('paymentsdiv').getElements('input').length;i++) 
- {
-	if (document.id('paymentsdiv').getElements('input')[i].value == selected_payment) 
-	{
-		document.id('paymentsdiv').getElements('input')[i].checked=true;
-	}
- }
- for(var i=0;i<document.id('shipmentdiv').getElements('input').length;i++) 
- {
-	if (document.id('shipmentdiv').getElements('input')[i].value == selected_shipment) 
-	{
-		document.id('shipmentdiv').getElements('input')[i].checked=true;
-	}
-  }
-});
 
+  if(jQuery("#paymentsdiv").length > 0)
+  {
+	   jQuery("#paymentsdiv input").each(function(){
+			if(jQuery(this).val() == selected_payment)  
+			{
+				 jQuery(this).prop('checked', true);
+			}
+	   });
+  }
+  
+   jQuery("#paymentsdiv input").each(function(){
+		if(jQuery(this).val() == selected_payment)  
+		{
+			 jQuery(this).prop('checked', true);
+		}
+   });
+
+   jQuery("#shipmentdiv input").each(function(){
+		if(jQuery(this).val() == selected_shipment)  
+		{
+			 jQuery(this).prop('checked', true);
+		}
+   });
+});
 
 </script>
 
@@ -71,9 +83,24 @@ jQuery(document).ready(function(){
    {
 	       echo ' <div class="opg-width-1-1 opg-panel opg-panel-box">';
    }
-   foreach($this->cart->BTaddress["fields"] as $singlefield) 
+   
+   $popupaddress = $params->get("popup_address", 1);
+   if($popupaddress > 1)
+   {
+       $cartfields =  $this->cart->STaddress["fields"];
+	   $countryfield = 'shipto_virtuemart_country_id';
+	   $statefield  =  'shipto_virtuemart_state_id';
+   }
+   else
+   {
+	   $cartfields =  $this->cart->BTaddress["fields"];
+	   $countryfield = 'virtuemart_country_id';
+	   $statefield  =  'virtuemart_state_id';
+   }
+   
+   foreach($cartfields as $singlefield) 
     {
-	  if($singlefield['name']=='virtuemart_country_id') 
+	  if($singlefield['name']== $countryfield) 
 	  {
 	     $hidecountry_class = "";
 	     if($hidecountry)
@@ -90,7 +117,7 @@ jQuery(document).ready(function(){
 		 echo $singlefield['formcode'];
 		 echo '</div>';
 	  }
-	  else if($singlefield['name'] == "virtuemart_state_id")
+	  else if($singlefield['name'] == $statefield)
 	  {
 	     $hidestate_class = "";
 	     if($hidestate)
@@ -116,6 +143,7 @@ jQuery(document).ready(function(){
 		 echo '</div>';
 	  }
 	}
+  
    if($tempcount > 1)
     {
 		 echo '</div>';
@@ -210,7 +238,7 @@ jQuery(document).ready(function(){
 							{
 							    $target = "{target:'#shipmentdiv'}";
 							    echo '<td id="shipchangediv" class="opg-width-1-4">';
-					            echo '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
+					            echo '<a class="opg-button '.$button_primary_class.'" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}
 							echo '</tr></table>';
@@ -233,7 +261,7 @@ jQuery(document).ready(function(){
 							{
 							    $target = "{target:'#shipmentdiv'}";
 							    echo '<td id="shipchangediv" class="opg-width-1-4">';
-					            echo '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
+					            echo '<a class="opg-button '.$button_primary_class.'" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}
 							echo '</tr></table>'; 
@@ -278,11 +306,13 @@ jQuery(document).ready(function(){
    <h3 class="opg-panel-title"><?php echo JText::_('COM_VIRTUEMART_CART_SELECTPAYMENT'); ?></h3>
    <?php
 	    $paymentsarr = $this->paymentplugins_paymentsnew;
-		 echo '<div id="payment_nill"></div>';
+		echo '<div id="payment_nill"></div>';
 	    echo '<div id="paymentsdiv">';
 		echo '<ul class="opg-list" id="payment_ul">';
 		foreach($paymentsarr as $pay)
 		{
+		      $pos = strpos($pay, '</span></span>');
+			  $pay = substr($pay, 0, $pos); 
 		      $replacetxt = "";
 			  $replacetxt = '<input onclick="setpayment()"';
 			  $pay = str_replace("<input", $replacetxt, $pay);
@@ -320,6 +350,8 @@ jQuery(document).ready(function(){
 					
 						    $tmpdis = strip_tags($tmppay , '<span><img>');
 						    echo '<table class="opg-table opg-table-striped" id="paymentable"><tr id="paymentrow"><td id="paymentdetails">';
+							$pos = strpos($tmpdis, '</span></span>');
+						    $tmpdis = substr($tmpdis, 0, $pos); 
 						    $tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_description" , "vmpaymentt_description opg-text-small", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_cost" , "vmpayment_cost opg-text-small", $tmpdis);
@@ -329,7 +361,7 @@ jQuery(document).ready(function(){
 							{  
 							    $target = "{target:'#paymentdiv'}";
 							    echo '<td id="paychangediv" class="opg-width-1-4">';
-					            echo '<a class="opg-button opg-button-primary" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
+					            echo '<a class="opg-button '.$button_primary_class.'" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}
 							echo '</tr></table>'; 
@@ -346,6 +378,8 @@ jQuery(document).ready(function(){
 					        $paym_arr = $this->paymentplugins_paymentsnew;
 				            $tmpdis = strip_tags($paym_arr[0] , '<span><img>');
 						    echo '<table class="opg-table opg-table-striped" id="paymentable"><tr id="paymentrow"><td id="paymentdetails">';
+							$pos = strpos($tmpdis, '</span></span>');
+						    $tmpdis = substr($tmpdis, 0, $pos); 
 						    $tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_description" , "vmpayment_description opg-text-small", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_cost" , "vmpayment_cost opg-text-small", $tmpdis);
@@ -355,11 +389,12 @@ jQuery(document).ready(function(){
 							{
 							    $target = "{target:'#paymentdiv'}";
 							    echo '<td id="paychangediv" class="opg-width-1-4" >';
-					            echo '<a class="opg-button opg-button-primary" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
+					            echo '<a class="opg-button '.$button_primary_class.'" href="#" data-opg-modal="'.$target.'">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE").'</a>';
 					 			echo '</td>';
 							}
 							echo '</tr></table>'; 
 							$paymentpresent = 1;
+							
 					}
 					else
 					{

@@ -1,6 +1,6 @@
 <?php
 /**
-** Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015 All Right Reserved.
+** Parts of this code is written by joomlaprofessionals.com Copyright (c) 2012, 2015 All Right Reserved.
 ** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
 ** Some parts might even be Joomla and is Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -12,17 +12,23 @@
 ** THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
 ** KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
 ** IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
-** PARTICULAR PURPOSE.
+** PARTICULAR PURPOSE. 
 
 ** <author>Joomlaproffs / Virtuemart team</author>
-** <email>info@joomlaproffs.se</email>
+** <email>info@joomlaprofessionals.com</email>
 ** <date>2015</date>
 */
 
 defined('_JEXEC') or die('Restricted access');
 
 $return =  $input->getString('return');
-$return = base64_decode($return);
+ if (empty($this->url)){
+		$uri = JFactory::getURI();
+		$return = $uri->toString(array('path', 'query', 'fragment'));
+	  } else{
+		$return = $this->url;
+  }
+
 if (!JURI::isInternal($return)) 
 {
 	 $return = '';

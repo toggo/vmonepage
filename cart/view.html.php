@@ -1,6 +1,6 @@
 <?php
 /**
-** Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015 All Right Reserved.
+** Parts of this code is written by joomlaprofessionals.com Copyright (c) 2012, 2015 All Right Reserved.
 ** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
 ** Some parts might even be Joomla and is Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -10,17 +10,17 @@
 ** other free or open source software licenses.
 **
 ** THIS CODE AND INFORMATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY 
-** KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+** KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
 ** IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A 
 ** PARTICULAR PURPOSE.
 
 ** <author>Joomlaproffs / Virtuemart team</author>
-** <email>info@joomlaproffs.se</email>
+** <email>info@joomlaprofessionals.com</email>
 ** <date>2015</date>
 */
 defined('_JEXEC') or die('Restricted access');
 
-if(!class_exists('VmView'))require(VMPATH_SITE.DS.'helpers'.DS.'vmview.php');
+if(!class_exists('VmView'))require(VMPATH_SITE.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'vmview.php');
 
 
 class VirtueMartViewCart extends VmView {
@@ -32,6 +32,10 @@ class VirtueMartViewCart extends VmView {
 
 		$app = JFactory::getApplication();
 		$input = JFactory::getApplication()->input;
+		
+		$lang = JFactory::getLanguage();
+		$extension = 'com_users';
+		$lang->load($extension);
 
   
 		$this->prepareContinueLink(); 
@@ -44,7 +48,7 @@ class VirtueMartViewCart extends VmView {
 		$document = JFactory::getDocument();
 		$document->setMetaData('robots','NOINDEX, NOFOLLOW, NOARCHIVE, NOSNIPPET');
 		
-		$this->addTemplatePath(dirname(__FILE__).DS. 'tmpl'.DS);
+		$this->addTemplatePath(dirname(__FILE__).DIRECTORY_SEPARATOR. 'tmpl'.DIRECTORY_SEPARATOR);
 		
 		$path   = JPATH_BASE.'/templates/'.$app->getTemplate().'/html/plg_content_onepage_generic/';
 		$this->addTemplatePath($path);
@@ -57,7 +61,7 @@ class VirtueMartViewCart extends VmView {
 		$format = vRequest::getCmd('format');
 
 		if (!class_exists('VirtueMartCart'))
-		require(VMPATH_SITE . DS . 'helpers' . DS . 'cart.php');
+		require(VMPATH_SITE . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'cart.php');
 		$cart = VirtueMartCart::getCart();
 
 		$cart->prepareVendor();
@@ -100,7 +104,7 @@ class VirtueMartViewCart extends VmView {
 			$this->renderCompleteAddressList();
 
 			if (!class_exists ('VirtueMartModelUserfields')) {
-				require(VMPATH_ADMIN . DS . 'models' . DS . 'userfields.php');
+				require(VMPATH_ADMIN . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'userfields.php');
 			}
 
 			$userFieldsModel = VmModel::getModel ('userfields');
@@ -117,7 +121,7 @@ class VirtueMartViewCart extends VmView {
 			);
 
 			if (!class_exists ('CurrencyDisplay'))
-				require(VMPATH_ADMIN . DS . 'helpers' . DS . 'currencydisplay.php');
+				require(VMPATH_ADMIN . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'currencydisplay.php');
 
 			$this->currencyDisplay = CurrencyDisplay::getInstance($cart->pricesCurrency);
 			$currency	= $this->currencyDisplay;
@@ -153,7 +157,7 @@ class VirtueMartViewCart extends VmView {
 			}
 			$this->checkout_link_html = '<button type="submit"  id="checkoutFormSubmit" name="'.$this->checkout_task.'" value="1" class="vm-button-correct" ><span>' . $text . '</span> </button>';
 
-            if (!class_exists('vmPSPlugin')) require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
+            if (!class_exists('vmPSPlugin')) require(JPATH_VM_PLUGINS . DIRECTORY_SEPARATOR . 'vmpsplugin.php');
 				JPluginHelper::importPlugin('vmshipment');
 				JPluginHelper::importPlugin('vmpayment');
 				vmdebug('cart view oncheckout_opc ');
@@ -199,7 +203,7 @@ class VirtueMartViewCart extends VmView {
 		$this->assignRef('totalInPaymentCurrency', $totalInPaymentCurrency);
 		$this->assignRef('checkoutAdvertise', $checkoutAdvertise);
 
-		if(!class_exists('VmTemplate')) require(VMPATH_SITE.DS.'helpers'.DS.'vmtemplate.php');
+		if(!class_exists('VmTemplate')) require(VMPATH_SITE.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'vmtemplate.php');
 		VmTemplate::setVmTemplate($this, 0, 0, $layoutName);
 
 		//We never want that the cart is indexed
@@ -210,14 +214,7 @@ class VirtueMartViewCart extends VmView {
 			$this->addTemplatePath($cart->layoutPath);
 		}
 		
-		if(isset($_POST["tos"]))
-		{
-			$_POST["agreed"] = $_POST["tos"];
-		}
-		else
-		{
-		   $_POST["agreed"] = 0;
-		}
+		
 
 		$current = JFactory::getUser();
 		$this->allowChangeShopper = false;
@@ -229,7 +226,7 @@ class VirtueMartViewCart extends VmView {
 				$this->adminID = JFactory::getSession()->get('vmAdminID',false);
 				if($this->adminID){
 					if(!class_exists('vmCrypt'))
-						require(VMPATH_ADMIN.DS.'helpers'.DS.'vmcrypt.php');
+						require(VMPATH_ADMIN.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'vmcrypt.php');
 					$this->adminID = vmCrypt::decrypt($this->adminID);
 					$adminIdUser = JFactory::getUser($this->adminID);
 					if($adminIdUser->authorise('core.admin', 'com_virtuemart') or $adminIdUser->authorise('vm.user', 'com_virtuemart')){
@@ -249,18 +246,33 @@ class VirtueMartViewCart extends VmView {
 		
 		if($task == "completecheckout")
 		{ 
+
 		     require_once dirname(__FILE__)."/updatecartaddress.php";
 			
 			 $checkout = $cart->checkoutData(false);
-			
+		  	 $app = JFactory::getApplication();
+			 $messageQueue = $app->getMessageQueue();
+
+			 $return_error = "";
+			 if(count($messageQueue) > 0)
+			 {
+			    foreach($messageQueue as $message)
+				{
+				   $return_error .= $message['message'];
+				}
+			 }
+			 
+			 $returnarray = array();
 		     if($checkout)
 			 {
-				 echo "success";
+				 $returnarray["success"] = 1;
 			 }
 			 else
 			 {
-			    echo "error";
+			    $returnarray["success"] = 0;
 			 } 
+			 $returnarray['message'] =  $return_error;
+			 echo json_encode($returnarray);
 			 exit;
 		}
 		
@@ -276,9 +288,86 @@ class VirtueMartViewCart extends VmView {
 			echo json_encode($this->paymentplugins_payments);
 			exit;
 		  }
+		  if($task == "ajaxpayandship")
+		  {
+		    $this->lSelectShipment();
+			$this->lSelectPayment();
+			$result = array();
+			$result['payments'] = $this->paymentplugins_payments;
+			$result['shipments'] = $this->shipments_shipment_rates;
+			echo json_encode($result);
+			exit;
+		  }
+		  if($task == "setshipment")
+		  {
+		     $shipid = $input->get('shipid', 0);
+		     if($shipid > 0)
+			 {
+			     $cart->setShipmentMethod(false, false, $shipid);
+				 $cart->setCartIntoSession();
+			 }
+			 echo "success";
+			 exit;
+		  }
+		  if($task == "setpayment")
+		  {
+ 		     $payid = $input->get('payid', 0); 
+		     if($payid > 0)
+			 {
+			     $cart->setPaymentMethod(false, false, $payid);
+				 $cart->setCartIntoSession();
+			 }
+			 echo "success";
+			 exit;
+		  }
+		   if($task == "checkemail")
+		  {
+			$post = $input->post->getArray();
+			$emailval = $post['emailval'];
+			$db = JFactory::getDBO();
+			$query = "SELECT * FROM #__users WHERE email = '".$emailval."'";
+			$db->setQuery($query);
+			$result = $db->LoadObject();
+			$return = array();
+			if($result)
+			{
+			  $return["exists"] = "yes";
+			  $return["msg"] = JText::_("COM_USERS_REGISTER_EMAIL1_MESSAGE");
+			}
+			else
+			{ 
+			  $return["exists"] = "no";
+			}
+			echo json_encode($return);
+			exit;
+		  }
+		  if($task == "checkuser")
+		  {
+		    $post = $input->post->getArray();
+			$userval = $post['userval'];
+			$db = JFactory::getDBO();
+			$query = "SELECT * FROM #__users WHERE username = '".$userval."'";
+			$db->setQuery($query);
+			$result = $db->LoadObject();
+			$return = array();
+			if($result)
+			{
+			  $return["exists"] = "yes";
+			  $return["msg"] = JText::_("COM_USERS_REGISTER_USERNAME_MESSAGE");
+			}
+			else
+			{ 
+			  $return["exists"] = "no";
+			}
+			echo json_encode($return);
+			exit;
+		  
+		  }
 		  if($task == "klarnaupdate")
 		  {
-		    $post = JRequest::get("post");
+
+			$post = $input->post->getArray(); 
+			
 			$address = array();
 			$address['shipto_address_type_name'] = 'ST';
 			if(!empty($post['given_name']))
@@ -325,6 +414,27 @@ class VirtueMartViewCart extends VmView {
 			$address['tos'] = 1;
 			$cart->saveAddressInCart($address,'ST', true, 'shipto_');
 			$cart->setCartIntoSession(false,true);
+			$return = array();
+			$return['response'] = "success";
+			echo json_encode($return);
+			exit;
+		  }
+		  if($task == "klarnacartupdate")
+		  {
+		    $post = $input->post->getArray();
+			foreach($this->userFieldsCart['fields'] as $name => $cartfield)
+			{
+			   if(!empty($post[$name]))
+			   {
+				   $cart->cartfields[$name] = $cartfield['title'];
+			   }
+			   else if($cartfield['type'] == "checkbox")
+			   {
+			       $cart->cartfields[$name] = 0;
+			   }
+	 		}
+			$cart->setCartIntoSession(false,true);
+			$cart->saveCartFieldsInCart();
 			$return = array();
 			$return['response'] = "success";
 			echo json_encode($return);
@@ -398,7 +508,7 @@ class VirtueMartViewCart extends VmView {
 		}
 
 		$shipments_shipment_rates = array();
-		if (!class_exists('vmPSPlugin')) require(JPATH_VM_PLUGINS . DS . 'vmpsplugin.php');
+		if (!class_exists('vmPSPlugin')) require(JPATH_VM_PLUGINS . DIRECTORY_SEPARATOR . 'vmpsplugin.php');
 		JPluginHelper::importPlugin('vmshipment');
 		$dispatcher = JDispatcher::getInstance();
 		
@@ -552,7 +662,7 @@ class VirtueMartViewCart extends VmView {
 			return;
 		}
 
-		if(!class_exists('vmPSPlugin')) require(JPATH_VM_PLUGINS.DS.'vmpsplugin.php');
+		if(!class_exists('vmPSPlugin')) require(JPATH_VM_PLUGINS.DIRECTORY_SEPARATOR.'vmpsplugin.php');
 		
 		JPluginHelper::importPlugin('vmpayment');
 		$dispatcher = JDispatcher::getInstance();
@@ -755,7 +865,7 @@ class VirtueMartViewCart extends VmView {
 			$this->adminID = JFactory::getSession()->get('vmAdminID',false);
 			if($this->adminID) {
 				if(!class_exists('vmCrypt'))
-					require(VMPATH_ADMIN.DS.'helpers'.DS.'vmcrypt.php');
+					require(VMPATH_ADMIN.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'vmcrypt.php');
 				$this->adminID = vmCrypt::decrypt( $this->adminID );
 			}
 			$superVendor = VmConfig::isSuperVendor($this->adminID);
@@ -818,6 +928,8 @@ class VirtueMartViewCart extends VmView {
 
 			$cart->lists['shipTo'] = JHtml::_('select.radiolist', $addressList, 'shipto', null, 'virtuemart_userinfo_id', 'address_type_name', $_selectedAddress);
 			$cart->lists['billTo'] = empty($addressList[0]->virtuemart_userinfo_id)? 0 : $addressList[0]->virtuemart_userinfo_id;
+			
+			
 		} else {
 			$cart->lists['shipTo'] = false;
 			$cart->lists['billTo'] = false;
