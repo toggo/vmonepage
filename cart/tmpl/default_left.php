@@ -1,6 +1,6 @@
 <?php 
 /**
-** Parts of this code is written by joomlaprofessionals.com Copyright (c) 2012, 2015 All Right Reserved.
+** Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015 All Right Reserved.
 ** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
 ** Some parts might even be Joomla and is Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -15,7 +15,7 @@
 ** PARTICULAR PURPOSE.
 
 ** <author>Joomlaproffs / Virtuemart team</author>
-** <email>info@joomlaprofessionals.com</email>
+** <email>info@joomlaproffs.se</email>
 ** <date>2015</date>
 */
 
@@ -23,10 +23,6 @@ defined('_JEXEC') or die('Restricted access');
  
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
-
-$button_primary_class  = $params->get("button_primary","opg-button-primary");
-
-
 ?>
 <div class="opg-width-1-1 opg-margin-bottom">
    <h3 class="opg-h3"><?php echo JText::_('COM_VIRTUEMART_CART_TITLE'); ?></h3>
@@ -68,14 +64,10 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 		$pModel = VmModel::getModel('product');
 		$tmpProduct = $pModel->getProduct($vmproduct_id, true, false,true,1);
 		$pModel->addImages($tmpProduct,1);
-		$min = $prow->min_order_level;
-		$max = $prow->max_order_level;
-		$maxerror = vmText::sprintf('COM_VIRTUEMART_CART_MAX_ORDER', $max, $prow->product_name);
-		$minerror = vmText::sprintf('COM_VIRTUEMART_CART_MIN_ORDER', $min, $prow->product_name);
 		?>
  		<div class="product opg-width-1-1 opg-margin" id="product_row_<?php echo $cartitemid; ?>">
-          <div class="opg-grid">
-		    <div class="opg-width-1-5 opg-hidden-small">
+          <div class="spacer">
+		    <div class="opg-width-1-5 opg-hidden-small opg-float-left">
 				<?php // Output Product Image
 				if ($tmpProduct->virtuemart_media_id) { ?>
                     <div class="opg-margin-right opg-text-center ">
@@ -84,23 +76,19 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
                     </div>
 		    	<?php } ?>
             </div>
-         <div class="opg-width-large-4-5 opg-width-small-1-1">
-            <div class="top-row opg-grid">
-			  <div class="opg-text-large opg-text-bold  opg-width-large-2-5 opg-width-small-1-1 opg-width-1-1">
+         <div class="opg-width-large-4-5 opg-width-small-1-1 opg-float-left">
+            <div class="top-row">
+			  <div class="opg-text-large opg-text-bold opg-float-left opg-width-large-2-5 opg-width-small-1-1 opg-width-1-1">
                     <div class="spacer">
 						<?php echo JHTML::link($prow->url, $prow->product_name, 'class="opg-link"') ?>
                     </div>
                </div>
-			 
-			 
-			    <div class="opg-text-primary opg-hidden-small opg-text-bold  opg-width-large-1-6 opg-width-small-2-6 opg-width-2-6 opg-text-left-small">
-
-                    <div class="spacer" >
-						<?php echo $this->currencyDisplay->createPriceDiv('salesPrice','', $this->cart->pricesUnformatted[$pkey],true,false,1); //No quantity or you must use product_final_price ?>
-						<?php //echo $this->currencyDisplay->createPriceDiv('basePriceVariant','', $this->cart->pricesUnformatted[$pkey],false); ?>
+			   <div class="opg-text-primary opg-text-bold opg-float-right opg-width-large-1-6 opg-width-small-3-6 opg-width-3-6 opg-text-right">
+                    <div class="spacer" id="subtotal_with_tax_<?php echo $pkey; ?>">
+						<?php echo $this->currencyDisplay->createPriceDiv('salesPrice','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity); //No quantity or you must use product_final_price ?>
                     </div>
                </div>
-			       <div class="quantity  opg-width-large-1-4 opg-width-small-3-6 opg-width-3-6 opg-text-left-small">
+			       <div class="quantity opg-float-right opg-width-large-1-4 opg-width-small-3-6 opg-width-3-6 opg-text-left-small">
                     <div class="spacer" >
 					 <?php
 					   if (isset($prow->step_order_level))
@@ -110,104 +98,43 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 						if($step==0)
 							$step=1;
 						$alert=JText::sprintf ('COM_VIRTUEMART_WRONG_AMOUNT_ADDED', $step);
-						
-						$init = 1;
-				if(isset($viewData['init'])){
-					$init = $viewData['init'];
-				}
-				if(!empty($prow->min_order_level) and $init<$prow->min_order_level){
-					$init = $prow->min_order_level;
-				}
-				$step=1;
-				if (!empty($prow->step_order_level)){
-					$step=$prow->step_order_level;
-					if(!empty($init)){
-						if($init<$step){
-							$init = $step;
-						} else {
-							$init = ceil($init/$step) * $step;
-			 			}
-					}
-					if(empty($prow->min_order_level) and !isset($viewData['init'])){
-						$init = $step;
-					}
-				}
-				$maxOrder= '';
-				if (!empty($prow->max_order_level)){
-					$maxOrder = ' max="'.$prow->max_order_level.'" ';
-				}
+
 					   ?>
 					   <script type="text/javascript">
                         function check_<?php echo $pkey?>(obj) {
-						
                             // use the modulus operator '%' to see if there is a remainder
                             remainder=obj.value % <?php echo $step?>;
                             quantity=obj.value;
-							Ste = <?php echo $step?>;
-							if (isNaN(Ste)) Ste = 1;
-							
                             if (remainder  != 0) {
-                                 alert('<?php echo $alert?>!');
-	                              return false;
+                                alert('<?php echo $alert?>!');
+                                obj.value = quantity-remainder;
+                                return false;
                             }
-							Qtt = quantity;
-							
-							if (!isNaN(Qtt)) 
-						     {
-							      maxQtt = jQuery(obj).attr("max");
-								  maxerror = jQuery(obj).attr("data-maxerror"); 
-								  init = jQuery(obj).attr("data-init");
-
-	        					  if(!isNaN(maxQtt) && Qtt > maxQtt)
-								  {
-									   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + maxerror + "</p></div>";
-									   jQuery("#customerror").html("");
-									   jQuery("#customerror").show();
-									   jQuery("#customerror").html(r);
-								  
-				        		     jQuery(obj).val(maxQtt);
-									 return false;
-						          }
-								  else if(Qtt < init)
-								  {
-									   minerror = jQuery(obj).attr("data-minerror"); 
-									   var r = '<div class="opg-margin-small-top opg-alert opg-alert-warning" data-opg-alert><a href="" class="opg-alert-close opg-close"></a><p>' + minerror + "</p></div>";
-									   jQuery("#customerror").html("");
-									   jQuery("#customerror").show();
-									   jQuery("#customerror").html(r);
-								  
-				        		     jQuery(obj).val(init);
-									 return false;
-								  
-								  }
-					         }
                             return true;
                         }
                         </script>
-					         <input name="quantityv" type="hidden" value="<?php echo $step ?>" />
+					         <input name="quantity" type="hidden" value="<?php echo $step ?>" />
 							 
-							   
-							 
-                             <input type="text" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="quantity-input js-recalculate opg-form-small opg-text-center" onchange="check_<?php echo $pkey; ?>(this);" size="2" maxlength="4" value="<?php echo $prow->quantity ?>" id='quantity_<?php echo $cartitemid; ?>'  data-init="<?php echo $init; ?>"  data-step="<?php echo $step; ?>" name="quantityval[<?php echo $pkey; ?>]"  style="color:inherit !important;" data-minerror = "<?php echo $minerror; ?>" data-maxerror="<?php echo $maxerror; ?>" <?php echo $maxOrder; ?> />
+                             <input type="text" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="quantity-input js-recalculate opg-form-small opg-text-center" onblur="check_<?php echo $pkey; ?>(this);" size="2" maxlength="4" value="<?php echo $prow->quantity ?>" id='quantity_<?php echo $cartitemid; ?>' name="quantityval[<?php echo $pkey; ?>]"  style="color:inherit !important;" />
 									  
 				            <input type="hidden" name="stock[<?php echo $pkey; ?>]" value="<?php echo $prow->product_in_stock; ?>" />  
                             <input type="hidden" name="view" value="cart" /> 
                             <input type="hidden" name="virtuemart_product_id[]" value="<?php echo $vmproduct_id;  ?>" />
                             <div class="opg-button-group">
-                             <a href="javascript:void(0);" class="opg-button <?php echo $button_primary_class; ?> quantity-minus opg-button-mini"><i class="opg-icon-minus"></i></a>
-							 <a href="javascript:void(0);" class="opg-button <?php echo $button_primary_class; ?> quantity-plus  opg-button-mini"><i class="opg-icon-plus"></i></a>
-							 <a id="refreshbutton" data-itemid= "<?php echo $cartitemid;  ?>" href="javascript:void(0);" name="update" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="refreshbutton  opg-margin-small-left <?php echo $button_primary_class; ?>  opg-button-mini"><?php echo JText::_('COM_VIRTUEMART_UPDATE'); ?></a>	
+                             <a href="javascript:void(0);" class="opg-button opg-button-primary quantity-minus opg-button-mini"><i class="opg-icon-minus"></i></a>
+							 <a href="javascript:void(0);" class="opg-button opg-button-primary quantity-plus  opg-button-mini"><i class="opg-icon-plus"></i></a>
+							 <a id="refreshbutton" data-itemid= "<?php echo $cartitemid;  ?>" href="javascript:void(0);" name="update" title="<?php echo  JText::_('COM_VIRTUEMART_CART_UPDATE') ?>" class="refreshbutton  opg-margin-small-left opg-button opg-button-primary  opg-button-mini"><?php echo JText::_('COM_VIRTUEMART_UPDATE'); ?></a>	
                          	</div>
                     </div>
                 </div>
 				
-				  <div class="opg-text-primary opg-text-bold  opg-width-large-1-6 opg-width-small-3-6 opg-width-3-6 opg-text-right">
-                    <div class="spacer" id="subtotal_with_tax_<?php echo $pkey; ?>">
-						<?php echo $this->currencyDisplay->createPriceDiv('salesPrice','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity); ?>
+      <div class="opg-text-primary opg-hidden-small opg-text-bold opg-float-right opg-width-large-1-6 opg-width-small-2-6 opg-width-2-6 opg-text-left-small">
+
+                    <div class="spacer" >
+						<?php echo $this->currencyDisplay->createPriceDiv('salesPrice','', $this->cart->pricesUnformatted[$pkey],true,false,1); //No quantity or you must use product_final_price ?>
+						<?php //echo $this->currencyDisplay->createPriceDiv('basePriceVariant','', $this->cart->pricesUnformatted[$pkey],false); ?>
                     </div>
                </div>
-				
-   
        	<div class="clear"></div>
         </div>
 		<hr class="opg-margin-remove" />
@@ -224,7 +151,7 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 						 }
 						 if (!empty($prow->customfields)) 
 					 	 {
-						   $customfiledstext = $this->customfieldsModel->CustomsFieldCartDisplay($prow);
+						    $customfiledstext = $this->customfieldsModel->CustomsFieldCartDisplay($prow);
 							$customfiledstext = str_replace("<br />", "", $customfiledstext);
 							echo str_replace('<span', '<span class="opg-text-small" ', $customfiledstext);
 						 } ?>
@@ -241,7 +168,7 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 						<?php // Output The Tax For The Product
 						$taxtAmount = $this->currencyDisplay->createPriceDiv('taxAmount','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity);
 						if ( VmConfig::get('show_tax') && !empty($taxtAmount)) { 
-						echo '<div><span class="opg-margin-small-right ">'.JText::_('COM_VIRTUEMART_CART_SUBTOTAL_TAX_AMOUNT')." :</span>";
+						echo '<div><span class="opg-margin-small-right opg-float-left">'.JText::_('COM_VIRTUEMART_CART_SUBTOTAL_TAX_AMOUNT')." :</span>";
 						?>
                             <span class="tax opg-text-left" id="subtotal_tax_amount_<?php echo $pkey; ?>"><?php $this->currencyDisplay->createPriceDiv('taxAmount','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity) ?></span></div>
 							<?php } ?>
@@ -249,7 +176,7 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 						<?php // Output The Discount For The Product
 						$discountAmount = $this->currencyDisplay->createPriceDiv('discountAmount','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity);
 						if(!empty($discountAmount)) {
-						echo '<div><span class="opg-margin-small-right ">'.JText::_('COM_VIRTUEMART_CART_SUBTOTAL_DISCOUNT_AMOUNT')." :</span>";
+						echo '<div><span class="opg-margin-small-right opg-float-left">'.JText::_('COM_VIRTUEMART_CART_SUBTOTAL_DISCOUNT_AMOUNT')." :</span>";
 						?>
                             <span class="discount opg-float-left" id="subtotal_discount_<?php echo $pkey; ?>"><?php echo $this->currencyDisplay->createPriceDiv('discountAmount','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity);  //No quantity is already stored with it ?></span></div>
 							<?php } ?>

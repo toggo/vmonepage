@@ -69,7 +69,6 @@ div.product
   border-radius:0 !important;
   color:inherit !important;
   border:1px solid !important;
-  padding:2px !important;
 }
 td#paymentdetails  #klarna-checkout-containers_div, #paymentsdiv #klarna-checkout-containers_div, td#paymentdetails #error_div, #paymentsdiv #error_div
 {
@@ -88,7 +87,7 @@ input.quantity-input
 {
   display:none;
 }
-#customerror .opg-alert, #loginerror .opg-alert, #cartalert .opg-alert, #email_error .opg-alert, #user_error .opg-alert
+#customerror .opg-alert, #loginerror .opg-alert
 {
   display:block;
 }
@@ -719,10 +718,10 @@ margin-top: 5px; !important;
 @media (min-width: 1220px) {
   /* Horizontal */
   .opg-grid {
-    margin-left: -15px;
+    margin-left: -35px;
   }
   .opg-grid > * {
-    padding-left: 15px;
+    padding-left: 35px;
   }
   /* Vertical */
   .opg-grid + .opg-grid,
@@ -3072,7 +3071,7 @@ margin-top: 5px; !important;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 500000;
+  z-index: 5000;
   /* 3 */
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

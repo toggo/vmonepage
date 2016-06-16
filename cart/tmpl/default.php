@@ -1,6 +1,6 @@
 <?php
 /**
-** Parts of this code is written by joomlaprofessionals.com Copyright (c) 2012, 2015 All Right Reserved.
+** Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015 All Right Reserved.
 ** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
 ** Some parts might even be Joomla and is Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -15,7 +15,7 @@
 ** PARTICULAR PURPOSE.
 
 ** <author>Joomlaproffs / Virtuemart team</author>
-** <email>info@joomlaprofessionals.com</email>
+** <email>info@joomlaproffs.se</email>
 ** <date>2015</date>
 */
 
@@ -24,7 +24,7 @@ defined('_JEXEC') or die('Restricted access');
 JHTML::script('plugins/system/onepage_generic/onepage.js');
 JHTML::script('plugins/system/onepage_generic/onepage_generic.js');
 JHTML::stylesheet ( 'plugins/system/onepage_generic/onepage_generic.css');
-JHtml::_('behavior.framework');
+
 
 
 $taskRoute = "";
@@ -36,21 +36,15 @@ if (VmConfig::get('enable_content_plugin', 0)) {
 		shopFunctionsF::triggerContentPlugin($vendordata, 'vendor','vendor_terms_of_service');
 }
 
-$lang = JFactory::getLanguage();
-$extension = 'com_users';
-$lang->load($extension);
-
-
 $this->assignRef("vendordata", $vendordata);
 
 vmJsApi::jPrice();
-
+JHTML::script('plugins/system/onepage_generic/vmprices.js');
 
 
 $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
 $countryreload = $params->get("country_reload", 0);
-$popupaddress = $params->get("popup_address", 1);
 
 if($params->get("buttoncolour") != "")
 {
@@ -106,8 +100,8 @@ $document->addStyleDeclaration('#facebox .content {display: block !important; he
 	 }
 	 
  } 
-$agreetotos = 0;
-foreach($this->cart->BTaddress['fields'] as $name => $cartfield)
+$agreetotos = VmConfig::get('agree_to_tos_onorder');
+foreach($this->BTaddress['fields'] as $name => $cartfield)
 {
  if($cartfield['required'] == 1)
  {
@@ -118,7 +112,7 @@ foreach($this->cart->BTaddress['fields'] as $name => $cartfield)
   }
  } 
 
-foreach($this->cart->STaddress['fields'] as $name => $cartfield)
+foreach($this->STaddress['fields'] as $name => $cartfield)
 {
  if($cartfield['required'] == 1)
  {
@@ -140,7 +134,7 @@ foreach($this->userFieldsCart['fields'] as $name => $cartfield)
   }
  } 
  if (!class_exists('CurrencyDisplay'))
-				require(VMPATH_ADMIN . DIRECTORY_SEPARATOR . 'helpers' . DIRECTORY_SEPARATOR . 'currencydisplay.php');
+				require(VMPATH_ADMIN . DS . 'helpers' . DS . 'currencydisplay.php');
 				$currency = CurrencyDisplay::getInstance();
  $listpayments = $params->get("list_allpayment", 0);				
  $listshipments = $params->get("list_allshipment", 0);	
@@ -167,51 +161,36 @@ $noshipmethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_C
 $nopaymethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', ''), ENT_QUOTES);
 $minpurchaseerror   =  htmlspecialchars(vmText::sprintf('COM_VIRTUEMART_CART_MIN_PURCHASE',  $currency->priceDisplay($vendordata->vendor_min_pov)), ENT_QUOTES);
 
-
-$button_primary  = $params->get("button_primary","opg-button-primary");
-$button_danger  = $params->get("button_danger","opg-button-danger");
-$form_danger  = $params->get("form_danger","opg-form-danger");
-
-
-$document->addScriptDeclaration('
-if (typeof vmonepage == "undefined") {
-  var vmonepage = {};
-};
-var vmonepage = { 
-  "CARTPAGE" : "yes",
-  "shipmentfileds" : "'.count($this->cart->STaddress['fields']).'",
-  "agree_to_tos_onorder" : "'.$agreetotos.'",
-  "acceptmeessage" : "'.$acceptmessage.'",
-  "privacymeessage" : "'.$privacymeessage.'",
-  "minpurchaseerror" : "'.$minpurchaseerror.'",
-  "selectshipment" : "'.$selectshipment.'",
-  "selectpayment" : "'.$selectpayment.'",
-  "invaliddata" : "'.$invaliddata.'",
-  "productupdate" : "'.$productupdate.'",
-  "chosecountry" : "'.$chosecountry.'",
-  "removeprouct" : "'.$removeprouct.'",
-  "changetext" : "'.$changetext.'",
-  "noshipmethod" : "'.$noshipmethod.'",
-  "nopaymethod" : "'.$nopaymethod.'",
-  "onlyregistered" : "'.VmConfig::get('oncheckout_only_registered', 0).'",
-  "couponenable" : "'.VmConfig::get('coupons_enable', 0).'",
-  "showextraterms" : "'.$showextraterms.'",
-  "token" : "'.JSession::getFormToken().'",
-  "show_tax" :"'.VmConfig::get('show_tax').'",
-  "customernote" : "'.$customernote.'",
-  "countryreload" : "'.$countryreload.'",
-  "captchaenabled" : "'.$captchaenabled.'",
-  "captchainvalid" : "'.$captchainvalid.'",
-  "listshipments" : "'.$listshipments.'",
-  "listpayments" : "'.$listpayments.'",
-  "popupaddress" : "'.$popupaddress.'",
-  "button_primary" : "'.$button_primary.'",
-  "button_danger" : "'.$button_danger.'",
-  "form_danger" : "'.$form_danger.'"
-  };
-');
-
-
+$document->addScriptDeclaration("
+      //<![CDATA[ 
+      window.CARTPAGE = 'yes';
+	  window.shipmentfileds = ".count($this->cart->STaddress['fields']).";
+      window.agree_to_tos_onorder = ".$agreetotos.";
+	  window.acceptmeessage = '".$acceptmessage."';
+	  window.privacymeessage = '".$privacymeessage."';
+      window.minpurchaseerror = '".$minpurchaseerror."';
+	  window.selectshipment = '".$selectshipment."';
+	  window.selectpayment = '".$selectpayment."';	  
+	  window.invaliddata = '".$invaliddata."';	  
+	  window.productupdate = '".$productupdate."';	  
+	  window.chosecountry = '".$chosecountry."';	  
+	  window.removeprouct = '".$removeprouct."';	  
+	  window.changetext = '".$changetext."';	  
+	  window.noshipmethod = '".$noshipmethod."';	  
+	  window.nopaymethod = '".$nopaymethod."';	  
+	  window.onlyregistered = ".VmConfig::get('oncheckout_only_registered').";	  
+	  window.couponenable = ".VmConfig::get('coupons_enable').";	  
+	  window.showextraterms = ".$showextraterms.";
+	  window.token = '".JSession::getFormToken()."';
+	  window.show_tax = ".VmConfig::get('show_tax').";
+	  window.customernote = ".$customernote.";
+	  window.countryreload = ".$countryreload.";
+	  window.captchaenabled = ".$captchaenabled.";
+	  window.captchainvalid = '".$captchainvalid."';
+  	  window.listshipments = '".$listshipments."';
+	  window.listpayments = '".$listpayments."';
+      //]]>
+      ");
 ?>
 
 <style>
@@ -233,12 +212,11 @@ if(count($this->cart->products) == 0)
 			<?php if(!empty($this->continue_link_html)) : ?>
 			<div class="opg-text-center">
 				<?php 
-				echo str_replace("continue_link", "opg-button ".$button_primary, $this->continue_link_html);
+				echo str_replace("continue_link", "opg-button opg-button-primary", $this->continue_link_html);
 				?>
 			</div>
 			<?php endif; ?>		
 	</div>	
-	<div class="opg-margin" title="Gnereic VMonepage" style="text-align:right; clear:both;"><small class="opg-text-muted"><a class="opg-link opg-text-muted" href="http://www.vmuikit.com" target="_blank">VMuikit</a> is built by <a href="http://www.joomlaprofessionals.com" title="Joomla Pros / Professionals" target="_blank" class="opg-link opg-text-muted">joomlaprofessionals.com</a></small></div>
 <?php
 }
 else
@@ -249,12 +227,7 @@ else
 <div class="opg-width-1-1" id="fullerrordiv">
 </div>
 	
-   <?php
-   if ($this->allowChangeShopper){
-		echo $this->loadTemplate ('shopperform');
-	}
-   ?>
-	
+
 	<form method="post" id="checkoutForm" name="checkoutForm" action="<?php echo JRoute::_( 'index.php?option=com_virtuemart&view=cart'.$taskRoute,$this->useXHTML,$this->useSSL ); ?>" class="opg-form opg-width-1-1 ">
 	
 	 <a id="loadingbutton" class="opg-hidden" href="Javascript:void(0);" data-opg-modal="{target:'#lodingdiv', bgclose:false}"></a>
@@ -262,7 +235,7 @@ else
 		 <div class="opg-modal-dialog"><!-- lodingdiv Modal Started -->
 		     <a id="loadingbtnclose" class="opg-modal-close opg-close opg-hidden"></a>
 			<div class="opg-progress opg-progress-striped opg-active">
-			    <div class="opg-progress-bar opg-text-center" style="width: 100%;"></div>
+			    <div class="opg-progress-bar opg-text-center" style="width: 100%;">Loading...</div>
 			</div>
     	</div> <!-- lodingdiv Modal ended -->
 		</div><!-- lodingdiv Modal ended -->
@@ -293,10 +266,10 @@ else
 			 $rightdiv_width = "opg-width-large-2-5 opg-width-medium-2-5";
 		}
 		?>
-		 <div id="leftdiv" class="opg-width-1-1 <?php echo $leftdiv_width; ?> opg-width-small-1-1    opg-border-rounded">
+		 <div id="leftdiv" class="opg-width-1-1 <?php echo $leftdiv_width; ?> opg-width-small-1-1 opg-float-left   opg-border-rounded">
 			<?php echo $this->loadTemplate('left'); ?>
 		 </div>
-		 <div id="right_div" class="tm-sidebar-a opg-width-1-1 <?php echo $rightdiv_width; ?> opg-width-small-1-1 o" >
+		 <div id="right_div" class="tm-sidebar-a opg-width-1-1 <?php echo $rightdiv_width; ?> opg-width-small-1-1 opg-float-right" >
 		    <?php echo $this->loadTemplate('right'); ?>
 		 </div>
 		 
@@ -304,10 +277,9 @@ else
 	  <?php
 	  	echo $this->loadTemplate('modalpage');
 	  ?>
-	 <p style="text-align: center;"><small style="text-size:8px; color:#b4b4b4;"><a style="text-size:8px; color:#b4b4b4;" title="one page checkout virtuemart" target="_blank" href="http://vmonepage.com">VMonepage</a>&nbsp;is built by&nbsp;<a style="text-size:8px; color:#b4b4b4;" title="joomlaproffs webshop ecommerce" target="_blank" href="http://www.joomlaprofessionals.com">joomlaprofessionals.com</a></small></p>
+	 <p style="text-align: center;"><small style="text-size:8px; color:#b4b4b4;"><a style="text-size:8px; color:#b4b4b4;" title="one page checkout virtuemart" target="_blank" href="http://vmonepage.com">VMonepage</a>&nbsp;is built by&nbsp;<a style="text-size:8px; color:#b4b4b4;" title="joomlaproffs webshop ecommerce" target="_blank" href="http://www.joomlaproffs.se">joomlaproffs.se</a></small></p>
 </form>
 
 <?php
 }
-JHTML::script('plugins/system/onepage_generic/vmprices.js');
 ?>

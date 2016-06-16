@@ -1,6 +1,6 @@
 /*! UIkit 2.19.0 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 /**
-** Parts of this code is written by joomlaprofessionals.com Copyright (c) 2012, 2015 All Right Reserved.
+** Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015 All Right Reserved.
 ** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
 ** Some parts might even be Joomla and is Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -15,7 +15,7 @@
 ** PARTICULAR PURPOSE.
 
 ** <author>Joomlaproffs / Virtuemart team</author>
-** <email>info@joomlaprofessionals.com</email>
+** <email>info@joomlaproffs.se</email>
 ** <date>2015</date>
 */
 (function(core) {

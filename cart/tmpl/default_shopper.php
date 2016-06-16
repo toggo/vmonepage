@@ -1,6 +1,6 @@
 <?php 
 /**
-** Parts of this code is written by joomlaprofessionals.com Copyright (c) 2012, 2015 All Right Reserved.
+** Parts of this code is written by Joomlaproffs.se Copyright (c) 2012, 2015 All Right Reserved.
 ** Many part of this code is from VirtueMart Team Copyright (c) 2004 - 2015. All rights reserved.
 ** Some parts might even be Joomla and is Copyright (C) 2005 - 2014 Open Source Matters, Inc. All rights reserved. 
 ** http://www.gnu.org/copyleft/gpl.html GNU/GPL, see LICENSE.php
@@ -15,87 +15,14 @@
 ** PARTICULAR PURPOSE.
 
 ** <author>Joomlaproffs / Virtuemart team</author>
-** <email>info@joomlaprofessionals.com</email>
+** <email>info@joomlaproffs.se</email>
 ** <date>2015</date>
 */
 
 defined('_JEXEC') or die('Restricted access');
 
-
-   $plugin=JPluginHelper::getPlugin('system','onepage_generic');
-   $params=new JRegistry($plugin->params);
-   
-   $button_primary_class  = $params->get("button_primary","opg-button-primary");
-
-   
-   $popupaddress = $params->get("popup_address", 1);
-   $userfieldscount = 0;
-   foreach($this->userFieldsCart["fields"] as $singlefield) 
-   {
-    $skipped_fields = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2', 'tos');
-	  if(!in_array($singlefield['name'],$skipped_fields)) 
-	  {
-	    $userfieldscount++;
-	  }
-	} 
-   if($userfieldscount > 0)
-   {
-	 echo '<div id="klarna_fields" class="opg-width-1-1 opg-panel opg-panel-box" style="display:none">';
-    foreach($this->userFieldsCart["fields"] as $singlefield) 
-    {
-      $skipped_fields = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2', 'tos');
-	  if(in_array($singlefield['name'],$skipped_fields)) 
-	  {
-	  }
-	  else
-	  {
-		 echo '<div class="opg-width-1-1 opg-margin-small">';
-	     if($singlefield['type'] == "select")
-		 {		
-		    echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
-		    echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
-		    echo '</label><br/>';
-		 }
-		 else if($singlefield['type'] == "checkbox") 
-		 {
-			  $singlefield['formcode']= '<label>'.$singlefield["formcode"].$singlefield["title"].'</label>';
-		 } 
-		 else
-		 {
-		    $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
-		 }
-	     echo $singlefield['formcode'];
-		 echo '</div>';
-	  }
-   } 
-   echo '</div>';
-  }
-	
-	
-	$checkoutadv = FALSE;
-    foreach($this->checkoutAdvertise as $checkoutAdvertise)
-    {
-      if(!empty($checkoutAdvertise))
-	  {
-	    $checkoutadv = TRUE;
-	  } 
-    }
-    if ($checkoutadv) 
-	{
-	?>
-		 <div id="checkout-advertise-box"> <?php
-			foreach ($this->checkoutAdvertise as $checkoutAdvertise) 
-			{
-			?>
-				<div class="checkout-advertise opg-width-1-1 opg-panel-box opg-margin-small-top ">
-					<?php echo $checkoutAdvertise; ?>
-				</div>
-			<?php
-			}
-			?>
-			</div>
-	<?php
-	}
+    $plugin=JPluginHelper::getPlugin('system','onepage_generic');
+    $params=new JRegistry($plugin->params);
     echo "<fieldset id='payments'>"; 
     foreach($this->paymentplugins_payments as $payments) 
     {
@@ -119,18 +46,10 @@ defined('_JEXEC') or die('Restricted access');
 		} 
 		$display = str_replace('type="radio"','type="radio" class="opg-hidden" onclick="javascript:updateaddress(5);"',$payments);
 		$display = str_replace('<label','<label class="opg-hidden"',$display);
-		if($this->selectedPayment == $paymethod_id)
-		{
-		  $displayvar = "";
-		}
-		else
-		{
-		  $displayvar = "display:none;";
-		}
-		echo '<div class="paydiv" id="paydiv_'.$paymethod_id.'" style="'.$displayvar.'">'.$display.'</div>';
+
+		echo '<div id="paydiv_'.$paymethod_id.'" style="">'.$display.'</div>';
     }
 	echo '</fieldset>';
-	$otherpaycss = "";
 	if($this->klarnapaymentid > 0)
 	{
 	   if($this->selectedPayment == $this->klarnapaymentid)
@@ -139,7 +58,6 @@ defined('_JEXEC') or die('Restricted access');
 	   }
 	}
    ?>
-  
    <div id="otherpay_buttons" class="opg-panel-box opg-margin-top" style="<?php echo $otherpaycss; ?>"> <!-- Panel Box Started -->
      
 	 <?php
@@ -167,7 +85,7 @@ defined('_JEXEC') or die('Restricted access');
 			 else if(VmConfig::get('oncheckout_only_registered') == 1)
 			 {
 			     echo '<div class="opg-width-1-1 opg-button-group " id="loginbtns" data-opg-button-radio>';
-				 echo '<a id="regcheckout" onclick="changemode(2);"  class="opg-width-1-2 opg-button '.$button_primary_class.'"  href="javascript:void(0);">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER").'</a>';
+				 echo '<a id="regcheckout" onclick="changemode(2);"  class="opg-width-1-2 opg-button opg-button-primary"  href="javascript:void(0);">'.JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER").'</a>';
 	    		 echo '<a id="loginbtn" href="javascript:void(0);" onclick="changemode(1);" class="opg-button opg-width-1-2">'.JText::_("COM_VIRTUEMART_LOGIN").'</a>';
 				 echo '</div>';
 				 echo '<hr />';
@@ -176,7 +94,7 @@ defined('_JEXEC') or die('Restricted access');
 			 else if($activetab == 1 || $activetab == 2 || $activetab == 0)
 			 {
 				 echo '<div class="opg-width-1-1 opg-button-group " id="loginbtns" data-opg-button-radio>';
-				 echo '<a id="regbtn" href="javascript:void(0);"  onclick="changemode(2);" class="opg-button opg-width-1-2 '.$button_primary_class.'">'.JText::_("COM_VIRTUEMART_ORDER_REGISTER_GUEST_CHECKOUT").'</a>';
+				 echo '<a id="regbtn" href="javascript:void(0);"  onclick="changemode(2);" class="opg-button opg-width-1-2 opg-button-primary">'.JText::_("COM_VIRTUEMART_ORDER_REGISTER_GUEST_CHECKOUT").'</a>';
 	    		 echo '<a id="loginbtn" href="javascript:void(0);" onclick="changemode(1);" class="opg-button opg-width-1-2">'.JText::_("COM_VIRTUEMART_LOGIN").'</a>';
 				 echo '</div>';
 				 echo '<hr />';
@@ -186,7 +104,7 @@ defined('_JEXEC') or die('Restricted access');
 			 {
 				 echo '<div class="opg-width-1-1 opg-button-group " id="loginbtns" data-opg-button-radio>';
 				 echo '<a id="regbtn" href="javascript:void(0);"  onclick="changemode(2);" class="opg-button opg-width-1-2">'.JText::_("COM_VIRTUEMART_ORDER_REGISTER_GUEST_CHECKOUT").'</a>';
-	    		 echo '<a id="loginbtn" href="javascript:void(0);" onclick="changemode(1);" class="opg-button opg-width-1-2 '.$button_primary_class.'">'.JText::_("COM_VIRTUEMART_LOGIN").'</a>';
+	    		 echo '<a id="loginbtn" href="javascript:void(0);" onclick="changemode(1);" class="opg-button opg-width-1-2 opg-button-primary">'.JText::_("COM_VIRTUEMART_LOGIN").'</a>';
 				 echo '</div>';
 				 echo '<hr />';
 			 }
@@ -284,7 +202,7 @@ defined('_JEXEC') or die('Restricted access');
                 </div>
 
                 <div class="login opg-width-large-1-1 opg-width-small-1-1 opg-margin-small-top" id="com-form-login-remember">
-				 <a class="opg-button <?php echo $button_primary_class;  ?> opg-width-1-1" href="javascript:void(0);" onclick="ajaxlogin()"><?php echo JText::_('COM_VIRTUEMART_LOGIN') ?></a>
+				 <a class="opg-button opg-button-primary opg-width-1-1" href="javascript:void(0);" onclick="ajaxlogin()"><?php echo JText::_('COM_VIRTUEMART_LOGIN') ?></a>
 
                 </div>
                 <div class="clear"></div>
@@ -292,8 +210,7 @@ defined('_JEXEC') or die('Restricted access');
             <input type="hidden" id="loginempty" value="<?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_LOGIN_EMPTY"); ?>" /> 
             <input type="hidden" id="loginerrors" value="<?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_LOGIN_ERROR"); ?>" />
             <input type="hidden" name="task" value="user.login" />
-			 <input type="hidden" name="return" value="" id="returnurl" />
-
+            <input type="hidden" name="return" value="<?php echo base64_encode($url) ?>" id="returnurl" />
            
 
 		  </div>
@@ -345,7 +262,7 @@ defined('_JEXEC') or die('Restricted access');
 		   ?>
 			 <div class="opg-button-group opg-width-1-1" data-opg-button-radio="">
 			   <a id="guestchekcout" class="opg-button opg-width-1-2" onClick="changecheckout(1)" href="javascript:void(0);"><i id="guesticon" class="opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_GUEST"); ?></a>
-		  	   <a id="regcheckout"  class="opg-button opg-width-1-2 <?php echo $button_primary_class;  ?>" onClick="changecheckout(2)" href="javascript:void(0);"><i id="regicon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER"); ?></a> 
+		  	   <a id="regcheckout"  class="opg-button opg-width-1-2 opg-button-primary" onClick="changecheckout(2)" href="javascript:void(0);"><i id="regicon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER"); ?></a> 
       		</div>
 	 	   <?php
 		 
@@ -354,7 +271,7 @@ defined('_JEXEC') or die('Restricted access');
 		 {
 		   ?>
 			 <div class="opg-button-group opg-width-1-1" data-opg-button-radio="">
-			   <a id="guestchekcout" class="opg-button opg-width-1-2 <?php echo $button_primary_class;  ?>" onClick="changecheckout(1)" href="javascript:void(0);"><i id="guesticon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_GUEST"); ?></a>
+			   <a id="guestchekcout" class="opg-button opg-width-1-2 opg-button-primary" onClick="changecheckout(1)" href="javascript:void(0);"><i id="guesticon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_GUEST"); ?></a>
 		  	   <a id="regcheckout"  class="opg-button opg-width-1-2" onClick="changecheckout(2)" href="javascript:void(0);"><i id="regicon" class="opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER"); ?></a> 
       		</div>
 	 	   <?php
@@ -364,7 +281,7 @@ defined('_JEXEC') or die('Restricted access');
 		 {
 	  	  ?>
 			 <div class="opg-button-group opg-width-1-1" data-opg-button-radio="">
-			   <a id="guestchekcout" class="opg-button opg-width-1-2 <?php echo $button_primary_class;  ?>" onClick="changecheckout(1)" href="javascript:void(0);"><i id="guesticon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_GUEST"); ?></a>
+			   <a id="guestchekcout" class="opg-button opg-width-1-2 opg-button-primary" onClick="changecheckout(1)" href="javascript:void(0);"><i id="guesticon" class="opg-icon-check opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_GUEST"); ?></a>
 		  	   <a id="regcheckout"  class="opg-button opg-width-1-2" onClick="changecheckout(2)" href="javascript:void(0);"><i id="regicon" class="opg-margin-small-right"></i><?php echo JText::_("PLG_SYSTEM_VMUIKIT_ONEPAGE_REGISTER"); ?></a> 
       		</div>
  	   <?php
@@ -396,7 +313,6 @@ defined('_JEXEC') or die('Restricted access');
 	{
 	  $hidetitles = "";	   
 	}
-	$regchecked = 0;
 	?>
     <div class="opg-width-1-1"> 
 	
@@ -516,216 +432,67 @@ defined('_JEXEC') or die('Restricted access');
 			 $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"'. (VmConfig::get('oncheckout_only_registered') == 1 ? ' class="required"' : '') ,$singlefield['formcode']);
 			 $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
 			}
-			if($singlefield['name'] == "username") 
-			{
-				 $singlefield['formcode'] = '<div id ="user_error" class="opg-width-1-1 style="display:none;"></div>'.$singlefield['formcode'];
-			      $singlefield['formcode'] = str_replace('<input','<input onblur="checkuser();" ', $singlefield['formcode']);
-		   }
 		    echo $singlefield['formcode'];
 		    echo '</div>';
 		}
 		echo '<div><hr /></div>';
 		echo '</div>';
-		
-		if($popupaddress > 1)
-	    {
-			$samebt = "";
-			if($this->cart->STsameAsBT == 0)
+		echo '<div class="adminform" id="billto_fields_div" style="margin:0;">';
+		$skipped_fields_array = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2'); 
+		foreach($this->cart->BTaddress["fields"] as $singlefield) {
+		 if($singlefield['formcode'] != "")
+		 {
+			if(in_array($singlefield['name'],$skipped_fields_array)) {
+				continue;
+			}
+			echo "<div class='opg-width-1-1'>";
+			if($singlefield['type'] == "select")
+	        {	
+		      echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
+		      echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
+		      echo '</label><br />';
+		 	}
+			else
 			{
-				$samebt = '';
-				$shiptodisplay = "";
+			  $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
+			  $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
 			}
-		    else if($params->get('check_shipto_address') == 1)
-			{
-				$samebt = 'checked="checked"';
-				$shiptodisplay = "";
-			}
-		    else
-	 	    {
-		   		$samebt = '';
-			    $shiptodisplay = "";
-			}
-		   ?> 
-		   
-    	  <input class="inputbox opg-hidden" type="checkbox" name="STsameAsBT" checked="checked" id="STsameAsBT" value="0"/>
-		  <input class="inputbox opg-hidden" type="checkbox" name="BTsameAsST" checked="checked" id="BTsameAsST" value="1"/>
-		  <?php
-			if(!empty($this->cart->STaddress['fields'])){
-				if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'html.php');
-				//	echo JText::_('COM_VIRTUEMART_USER_FORM_ST_SAME_AS_BT');
-			?>
-			</label>
-	      <?php	
-			}
- 			?>
-	    <?php if(!isset($this->cart->lists['current_id'])) $this->cart->lists['current_id'] = 0; ?>
-    	<?php
-			echo '	<div class="adminform" id="shipto_fields_div" style="'.$shiptodisplay.'">';
-			$skipped_fields_array = array('shipto_virtuemart_country_id' , 'customer_note', 'shipto_virtuemart_state_id', 'agreed','name','username','password','password2'); 
-			
-			foreach($this->cart->BTaddress["fields"] as $singlefield) 
-			{
-				 if($singlefield['formcode'] != "")
-				 {
-				    if($singlefield['name'] == "email") 
-					{
-					   echo "<div class='opg-width-1-1 opg-margin-small'>";
-					  echo '<div id	="email_error" class="opg-width-1-1 style="display:none;">';
-					  echo '</div>';
-					  echo str_replace('<input','<input onblur="checkemail();" placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
-					
-					  echo '</div>';
-					}
-				  }
-		    }
-			foreach($this->cart->STaddress["fields"] as $singlefield) {
-			 if(in_array($singlefield['name'],$skipped_fields_array)) 
+		    if($singlefield['name']=='zip') {
+				$ajaxzip =   $onlyguest =  $params->get('ajax_zip',0);
+				if($ajaxzip)
 				{
-						continue;
-				}
-			 echo '<div class="opg-width-1-1 opg-margin-small">';
-	    	 if($singlefield['type'] == "select")
-		      {		
-			    echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
-			    echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
-			    echo '</label><br/>';
-			  }
-			  else if($singlefield['type'] == "checkbox") 
-			  {
-				  $singlefield['formcode']= '<label>'.$singlefield["formcode"].$singlefield["title"].'</label>';
-			  }
-			  else
-			  {
-			    $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
-			  }
-		    if($singlefield['name']=='shipto_zip') {
-				  $ajaxzip =   $params->get('ajax_zip',0);
-				  $countryreload = $params->get("country_reload", 0);
-				  $fieldtype = 4;
-				  if($ajaxzip)
-					{
-						$replacetext = 'input onchange="javascript:updateaddress(3);"';
-					}
-					else
-					{
-					    $replacetext = 'input ';
-					}
-				  $singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
-	    	} 
-			else if($singlefield['name']=='customer_note') {
-			}
-			else if($singlefield['name']=='shipto_virtuemart_country_id') {
-		    	$singlefield['formcode']=str_replace('class="virtuemart_country_id','class="shipto_virtuemart_country_id',$singlefield['formcode']);
-				$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
-				
-	    	}else if($singlefield['name']=='shipto_virtuemart_state_id') {
-		    	$singlefield['formcode']=str_replace('id="virtuemart_state_id"','id="shipto_virtuemart_state_id"',$singlefield['formcode']);
-	    	    $replacetext = '<select onchange="javascript:updateaddress(4);"';
-				$replacetext = "<select ";
-		    	$singlefield['formcode']=str_replace('<select',$replacetext,$singlefield['formcode']);
-				if($singlefield['required'])
-				{
-				  $singlefield['formcode']=str_replace('vm-chzn-select','required',$singlefield['formcode']);
+					$replacetext = 'input onchange="javascript:updateaddress(3);"';
 				}
 				else
 				{
-				   $singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
-				} 
+				    $replacetext = 'input ';
+				}
+		    	$singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
+		    } 
+			else if($singlefield['name']=='title') {
+				$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
 		    }
+			
 		    echo $singlefield['formcode'];
 			echo '</div>';
-		}	
+	      }
+		}
 	    echo '</div>';
-        }
-		else
-		{
-			echo '<div class="adminform" id="billto_fields_div" style="margin:0;">';
-			$skipped_fields_array = array('virtuemart_country_id' , 'customer_note', 'virtuemart_state_id', 'agreed','name','username','password','password2'); 
-			foreach($this->cart->BTaddress["fields"] as $singlefield) {
-			 if($singlefield['formcode'] != "")
-			 {
-				if(in_array($singlefield['name'],$skipped_fields_array)) {
-					continue;
-				}
-				echo "<div class='opg-width-1-1'>";
-				if($singlefield['type'] == "select")
-	    	    {	
-		    	  echo '<label class="' . $singlefield['name'] . '" for="' . $singlefield['name'] . '_field">';
-			      echo $singlefield['title'] . ($singlefield['required'] ? ' *' : '');
-			      echo '</label><br />';
-			 	}
-				else if($singlefield['type'] == "checkbox") 
-				{
-				  $singlefield['formcode']= '<label>'.$singlefield["formcode"].$singlefield["title"].'</label>';
-				}
-				else
-				{
-				
-				  $singlefield['formcode']=str_replace('<input','<input placeholder="'.$singlefield['title'].'"' ,$singlefield['formcode']);
-				  $singlefield['formcode']=str_replace('size="30"','' ,$singlefield['formcode']);
-				}
-				if($singlefield['name'] == "email") 
-					{
-					   $singlefield['formcode'] = '<div id	="email_error" class="opg-width-1-1 style="display:none;"></div>'.$singlefield['formcode'];
-					   $singlefield['formcode'] = str_replace('<input','<input onblur="checkemail();" ', $singlefield['formcode']);
-					}
-			    if($singlefield['name']=='zip') {
-					$ajaxzip =   $onlyguest =  $params->get('ajax_zip',0);
-					if($ajaxzip)
-					{
-						$replacetext = 'input onchange="javascript:updateaddress(3);"';
-					}
-					else
-					{
-					    $replacetext = 'input ';
-					}
-			    	$singlefield['formcode']=str_replace('input', $replacetext ,$singlefield['formcode']);
-			    } 
-				else if($singlefield['name']=='title') {
-					$singlefield['formcode']=str_replace('vm-chzn-select','',$singlefield['formcode']);
-			    }
-			    echo $singlefield['formcode'];
-				echo '</div>';
-	    	  }
-			}
-		    echo '</div>';
-			?>
+		?>
   </div>
-  <?php
-  }
-  if($popupaddress > 1)
-  {
-  ?>
-    <div class="opg-width-1-1 opg-margin-top" id="div_shipto"> 
-     <div class="shipto_fields_div">
-	    <div class="opg-width-1-1">
-	      <?php
-		   $target = "{target:'#billtopopup'}";
-		   ?>
-		  <a id="billtobutton" class="opg-button opg-width-1-1" href="#" data-opg-modal="<?php echo $target; ?>"><i id="billtoicon" style="display:none;" class="opg-icon opg-icon-check opg-margin-right"></i><?php echo JText::_('PLG_SYSTEM_VMUIKIT_CHANGE_BILLTO_ADDRESS'); ?></a>
-		 </div>
+  <div class="opg-width-1-1 opg-margin-top" id="div_shipto"> 
+    <div class="shipto_fields_div">
+     <div class="opg-width-1-1">
+	     <?php
+		  $target = "{target:'#shiptopopup'}";
+		  ?>
+		 <a id="shiptobutton" class="opg-button opg-width-1-1" href="#" data-opg-modal="<?php echo $target; ?>"><i id="shiptoicon" style="display:none;" class="opg-icon opg-icon-check opg-margin-right"></i><?php echo JText::_('PLG_SYSTEM_VMUIKIT_CHANGE_SHIP_ADDRESS'); ?></a>
+	 </div>
 	
-	  </div>
-	  <div class="clear"></div>
-   </div>
-   <?php
-   }
-   else
-   {
-   ?>
-	  <div class="opg-width-1-1 opg-margin-top" id="div_shipto"> 
-	    <div class="shipto_fields_div">
-    	 <div class="opg-width-1-1">
-		     <?php
-			  $target = "{target:'#shiptopopup'}";
-			  ?>
-			 <a id="shiptobutton" class="opg-button opg-width-1-1" href="#" data-opg-modal="<?php echo $target; ?>"><i id="shiptoicon" style="display:none;" class="opg-icon opg-icon-check opg-margin-right"></i><?php echo JText::_('PLG_SYSTEM_VMUIKIT_CHANGE_SHIP_ADDRESS'); ?></a>
-		 </div>
-	  </div>
-	  <div class="clear"></div>
-	</div>
+  </div>
+  <div class="clear"></div>
+</div>
  <?php
-   }
 	  $user = JFactory::getUser();
 	  $logindis = '';
 	  $activetab = $params->get('activetab',0);
@@ -754,7 +521,7 @@ defined('_JEXEC') or die('Restricted access');
 		
 		<?php
 		 $customernote = FALSE;
-  foreach($this->cart->BTaddress["fields"] as $field) 
+  foreach($cart->BTaddress["fields"] as $field) 
   {
      if($field['name']=='customer_note') 
  	 {
@@ -763,7 +530,7 @@ defined('_JEXEC') or die('Restricted access');
 	   break;
 	 }
   } 
-  foreach($this->cart->STaddress["fields"] as $field) 
+  foreach($cart->STaddress["fields"] as $field) 
   {
      if($field['name']=='customer_note') 
  	 {
@@ -772,7 +539,7 @@ defined('_JEXEC') or die('Restricted access');
 	   break;
 	 }
   } 
-  foreach($this->userFieldsCart["fields"] as $field) 
+  foreach($cart->userFieldsCart["fields"] as $field) 
   {
      if($field['name']=='customer_note') 
  	 {
@@ -787,7 +554,7 @@ defined('_JEXEC') or die('Restricted access');
 		if(!empty($singlefield['value']))
 	 	{
 		  $commenticon  = '';
-		  $commentactive = $button_primary_class;
+		  $commentactive = 'opg-button-primary';
 		}
 		else
 		{
@@ -809,33 +576,10 @@ defined('_JEXEC') or die('Restricted access');
 
 			<?php // Terms Of Service Checkbox
 			if (!class_exists('VirtueMartModelUserfields')){
-				require(JPATH_VM_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'models' . DIRECTORY_SEPARATOR . 'userfields.php');
+				require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'userfields.php');
 			}
-			if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DIRECTORY_SEPARATOR.'helpers'.DIRECTORY_SEPARATOR.'html.php');
-			$tosenabled = FALSE;
-		    foreach($this->cart->BTaddress["fields"] as $field) 
-		    {
-		      if($field['name']=='tos') 
-		 	  {	
-	    		$tosenabled = true;
-			  }
-		    } 
-		    foreach($this->cart->STaddress["fields"] as $field) 
-		    {
-		      if($field['name']=='tos') 
-		 	  {	
-			    $tosenabled = true;
-			  }
-		   } 
-		   foreach($this->userFieldsCart["fields"] as $field) 
-		   {
-		     if($field['name']=='tos') 
-		 	 {	
-			   $tosenabled = true;
-			 }
-		   } 
-		   if($tosenabled)
-		   {
+			if(!class_exists('VmHtml'))require(JPATH_VM_ADMINISTRATOR.DS.'helpers'.DS.'html.php');
+			if(VmConfig::get('oncheckout_show_legal_info',1)){
 			?>
                 <section title=".squaredTwo">
 					    <div class="squaredTwo">
@@ -893,7 +637,7 @@ defined('_JEXEC') or die('Restricted access');
 		  }
 			if (!VmConfig::get('use_as_catalog')) {
 			   echo '<p id="bottom_total" class="opg-text-large opg-text-primary opg-text-bold opg-text-center">'.JText::_("COM_VIRTUEMART_CART_TOTAL").'&nbsp;:&nbsp;<strong class="opg-text-large opg-text-primary opg-text-bold" id="carttotal"></strong></p>';
-				echo '<a class="opg-button '.$button_primary_class.' opg-button-large opg-margin-top opg-width-1-1" href="javascript:void(0);" onclick="submit_order();"><span>' . JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU') . '</span></a>';
+				echo '<a class="opg-button opg-button-primary opg-button-large opg-margin-top opg-width-1-1" href="javascript:void(0);" onclick="submit_order();"><span>' . JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU') . '</span></a>';
 			}
 			$text = JText::_('COM_VIRTUEMART_ORDER_CONFIRM_MNU');
 			?>
