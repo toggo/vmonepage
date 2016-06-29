@@ -251,7 +251,7 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 						if(!empty($discountAmount)) {
 						echo '<div><span class="opg-margin-small-right ">'.JText::_('COM_VIRTUEMART_CART_SUBTOTAL_DISCOUNT_AMOUNT')." :</span>";
 						?>
-                            <span class="discount opg-float-left" id="subtotal_discount_<?php echo $pkey; ?>"><?php echo $this->currencyDisplay->createPriceDiv('discountAmount','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity);  //No quantity is already stored with it ?></span></div>
+                            <span class="discount" id="subtotal_discount_<?php echo $pkey; ?>"><?php echo $this->currencyDisplay->createPriceDiv('discountAmount','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity);  //No quantity is already stored with it ?></span></div>
 							<?php } ?>
                     </div>
                 </div>
