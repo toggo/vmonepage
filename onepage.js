@@ -1461,7 +1461,7 @@ function update_shipment()
 				 }
 				 else
 				 {
-				     jquery('#shipment_selection').empty();
+				    jQuery('#shipment_selection').empty();
 					var shipments="";
 					if(data.length == 0)
 					{
