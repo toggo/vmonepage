@@ -24,6 +24,10 @@ defined('_JEXEC') or die('Restricted access');
 $app = JFactory::getApplication();
 $postData = $app->input->post->getArray();
 
+if(!isset($postData['address_type'])){
+    $postData['address_type'] = 'BT';
+}
+
 
 $user_modal = VmModel::getModel('user');
 $virtuemart_response = $user_modal->store($postData);
