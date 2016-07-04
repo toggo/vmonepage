@@ -147,7 +147,7 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 							if (isNaN(Ste)) Ste = 1;
 							
                             if (remainder  != 0) {
-                                 alert('<?php echo $alert?>!');
+                                  alert('<?php echo htmlspecialchars($alert,ENT_QUOTES);?>!');
 	                              return false;
                             }
 							Qtt = quantity;
