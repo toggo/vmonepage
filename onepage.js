@@ -1155,6 +1155,10 @@ function update_prices()
 								jQuery('#subtotal_tax_amount_'+id).html(data.products[id].subtotal_tax_amount); 
 		             	     }
 					     }
+						 if(jQuery("#subtotal_salesPrice_"+id))
+						 {
+							jQuery('#subtotal_salesPrice'+id).html(data.products[id].subtotal_salesPrice);
+						 }
 	                     if (jQuery('#subtotal_discount_'+id) ) 
 						 {
 	                        jQuery('#subtotal_discount_'+id).html(data.products[id].subtotal_discount);

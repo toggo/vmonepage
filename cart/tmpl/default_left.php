@@ -95,7 +95,7 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 			 
 			    <div class="opg-text-primary opg-hidden-small opg-text-bold  opg-width-large-1-6 opg-width-small-2-6 opg-width-2-6 opg-text-left-small">
 
-                    <div class="spacer" >
+                    <div class="spacer"  id="subtotal_salesPrice<?php echo $pkey; ?>" >
 						<?php echo $this->currencyDisplay->createPriceDiv('salesPrice','', $this->cart->pricesUnformatted[$pkey],true,false,1); //No quantity or you must use product_final_price ?>
 						<?php //echo $this->currencyDisplay->createPriceDiv('basePriceVariant','', $this->cart->pricesUnformatted[$pkey],false); ?>
                     </div>
