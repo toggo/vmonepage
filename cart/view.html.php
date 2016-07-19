@@ -311,13 +311,37 @@ class VirtueMartViewCart extends VmView {
 		  }
 		  if($task == "setpayment")
 		  {
- 		     $payid = $input->get('payid', 0); 
-		     if($payid > 0)
+ 		     $payid = $input->get("payid", 0);
+			 $paymentModel = VmModel::getModel('Paymentmethod');
+			 $payments = $paymentModel->getPayments(true, false);
+			 
+			 $express = false;
+			 foreach($payments as $payment)
+			 {
+			 
+			   if($payid == $payment->virtuemart_paymentmethod_id)
+			   {
+			  
+			     if(strpos($payment->payment_params, 'paypalproduct="exp"') !== false)
+				 {
+				   $express = true;
+				 }
+			   } 
+			 }
+			
+			 if($express)
+			 {
+			    $return = array();
+				$return['response'] = "redirect";
+			 }
+		     else if($payid > 0 )
 			 {
 			     $cart->setPaymentMethod(false, false, $payid);
 				 $cart->setCartIntoSession();
+				 $return = array();
+			  	 $return['response'] = "success";
 			 }
-			 echo "success";
+			 echo json_encode($return);
 			 exit;
 		  }
 		   if($task == "checkemail")

@@ -2115,10 +2115,19 @@ function setpayment()
 		        cache: false,
 	    	    url: window.vmSiteurl + 'index.php?option=com_virtuemart&view=cart&vmtask=setpayment&payid='+selectedpayid,
 				data : datas,
+				dataType: "json"
 
 	 }).done(
 				 function (data, textStatus){
-				 updatepayment();	
+					  if(data.response == 'redirect')
+					   {
+						   redirecturl = window.vmSiteurl + 'index.php?option=com_virtuemart&view=plugin&type=vmpayment&name=paypal&action=SetExpressCheckout&pm='+selectedpayid;
+					   window.location.href = redirecturl;
+					   }
+					   else
+					   {
+						   updatepayment();	
+					   }
 	 });
 
 }
