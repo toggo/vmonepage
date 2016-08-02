@@ -238,8 +238,13 @@ if(count($this->cart->products) == 0)
 			</div>
 			<?php endif; ?>		
 	</div>	
-	<div class="opg-margin" title="Gnereic VMonepage" style="text-align:right; clear:both;"><small class="opg-text-muted"><a class="opg-link opg-text-muted" href="http://www.vmuikit.com" target="_blank">VMuikit</a> is built by <a href="http://www.joomlaprofessionals.com" title="Joomla Pros / Professionals" target="_blank" class="opg-link opg-text-muted">joomlaprofessionals.com</a></small></div>
+    <?php
+    if($params->get("built_by") == 1)
+    {
+    ?>
+	    <div class="opg-margin" title="Gnereic VMonepage" style="text-align:right; clear:both;"><small class="opg-text-muted"><a class="opg-link opg-text-muted" href="http://www.vmuikit.com" target="_blank">VMuikit</a> is built by <a href="http://www.joomlaprofessionals.com" title="Joomla Pros / Professionals" target="_blank" class="opg-link opg-text-muted">joomlaprofessionals.com</a></small></div>
 <?php
+    }
 }
 else
 {
@@ -301,10 +306,16 @@ else
 		 </div>
 		 
      </div><!-- CART CONTENT DIV END -->
-	  <?php
-	  	echo $this->loadTemplate('modalpage');
-	  ?>
-	 <p style="text-align: center;"><small style="text-size:8px; color:#b4b4b4;"><a style="text-size:8px; color:#b4b4b4;" title="one page checkout virtuemart" target="_blank" href="http://vmonepage.com">VMonepage</a>&nbsp;is built by&nbsp;<a style="text-size:8px; color:#b4b4b4;" title="joomlaproffs webshop ecommerce" target="_blank" href="http://www.joomlaprofessionals.com">joomlaprofessionals.com</a></small></p>
+	 <?php
+	 echo $this->loadTemplate('modalpage');
+
+	 if($params->get("built_by") == 1)
+	 {
+	 ?>
+    	 <p style="text-align: center;"><small style="text-size:8px; color:#b4b4b4;"><a style="text-size:8px; color:#b4b4b4;" title="one page checkout virtuemart" target="_blank" href="http://vmonepage.com">VMonepage</a>&nbsp;is built by&nbsp;<a style="text-size:8px; color:#b4b4b4;" title="joomlaproffs webshop ecommerce" target="_blank" href="http://www.joomlaprofessionals.com">joomlaprofessionals.com</a></small></p>
+	 <?php
+	 }
+	 ?>
 </form>
 
 <?php

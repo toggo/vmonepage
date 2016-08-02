@@ -131,7 +131,10 @@
 						</field>
 						<field 	name="recaptchakey" type="text" class="btn-group btn-group-yesno" label="Recaptcha Key"  description="" default="" />	
 						<field 	name="secretkey" type="text" class="btn-group btn-group-yesno" label="Recaptcha Secret Key"  description="" default="" />	
-
+						<field 	name="built_by"	type="radio" class="btn-group btn-group-yesno"	label="Display built by footer" description="Do you want to display a backlink to http://vmonepage.com and http://www.joomlaprofessionals.com/ to support the project?" default="1">
+							<option value="0">JNO</option>
+							<option value="1">JYES</option>
+						</field>
 
 	                </fieldset>
 
