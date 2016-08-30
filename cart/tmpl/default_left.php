@@ -240,19 +240,19 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
                     <div class="spacer">
 						<?php // Output The Tax For The Product
 						$taxtAmount = $this->currencyDisplay->createPriceDiv('taxAmount','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity);
-						if ( VmConfig::get('show_tax') && !empty($taxtAmount)) { 
-						echo '<div><span class="opg-margin-small-right ">'.JText::_('COM_VIRTUEMART_CART_SUBTOTAL_TAX_AMOUNT')." :</span>";
+						if ( VmConfig::get('show_tax')) { 
+						echo '<div id="subtotal_tax_amount_div_'.$pkey.'"><span class="opg-margin-small-right ">'.JText::_('COM_VIRTUEMART_CART_SUBTOTAL_TAX_AMOUNT')." :</span>";
 						?>
                             <span class="tax opg-text-left" id="subtotal_tax_amount_<?php echo $pkey; ?>"><?php $this->currencyDisplay->createPriceDiv('taxAmount','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity) ?></span></div>
 							<?php } ?>
 
 						<?php // Output The Discount For The Product
 						$discountAmount = $this->currencyDisplay->createPriceDiv('discountAmount','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity);
-						if(!empty($discountAmount)) {
-						echo '<div><span class="opg-margin-small-right ">'.JText::_('COM_VIRTUEMART_CART_SUBTOTAL_DISCOUNT_AMOUNT')." :</span>";
+					
+						echo '<div id="subtotal_discount_div_'.$pkey.'"><span class="opg-margin-small-right ">'.JText::_('COM_VIRTUEMART_CART_SUBTOTAL_DISCOUNT_AMOUNT')." :</span>";
 						?>
                             <span class="discount" id="subtotal_discount_<?php echo $pkey; ?>"><?php echo $this->currencyDisplay->createPriceDiv('discountAmount','', $this->cart->pricesUnformatted[$pkey],true,false,$prow->quantity);  //No quantity is already stored with it ?></span></div>
-							<?php } ?>
+						
                     </div>
                 </div>
 				<div class="status opg-width-large-1-3 opg-width-small-1-2 opg-width-1-2 opg-text-right">

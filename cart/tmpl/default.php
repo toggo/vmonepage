@@ -21,6 +21,8 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+
+
 JHTML::script('plugins/system/onepage_generic/onepage.js');
 JHTML::script('plugins/system/onepage_generic/onepage_generic.js');
 JHTML::stylesheet ( 'plugins/system/onepage_generic/onepage_generic.css');
@@ -71,6 +73,7 @@ if($params->get("buttoncolour") != "")
 }
 
 
+
 JFactory::getLanguage()->load('plg_system_onepage_generic',JPATH_ADMINISTRATOR);
 
 $userFieldsModel = VmModel::getModel('userfields');
@@ -78,6 +81,7 @@ $userFieldsModel = VmModel::getModel('userfields');
 $showextraterms = $params->get('show_extraterms',0);	
 
 JHtml::_('behavior.formvalidation');
+
 
 $document = JFactory::getDocument();
 $document->addStyleDeclaration('#facebox .content {display: block !important; height: 480px !important; overflow: auto; width: 560px !important; }');
@@ -129,6 +133,7 @@ foreach($this->cart->STaddress['fields'] as $name => $cartfield)
   }
  } 
  
+ 
 foreach($this->userFieldsCart['fields'] as $name => $cartfield)
 {
  if($cartfield['required'] == 1)
@@ -152,6 +157,8 @@ foreach($this->userFieldsCart['fields'] as $name => $cartfield)
    JHTML::script('https://www.google.com/recaptcha/api.js');
    $captchaenabled = 1;
  }
+ 
+ 
 
 $acceptmessage =  htmlspecialchars(JText::_('COM_VIRTUEMART_CART_PLEASE_ACCEPT_TOS'), ENT_QUOTES);
 $privacymeessage =  htmlspecialchars(JText::_('PLG_VMUIKITONEPAGE_PRIVACY_POLICY_ERROR'), ENT_QUOTES);
@@ -163,9 +170,10 @@ $chosecountry =  htmlspecialchars(JText::_('PLG_SYSTEM_VMUIKIT_CHOOSE_COUNTRY'),
 $captchainvalid =  htmlspecialchars(JText::_('PLG_SYSTEM_VMUIKIT_CAPTCHA_INVALID'), ENT_QUOTES);
 $removeprouct =  htmlspecialchars(JText::_('COM_VIRTUEMART_PRODUCT_REMOVED_SUCCESSFULLY'), ENT_QUOTES);
 $changetext   =  htmlspecialchars(JText::_('PLG_SYSTEM_VMUIKIT_ONEPAGE_CHNAGE'), ENT_QUOTES);
-$noshipmethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', ''), ENT_QUOTES);
-$nopaymethod   =  htmlspecialchars(vmInfo('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', ''), ENT_QUOTES);
+$noshipmethod   =  htmlspecialchars(JText::sprintf('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', ''), ENT_QUOTES);
+$nopaymethod   =  htmlspecialchars(JText::sprintf('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', ''), ENT_QUOTES);
 $minpurchaseerror   =  htmlspecialchars(vmText::sprintf('COM_VIRTUEMART_CART_MIN_PURCHASE',  $currency->priceDisplay($vendordata->vendor_min_pov)), ENT_QUOTES);
+
 
 
 $button_primary  = $params->get("button_primary","opg-button-primary");

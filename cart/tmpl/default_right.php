@@ -169,6 +169,7 @@ jQuery(document).ready(function(){
    <input type="hidden" name="oneshipmenthide" id="oneshipmenthide" value="<?php echo $oneshipmenthide; ?>" />
    <input type="hidden" name="auto_shipmentid" id="auto_shipmentid" value="<?php echo vmconfig::get("set_automatic_shipment");  ?>" />
 	 <?php
+
 	  $listshipments = $params->get("list_allshipment", 0);				
 	  if($listshipments)
 	  {
@@ -201,7 +202,7 @@ jQuery(document).ready(function(){
 		  if(count($this->shipments_shipment_rates) == 0)
 		  {
 			  $text = "";
-		  	  $shipmentnilltext = vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', $text);
+		  	  $shipmentnilltext = JText::sprintf('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', $text);
 		  	  echo '<p id="shipmentnill" class="opg-text-warning">'.$shipmentnilltext.'</p>';
 		  }
 		  echo "</fieldset>";
@@ -270,7 +271,7 @@ jQuery(document).ready(function(){
 						else
 						{
 						  $text = "";
-					  	  $shipmentnilltext = vmInfo('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', $text);
+					  	  $shipmentnilltext = JText::sprintf('COM_VIRTUEMART_NO_SHIPPING_METHODS_CONFIGURED', $text);
 					  	  echo '<p id="shipmentnill" class="opg-text-warning">'.$shipmentnilltext.'</p>';
 						}
 				    }
@@ -322,7 +323,7 @@ jQuery(document).ready(function(){
 		if(count($paymentsarr) == 0)
 		{
 		    $text = "";
-		    $paymentnilltext = vmInfo('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', $text);
+		    $paymentnilltext = JText::sprintf('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', $text);
 		    echo '<p id="paymentnill" class="opg-text-warning">'.$paymentnilltext.'</p>';
 		}
 		
@@ -400,7 +401,7 @@ jQuery(document).ready(function(){
 					{
 					    
 					    $text = "";
-					    $paymentnilltext = vmInfo('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', $text);
+					    $paymentnilltext = JText::sprintf('COM_VIRTUEMART_NO_PAYMENT_METHODS_CONFIGURED', $text);
 					    echo '<p id="paymentnill" class="opg-text-warning">'.$paymentnilltext.'</p>';
 					}
 				}

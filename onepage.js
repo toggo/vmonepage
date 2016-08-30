@@ -32,7 +32,7 @@ jQuery(document).ready(function(){
 	form_danger = vmonepage.form_danger;
 								
 	jQuery(".opg-alert").hide();
-	jQuery("#system-message-container").hide();
+	//jQuery("#system-message-container").hide();
 	
 	
 	
@@ -1150,18 +1150,34 @@ function update_prices()
 					 jQuery.each(data.products, function(id, product) {
 						 if(vmonepage.show_tax > 0)
 						 {
-	    	                 if (jQuery('#subtotal_tax_amount_'+id).length > 0) 
+							 if(data.products[id].subtotal_tax_amount != "")
 							 {
-								jQuery('#subtotal_tax_amount_'+id).html(data.products[id].subtotal_tax_amount); 
-		             	     }
+								 jQuery('#subtotal_tax_amount_div_'+id).show(); 
+		    	                 if (jQuery('#subtotal_tax_amount_'+id).length > 0) 
+								 {
+									jQuery('#subtotal_tax_amount_'+id).html(data.products[id].subtotal_tax_amount); 
+		    	         	     }
+							 }
+							 else
+							 {
+								 jQuery('#subtotal_tax_amount_div_'+id).hide(); 
+							 }
 					     }
 						 if(jQuery("#subtotal_salesPrice_"+id))
 						 {
 							jQuery('#subtotal_salesPrice'+id).html(data.products[id].subtotal_salesPrice);
 						 }
-	                     if (jQuery('#subtotal_discount_'+id) ) 
+	                     if(jQuery('#subtotal_discount_'+id)) 
 						 {
-	                        jQuery('#subtotal_discount_'+id).html(data.products[id].subtotal_discount);
+							 if(data.products[id].subtotal_discount != "")
+							 {
+								 jQuery('#subtotal_discount_div_'+id).show(); 
+								 jQuery('#subtotal_discount_'+id).html(data.products[id].subtotal_discount);
+							 }
+							 else
+							 {
+								jQuery('#subtotal_discount_div_'+id).hide();  
+							 }
 		                 }
 			             if (jQuery('#subtotal_with_tax_'+id) ) 
 						 {

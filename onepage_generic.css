@@ -86,7 +86,7 @@ input.quantity-input
 }
 .opg-alert, #system-message-container
 {
-  display:none;
+
 }
 #customerror .opg-alert, #loginerror .opg-alert, #cartalert .opg-alert, #email_error .opg-alert, #user_error .opg-alert
 {
