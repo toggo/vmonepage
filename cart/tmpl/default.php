@@ -53,26 +53,22 @@ $plugin=JPluginHelper::getPlugin('system','onepage_generic');
 $params=new JRegistry($plugin->params);
 $countryreload = $params->get("country_reload", 0);
 $popupaddress = $params->get("popup_address", 1);
+$buttoncolour = $params->get("buttoncolour", "#3071A9")
 
-if($params->get("buttoncolour") != "")
-{
-  ?>
+?>
   <style type="text/css">
   .opg-button-primary
   {
-    background:<?php echo $params->get("buttoncolour"); ?> !important;
+    background:<?php echo $buttoncolour; ?> !important;
   }
   .opg-progress-striped .opg-progress-bar {
-  background-image: -webkit-linear-gradient(-45deg, <?php echo $params->get("buttoncolour"); ?> 25%, transparent 25%, transparent 50%, <?php echo $params->get("buttoncolour"); ?> 50%, <?php echo $params->get("buttoncolour"); ?> 75%, transparent 75%, transparent);
-  background-image: linear-gradient(-45deg, <?php echo $params->get("buttoncolour"); ?> 25%, transparent 25%, transparent 50%, <?php echo $params->get("buttoncolour"); ?> 50%, <?php echo $params->get("buttoncolour"); ?> 75%, transparent 75%, transparent);
+  background-image: -webkit-linear-gradient(-45deg, <?php echo $buttoncolour; ?> 25%, transparent 25%, transparent 50%, <?php echo $buttoncolour; ?> 50%, <?php echo $buttoncolour; ?> 75%, transparent 75%, transparent);
+  background-image: linear-gradient(-45deg, <?php echo $buttoncolour; ?> 25%, transparent 25%, transparent 50%, <?php echo $buttoncolour; ?> 50%, <?php echo $buttoncolour; ?> 75%, transparent 75%, transparent);
   background-size: 30px 30px;
 }
   
   </style>
-  <?php
-}
-
-
+<?php
 
 JFactory::getLanguage()->load('plg_system_onepage_generic',JPATH_ADMINISTRATOR);
 
