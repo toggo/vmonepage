@@ -92,7 +92,7 @@ $document->addStyleDeclaration('#facebox .content {display: block !important; he
  } 
  foreach($this->cart->STaddress["fields"] as $singlefield) 
  {
-     if($singlefield['name']=='customer_note') 
+     if($singlefield['name']=='shipto_customer_note') 
  	 {
 	   $customernote = true;
 	 }

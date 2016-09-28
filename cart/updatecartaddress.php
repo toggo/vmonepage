@@ -36,6 +36,7 @@ foreach ($_retValues as $_retVal)
 $app = JFactory::getApplication();
 $postData = $app->input->post->getArray();
 
+
 $cart->STsameAsBT= $app->input->getString('STsameAsBT');
 if($cart->STsameAsBT =='1') {
 	$cart->ST=0;
@@ -61,6 +62,11 @@ if($user->id > 0)
   
   $userModel->storeAddress($postData);
 }
+if(!empty($postData['customer_note']))
+{
+ $cart->BT['customer_note'] = $postData['customer_note'];
+ $cart->setCartIntoSession(false,true);
+}
 foreach($this->userFieldsCart['fields'] as $name => $cartfield)
 {
  if($cartfield['required'] == 1)
@@ -78,6 +84,7 @@ foreach($this->userFieldsCart['fields'] as $name => $cartfield)
 $cart->_blockConfirm = false;
 $cart->setCartIntoSession(false,true);
 $cart->saveCartFieldsInCart();
+
 
 $dataarray  = array();
 $dataarray['success'] = 1;

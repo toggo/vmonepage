@@ -307,7 +307,7 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
   } 
   foreach($this->cart->STaddress["fields"] as $field) 
   {
-     if($field['name']=='customer_note') 
+     if($field['name']=='shipto_customer_note') 
  	 {
 	   $customernote = true;
 	   $singlefield = $field;
@@ -330,7 +330,9 @@ $button_primary_class  = $params->get("button_primary","opg-button-primary");
 	   <h3 class="opg-panel-title"><?php echo JText::_('COM_VIRTUEMART_COMMENT_CART'); ?></h3>
 		   <div class="opg-text-center">
 		   <?php
-			   echo str_replace("<textarea", '<textarea onblur="javascript:updatecustomernote(this);" ', $singlefield['formcode']);
+			   $newstring = str_replace("<textarea", '<textarea onblur="javascript:updatecustomernote(this);" ', $singlefield['formcode']);
+			    echo str_replace("shipto_", "", $newstring);
+				
 		   ?>
 		   </div>
 	   </div>
