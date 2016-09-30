@@ -1123,6 +1123,7 @@ function update_product(vmid)
 				   jQuery('html,body').animate({
 				    	    scrollTop: jQuery("#customerror").offset().top},
     	    	   'slow')
+				   action = "updateaddress";
 				   updatepayment();
 				 }
 	 	 });
@@ -1165,7 +1166,7 @@ function update_prices()
 					     }
 						 if(jQuery("#subtotal_salesPrice_"+id))
 						 {
-							jQuery('#subtotal_salesPrice'+id).html(data.products[id].subtotal_salesPrice);
+							jQuery('#subtotal_salesPrice_'+id).html(data.products[id].subtotal_salesPrice);
 						 }
 	                     if(jQuery('#subtotal_discount_'+id)) 
 						 {
