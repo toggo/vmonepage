@@ -1190,27 +1190,9 @@ function update_prices()
 		                 }	
 
 					 });
-					 jQuery("#taxRulesBill").hide();
-					 jQuery("#taxRulesBill .opg-grid").each(function(){
-					   jQuery(this).hide();											    
- 			  	     });
-					 if(typeof(data.taxRulesBill)!= 'undefined')
-					 {
-						  jQuery.each(data.taxRulesBill, function(id, taxdata) {
-			 	 			 if(jQuery("#taxdiv_"+id).length > 0)
-							 {
-								 jQuery("#taxdiv_"+id).show();   
-								 jQuery("#taxRulesBill").show();
-								 jQuery("#tax_amount_"+id).html(taxdata.price);
-							 }
-							 else
-							 {
-							      jQuery("#taxRulesBill").show();
-							 	  htmldiv = '<div id="taxdiv_'+id+'"  class=" opg-grid opg-text-right"><div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.name+'</div><div id="tax_amount_'+id+'"   class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.price+'</div><div class="clear"></div></div>';
-								  jQuery("#taxRulesBill").append(htmldiv);
-							 }
-						  });
-					 }
+					 
+					 // TAX RULE TYPE ONE START
+					 
 					 jQuery("#DATaxRulesBill").hide();
 					 jQuery("#DATaxRulesBill .opg-grid").each(function(){
 					   jQuery(this).hide();											    
@@ -1228,10 +1210,37 @@ function update_prices()
 							 {
 							      jQuery("#DATaxRulesBill").show();
 							 	  htmldiv = '<div id="dataxdiv_'+id+'"  class=" opg-grid opg-text-right"><div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.name+'</div><div id="datax_amount_'+id+'"   class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.price+'</div><div class="clear"></div></div>';
-								  jQuery("#taxRulesBill").append(htmldiv);
+								  jQuery("#DATaxRulesBill").append(htmldiv);
 							 }
 						  });
 					 }
+					 // TAX RULE TYPE ONE END
+					 
+					 // TAX RULE TYPE TWO START
+					 jQuery("#taxRulesBill").hide();
+					 jQuery("#taxRulesBill .opg-grid").each(function(){
+					   jQuery(this).hide();											    
+ 			  	     });
+					 if(typeof(data.taxRulesBill)!= 'undefined')
+					 {
+						  jQuery.each(data.taxRulesBill, function(id, taxdata) {
+			 	 			 if(jQuery("#taxdiv_"+id).length > 0)
+							 {
+
+								 jQuery("#taxdiv_"+id).show();   
+								 jQuery("#taxRulesBill").show();
+								 jQuery("#tax_amount_"+id).html(taxdata.price);
+							 }
+							 else
+							 {
+							      
+							 	  htmldiv = '<div id="taxdiv_'+id+'"  class=" opg-grid opg-text-right"><div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.name+'</div><div id="tax_amount_'+id+'"   class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.price+'</div><div class="clear"></div></div>';
+								  jQuery("#taxRulesBill").append(htmldiv);
+								  jQuery("#taxRulesBill").show();
+							 }
+						  });
+					 }
+					 // TAX RULE TYPE TWO END	
 				   
 					if(data.salesPrice != "")
 					{
