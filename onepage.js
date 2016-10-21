@@ -1241,6 +1241,31 @@ function update_prices()
 						  });
 					 }
 					 // TAX RULE TYPE TWO END	
+					 
+					 
+					  // TAX RULE TYPE THREE START
+					 jQuery("#DBTaxRulesBill").hide();
+					 jQuery("#DBTaxRulesBill .opg-grid").each(function(){
+					   jQuery(this).hide();											    
+ 			  	     });
+					 if(typeof(data.DBTaxRulesBill)!= 'undefined')
+					 {
+						  jQuery.each(data.DBTaxRulesBill, function(id, taxdata) {
+			 	 			 if(jQuery("#db_tax_amount_"+id).length > 0)
+							 {
+								 jQuery("#db_taxdiv_"+id).show();    
+								 jQuery("#DBTaxRulesBill").show();
+								 jQuery("#db_tax_amount_"+id).html(taxdata.price);
+							 }
+							 else
+							 {
+							      jQuery("#DBTaxRulesBill").show();
+							 	  htmldiv = '<div id="db_taxdiv_'+id+'"  class=" opg-grid opg-text-right"><div class="price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.name+'</div><div id="db_tax_amount_'+id+'"   class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2">'+taxdata.price+'</div><div class="clear"></div></div>';
+								  jQuery("#DBTaxRulesBill").append(htmldiv);
+							 }
+						  });
+					 }
+					 // TAX RULE TYPE ONE END
 				   
 					if(data.salesPrice != "")
 					{

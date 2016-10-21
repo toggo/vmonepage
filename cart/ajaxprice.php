@@ -96,13 +96,14 @@ $cart->prepareCartData();
 	
 	if(count($this->cart->cartData['DBTaxRulesBill']) > 0)
 	{
+	
 	    $DBTaxRulesBill = array();
 		foreach($this->cart->cartData['DBTaxRulesBill'] as $rule)
 		{
 		   $virtuemart_calc_id = $rule['virtuemart_calc_id'];
 		   $calcname = $rule['calc_name'];
 		   $DBTaxRulesBill[$virtuemart_calc_id]["name"] = $calcname;
-		   $DBTaxRulesBillDBTaxRulesBill[$virtuemart_calc_id]["price"] = $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true);
+		   $DBTaxRulesBill[$virtuemart_calc_id]["price"] = $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true);
 		}
 		$price_values["DBTaxRulesBill"] = $DBTaxRulesBill;
 	}

@@ -65,16 +65,19 @@ $params=new JRegistry($plugin->params);
 		
          
 
-			<?php
+			
+		<div id="DBTaxRulesBill" style="display:none">
+		<?php
 		foreach($this->cart->cartData['DBTaxRulesBill'] as $rule){ ?>
-            <div class="opg-width-1-1  opg-grid opg-text-right">
+            <div id="db_taxdiv_<?php echo $rule['virtuemart_calc_id']; ?>"  class="opg-grid opg-text-right">
                 <div class="price-type price-type opg-width-large-3-4 opg-width-small-1-2 opg-width-1-2"><?php echo $rule['calc_name'].': ' ?></div>
-                <div class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2"><?php echo $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true); ?></div>
+                <div id="db_tax_amount_<?php echo $rule['virtuemart_calc_id']; ?>" class="price-amount opg-width-large-1-4 opg-width-small-1-2 opg-width-1-2"><?php echo $this->currencyDisplay->createPriceDiv($rule['virtuemart_calc_id'].'Diff','', $this->cart->pricesUnformatted[$rule['virtuemart_calc_id'].'Diff'],true); ?></div>
                 <div class="clear"></div>
             </div>
 			<?php } ?>
+		</div>
 
-		  <div id="taxRulesBill" style="display:none">
+		<div id="taxRulesBill" style="display:none">
 		<?php
 		foreach($this->cart->cartData['taxRulesBill'] as $rule){ 
 		?>
