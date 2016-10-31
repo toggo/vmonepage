@@ -238,14 +238,13 @@ else
 			   if($singlefield['required'])
 			   {
 			     $tmptext = "";
-				$tmptext = str_replace("<textarea", '<textarea onblur="javascript:updatecustomernote(this);" ', $singlefield['formcode']);
 				 $tmptext = str_replace("<textarea", '<textarea class="required"', $tmptext);
 				 echo $tmptext;
 
 			   }
 			   else
 			   {
-			    	echo str_replace("<textarea", '<textarea onblur="javascript:updatecart();" ', $singlefield['formcode']);
+			    	echo $singlefield['formcode'];
 			   }
 			   ?>
 		   </div>

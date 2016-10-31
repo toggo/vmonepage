@@ -159,6 +159,7 @@ if(jQuery('#checkoutForm').length  > 0)
 
 function validatecomment()
 {
+		 alert("111");
   if(jQuery("#commentpopup #customer_note_field").hasClass("required"))
   {
   
@@ -171,6 +172,7 @@ function validatecomment()
 	 }
 	 else
 	 {
+		 	 alert("123132");
 	 	 jQuery("#commenticon").show();
 		 jQuery("#commentbutton").addClass(button_primary);
 	     jQuery("#commentpopup #customer_note_field").removeClass(form_danger);
@@ -191,6 +193,8 @@ function validatecomment()
 	 }
 	 else
 	 {	
+	 alert("dafdfasdf");
+	 alert(button_primary);
 		 jQuery("#commenticon").show();
 		 jQuery("#commentbutton").addClass(button_primary);
 	     jQuery("#commentpopup #customer_note_field").removeClass(form_danger);
@@ -1265,7 +1269,7 @@ function update_prices()
 							 }
 						  });
 					 }
-					 // TAX RULE TYPE ONE END
+					 // TAX RULE TYPE THREE END
 				   
 					if(data.salesPrice != "")
 					{
