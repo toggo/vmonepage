@@ -230,7 +230,7 @@ jQuery(document).ready(function(){
 						
 						    $tmpdis = strip_tags($rates , '<span><img>');
 						    echo '<table class="opg-table opg-table-striped" id="shipmenttable"><tr id="shipmentrow"><td id="shipmentdetails">';
-							$tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
+							$tmpdis =  str_replace("</span><span" , "</span><br /><span", $tmpdis);
 							$tmpdis =  str_replace("vmshipment_description" , "vmshipment_description opg-text-small", $tmpdis);
 							$tmpdis =  str_replace("vmshipment_cost" , "vmshipment_cost opg-text-small", $tmpdis);
 						    echo $tmpdis;
@@ -253,7 +253,7 @@ jQuery(document).ready(function(){
 						{
 				            $tmpdis = strip_tags($this->shipments_shipment_rates[0] , '<span><img>');
 						    echo '<table class="opg-table opg-table-striped" id="shipmenttable"><tr id="shipmentrow"><td id="shipmentdetails">';
-						    $tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
+						    $tmpdis =  str_replace("</span><span" , "</span><br /><span", $tmpdis);
 							$tmpdis =  str_replace("vmshipment_description" , "vmshipment_description opg-text-small", $tmpdis);
 							$tmpdis =  str_replace("vmshipment_cost" , "vmshipment_cost opg-text-small", $tmpdis);
 							echo $tmpdis;
@@ -353,7 +353,7 @@ jQuery(document).ready(function(){
 						    echo '<table class="opg-table opg-table-striped" id="paymentable"><tr id="paymentrow"><td id="paymentdetails">';
 							$pos = strpos($tmpdis, '</span></span>');
 						    $tmpdis = substr($tmpdis, 0, $pos); 
-						    $tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
+						    $tmpdis =  str_replace("</span><span" , "</span><br /><span", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_description" , "vmpaymentt_description opg-text-small", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_cost" , "vmpayment_cost opg-text-small", $tmpdis);
 						    echo $tmpdis;
@@ -381,7 +381,7 @@ jQuery(document).ready(function(){
 						    echo '<table class="opg-table opg-table-striped" id="paymentable"><tr id="paymentrow"><td id="paymentdetails">';
 							$pos = strpos($tmpdis, '</span></span>');
 						    $tmpdis = substr($tmpdis, 0, $pos); 
-						    $tmpdis =  str_replace("</span><span>" , "</span><br /><span>", $tmpdis);
+						    $tmpdis =  str_replace("</span><span" , "</span><br /><span", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_description" , "vmpayment_description opg-text-small", $tmpdis);
 							$tmpdis =  str_replace("vmpayment_cost" , "vmpayment_cost opg-text-small", $tmpdis);
 						    echo $tmpdis;
